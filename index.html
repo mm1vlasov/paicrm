@@ -79,6 +79,10 @@
   .chart-wrap canvas { display: block; width: 100% !important; max-width: 100%; height: 100px; }
   .admin-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 100%; }
 
+  .github-sync-card { position: relative; }
+  .github-sync-body.locked { filter: blur(10px); user-select: none; pointer-events: none; }
+  .github-sync-lock { position: absolute; inset: 44px 0 0; display: flex; align-items: center; justify-content: center; z-index: 5; padding: 20px; }
+  .github-sync-lock.hidden { display: none; }
   .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; transition: border-color 0.15s; }
   .stat-card:hover { border-color: var(--border-hover); }
   .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); margin-bottom: 6px; }
@@ -394,6 +398,32 @@
           </div>
         </div>
 
+        <div class="card github-sync-card">
+          <div class="card-header"><span class="card-title">Синхронизация (GitHub)</span></div>
+          <div class="card-body github-sync-body locked" id="githubSyncBody">
+            <p style="color:var(--text2);font-size:12px;margin-bottom:12px;line-height:1.6">
+              Данные хранятся в <code style="color:var(--text)">data/state.json</code> репозитория. Укажите репозиторий и токен с правом <code style="color:var(--text)">repo</code> — изменения будут видны всем на сайте.<br>
+              <strong>Токен сохраняется только в вашем браузере и НЕ попадает в файл state.json.</strong>
+            </p>
+            <div class="form-row">
+              <div class="form-group"><label>Owner</label><input type="text" id="syncOwner" placeholder="username" disabled></div>
+              <div class="form-group"><label>Repo</label><input type="text" id="syncRepo" placeholder="pai-department" disabled></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Ветка</label><input type="text" id="syncBranch" value="main" disabled></div>
+              <div class="form-group"><label>Путь к JSON</label><input type="text" id="syncPath" value="data/state.json" disabled></div>
+            </div>
+            <div class="form-group">
+              <label>GitHub Token (PAT)</label>
+              <input type="password" id="syncToken" placeholder="ghp_..." autocomplete="off" disabled>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="saveSyncSettings()" disabled id="syncSaveBtn">Сохранить и синхронизировать</button>
+          </div>
+          <div class="github-sync-lock" id="githubSyncLock">
+            <button type="button" class="btn btn-primary" onclick="unlockGithubSync()">Введите пароль</button>
+          </div>
+        </div>
+
         <div class="card">
           <div class="card-header"><span class="card-title">Состав (редактирование)</span></div>
           <div class="card-body" id="adminMembersList" style="max-height:360px;overflow-y:auto"></div>
@@ -578,22 +608,22 @@
     { "id": "q21", "q": "Послать на хуй — какая статья?", "a": "15.8 Провокация" },
     { "id": "q22", "q": "Отличие 12.8 от 12.8.1?", "a": "Гос. и негос. оружие" }
   ],
+  "sync": {
+    "owner": "",
+    "repo": "",
+    "branch": "main",
+    "path": "data/state.json",
+    "sha": "",
+    "pollSec": 30
+  }
 }
 </script>
 
 <script>
 const DATA_PATH = 'data/state.json';
 const EMPTY_STATUS = '-';
-const SYNC_DEFAULTS = {
-  owner: 'mm1vlasov',
-  repo: 'paicrm',
-  branch: 'main',
-  path: 'data/state.json',
-  pollSec: 30,
-  token: ''
-};
-const SYNC_LOCAL_PATH = 'sync.local.json';
-let syncConfig = null;
+const GITHUB_SETTINGS_PASSWORD = '981864';
+const GITHUB_UNLOCK_KEY = 'pai_github_unlock';
 let state = null;
 let currentTab = 'dashboard';
 let memberFilter = '';
@@ -743,47 +773,85 @@ function fixStateEncoding(obj) {
   return obj;
 }
 
-// ─── SYNC / GITHUB ─────────────────────────────────────
-function stateForGitHub() {
-  const s = JSON.parse(JSON.stringify(state));
-  delete s.sync;
-  return s;
+function isGithubSyncUnlocked() {
+  return sessionStorage.getItem(GITHUB_UNLOCK_KEY) === '1';
 }
 
-function stripSyncSecrets(obj) {
-  if (!obj || typeof obj !== 'object') return;
-  if (obj.sync) {
-    delete obj.sync.token;
-    delete obj.sync.owner;
-    delete obj.sync.repo;
-    delete obj.sync.sha;
-    delete obj.sync.path;
-    delete obj.sync.branch;
-    if (!Object.keys(obj.sync).length) delete obj.sync;
+function unlockGithubSync() {
+  const pwd = prompt('Введите пароль для настроек GitHub:');
+  if (pwd === null) return;
+  if (pwd === GITHUB_SETTINGS_PASSWORD) {
+    sessionStorage.setItem(GITHUB_UNLOCK_KEY, '1');
+    updateGithubSyncLock();
+    toast('Доступ к настройкам GitHub открыт');
+  } else {
+    toast('Неверный пароль');
   }
 }
 
-async function ensureSyncConfig() {
-  if (syncConfig) return syncConfig;
-  try {
-    const res = await fetch(SYNC_LOCAL_PATH + '?t=' + Date.now(), { cache: 'no-store' });
-    if (res.ok) {
-      const local = await res.json();
-      syncConfig = { ...SYNC_DEFAULTS, ...local };
-      return syncConfig;
-    }
-  } catch (e) { console.warn('sync.local.json недоступен', e); }
-  syncConfig = { ...SYNC_DEFAULTS };
-  return syncConfig;
+function updateGithubSyncLock() {
+  const unlocked = isGithubSyncUnlocked();
+  const body = document.getElementById('githubSyncBody');
+  const lock = document.getElementById('githubSyncLock');
+  const saveBtn = document.getElementById('syncSaveBtn');
+  if (body) body.classList.toggle('locked', !unlocked);
+  if (lock) lock.classList.toggle('hidden', unlocked);
+  ['syncOwner', 'syncRepo', 'syncBranch', 'syncPath', 'syncToken'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = !unlocked;
+  });
+  if (saveBtn) saveBtn.disabled = !unlocked;
 }
 
+// ─── SYNC / GITHUB (без сохранения токена в state) ─────
 function getSyncConfig() {
-  return syncConfig || { ...SYNC_DEFAULTS };
+  // Сначала читаем из localStorage (там может быть токен)
+  const localCfg = JSON.parse(localStorage.getItem('pai_sync_config') || '{}');
+  // Затем из state.sync (но без token)
+  const syncFromState = state?.sync || getEmbeddedState()?.sync || {};
+  return {
+    owner: localCfg.owner || syncFromState.owner || '',
+    repo: localCfg.repo || syncFromState.repo || '',
+    branch: localCfg.branch || syncFromState.branch || 'main',
+    path: localCfg.path || syncFromState.path || 'data/state.json',
+    token: localCfg.token || '',  // только из localStorage
+    pollSec: localCfg.pollSec || syncFromState.pollSec || 30
+  };
 }
 
-function canWriteGitHub() {
-  const cfg = getSyncConfig();
-  return !!(cfg.owner && cfg.repo && cfg.token);
+function saveSyncConfigLocal(cfg) {
+  // Сохраняем в localStorage (включая токен)
+  localStorage.setItem('pai_sync_config', JSON.stringify({
+    owner: cfg.owner,
+    repo: cfg.repo,
+    branch: cfg.branch,
+    path: cfg.path,
+    token: cfg.token,
+    pollSec: cfg.pollSec
+  }));
+  // В state.sync записываем ВСЁ КРОМЕ ТОКЕНА
+  if (state) {
+    state.sync = {
+      ...state.sync,
+      owner: cfg.owner,
+      repo: cfg.repo,
+      branch: cfg.branch,
+      path: cfg.path,
+      pollSec: cfg.pollSec
+      // token НЕ сохраняем
+    };
+  }
+}
+
+// Удаление поля token из объекта (рекурсивно по sync)
+function stripTokenFromState(obj) {
+  if (!obj || typeof obj !== 'object') return obj;
+  const clone = Array.isArray(obj) ? [...obj] : { ...obj };
+  if (clone.sync && typeof clone.sync === 'object') {
+    clone.sync = { ...clone.sync };
+    delete clone.sync.token;
+  }
+  return clone;
 }
 
 async function loadStateFromUrl(url) {
@@ -791,7 +859,10 @@ async function loadStateFromUrl(url) {
   if (!res.ok) throw new Error('HTTP ' + res.status);
   const buf = await res.arrayBuffer();
   const text = new TextDecoder('utf-8').decode(buf);
-  return migrateState(JSON.parse(text));
+  const parsed = JSON.parse(text);
+  // Удаляем токен, если он вдруг есть
+  if (parsed.sync) delete parsed.sync.token;
+  return migrateState(parsed);
 }
 
 async function loadFromGitHub(cfg) {
@@ -803,25 +874,39 @@ async function loadFromGitHub(cfg) {
   const data = await res.json();
   remoteSha = data.sha;
   const json = JSON.parse(decodeBase64Utf8(data.content));
+  if (json.sync) delete json.sync.token; // защита
   return migrateState(json);
 }
 
 async function saveToGitHub(cfg) {
-  const content = encodeBase64Utf8(JSON.stringify(stateForGitHub(), null, 2));
+  // Создаём копию состояния, из которой удаляем токен
+  const stateToPush = stripTokenFromState(state);
+  const content = encodeBase64Utf8(JSON.stringify(stateToPush, null, 2));
   const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path || 'data/state.json')}`;
-  const body = { message: 'PAI CRM: update state', content, branch: cfg.branch || 'main', sha: remoteSha || undefined };
+  const body = {
+    message: 'PAI CRM: update state',
+    content,
+    branch: cfg.branch || 'main',
+    sha: remoteSha || cfg.sha || undefined
+  };
   const res = await fetch(api, {
     method: 'PUT',
     headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${cfg.token}`, 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
   });
-  if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.message || 'GitHub save ' + res.status); }
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || 'GitHub save ' + res.status);
+  }
   const data = await res.json();
   remoteSha = data.content.sha;
+  // Сохраняем sha в конфиг (локально и в state)
+  const newCfg = { ...cfg, sha: remoteSha };
+  saveSyncConfigLocal(newCfg);
 }
 
 async function loadStateFromNetwork() {
-  const cfg = await ensureSyncConfig();
+  const cfg = getSyncConfig();
   if (cfg.owner && cfg.repo && cfg.token) {
     try {
       const loaded = await loadFromGitHub(cfg);
@@ -867,33 +952,32 @@ function scheduleSave() {
 }
 
 async function pushRemote() {
-  await ensureSyncConfig();
-  if (canWriteGitHub()) {
+  const cfg = getSyncConfig();
+  if (cfg.owner && cfg.repo && cfg.token) {
     setSyncUI('pending', 'Сохранение...');
     try {
-      await saveToGitHub(getSyncConfig());
+      await saveToGitHub(cfg);
       setSyncUI('ok', 'Сохранено ' + new Date().toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' }));
     } catch (e) {
       setSyncUI('err', 'Ошибка сохранения');
       toast('Сохранение: ' + e.message);
     }
   } else {
-    setSyncUI('', 'Только чтение');
+    setSyncUI('', 'Настройте GitHub для сохранения');
   }
 }
 
 function startPolling() {
   clearInterval(pollTimer);
-  const sec = getSyncConfig().pollSec || 30;
+  const cfg = getSyncConfig();
+  const sec = cfg.pollSec || 30;
   pollTimer = setInterval(pullRemote, sec * 1000);
 }
 
 // ─── STATE ─────────────────────────────────────────────
 function migrateState(raw) {
   raw = fixStateEncoding(raw);
-  stripSyncSecrets(raw);
   const base = getEmbeddedState() || {};
-  stripSyncSecrets(base);
   const s = {
     ...base, ...raw,
     members: raw.members?.length ? raw.members : (base.members || []),
@@ -902,15 +986,15 @@ function migrateState(raw) {
     ranks: raw.ranks?.length ? raw.ranks : (base.ranks || []),
     weeklyScores: raw.weeklyScores || base.weeklyScores || {},
     meeting: raw.meeting || base.meeting || { date: '', attendance: {} },
-    call: raw.call || base.call
+    call: raw.call || base.call,
+    sync: { ...(base.sync || {}), ...(raw.sync || {}) }
   };
+  // Удаляем токен из sync, если он каким-то образом затесался
+  if (s.sync) delete s.sync.token;
   s.members = (s.members || []).map(normalizeMember);
   if (!s.meeting) s.meeting = { date: '', attendance: {} };
   if (!s.call) s.call = { date: '', candidates: [], scores: {} };
   if (!s.call.candidates) s.call.candidates = [];
-  // Migrate old fixed 6-slot candidates to dynamic array
-  s.call.candidates = s.call.candidates.filter(c => c && (c.name || c.gameId));
-  delete s.sync;
   (s.activities || []).forEach(a => {
     if (!a.code) a.code = (a.name || 'AC').replace(/[^\wа-яА-Я]/gi, '').slice(0, 2).toUpperCase() || 'AC';
     delete a.icon;
@@ -925,7 +1009,6 @@ function ensureMeetingAttendance(s = state) {
     if (!s.meeting.attendance[m.id]) {
       s.meeting.attendance[m.id] = { status: 'none', note: '' };
     }
-    // Migrate old format
     const a = s.meeting.attendance[m.id];
     if (a.present !== undefined || a.warned !== undefined) {
       a.status = a.present ? 'present' : a.warned ? 'warned' : 'absent';
@@ -938,7 +1021,7 @@ function ensureMeetingAttendance(s = state) {
 function defaultState() {
   const embedded = getEmbeddedState();
   if (embedded) return migrateState(JSON.parse(JSON.stringify(embedded)));
-  return migrateState({ members: [], ranks: ['Curator of Department','Head of Department','Deputy Head of Department','Instructor of Department'], activities: [], weeklyScores: {}, questions: [], meeting: { date: '', attendance: {} }, call: { date: '', candidates: [], scores: {} } });
+  return migrateState({ members: [], ranks: ['Curator of Department','Head of Department','Deputy Head of Department','Instructor of Department'], activities: [], weeklyScores: {}, questions: [], meeting: { date: '', attendance: {} }, call: { date: '', candidates: [], scores: {} }, sync: {} });
 }
 
 // ─── NAV ───────────────────────────────────────────────
@@ -991,7 +1074,8 @@ function renderDashboard() {
     <tr><td class="mono">${i + 1}</td>
     <td><span class="${rankClass(m.rank)}">${m.name}</span></td>
     <td><span class="${rankBadgeClass(m.rank)}">${m.rank}</span></td>
-    <td class="mono" style="color:${m.total > 0 ? 'var(--green)' : 'var(--text3)'}">${m.total}</td></tr>
+    <td class="mono" style="color:${m.total > 0 ? 'var(--green)' : 'var(--text3)'}">${m.total}</td>
+  </tr>
   `).join('');
 
   const oocMembers = state.members.filter(m => !isEmptyStatus(m.ooc));
@@ -1024,13 +1108,9 @@ function renderActivityChart() {
     const x = i * gap + gap * 0.2;
     const barW = gap * 0.6;
     ctx.fillStyle = 'rgba(255,255,255,0.08)';
-    ctx.beginPath();
-    if (ctx.roundRect) { ctx.roundRect(x, 8, barW, 72, 3); } else { ctx.rect(x, 8, barW, 72); }
-    ctx.fill();
+    ctx.fillRect(x, 8, barW, 72);
     ctx.fillStyle = 'rgba(255,255,255,0.55)';
-    ctx.beginPath();
-    if (ctx.roundRect) { ctx.roundRect(x, 80 - h, barW, h, 3); } else { ctx.rect(x, 80 - h, barW, h); }
-    ctx.fill();
+    ctx.fillRect(x, 80 - h, barW, h);
     ctx.fillStyle = 'rgba(255,255,255,0.35)';
     ctx.font = '9px DM Mono, monospace';
     ctx.textAlign = 'center';
@@ -1109,7 +1189,6 @@ function resetWeeklyScores() {
 }
 
 // ─── MEETINGS ──────────────────────────────────────────
-// Status cycle: none → present → warned → absent → none
 function cycleStatus(current) {
   if (current === 'none' || !current) return 'present';
   if (current === 'present') return 'warned';
@@ -1166,7 +1245,7 @@ function renderMeetings() {
             onclick="cycleMeetingStatus('${m.id}')">
             ${statusLabel(status)}
           </button>
-        </td>
+         </td>
         <td><input type="text" value="${escapeAttr(a.note)}" placeholder="${EMPTY_STATUS}" style="width:160px;padding:5px 8px;font-size:12px"
           onchange="setMeetingNote('${m.id}', this.value)"></td>
       </tr>
@@ -1202,7 +1281,6 @@ function renderCalls() {
   if (!state.call.date) state.call.date = today;
   document.getElementById('callDate').value = state.call.date;
 
-  // Candidates list
   const list = document.getElementById('candidatesList');
   if (!state.call.candidates) state.call.candidates = [];
   list.innerHTML = state.call.candidates.map((c, i) => `
@@ -1216,7 +1294,6 @@ function renderCalls() {
     </div>
   `).join('') || '<div style="color:var(--text3);font-size:12px;padding:8px 0">Нажмите «+ Создать кандидата», чтобы добавить</div>';
 
-  // Questions table
   const active = (state.call.candidates || []).map((c, i) => ({ ...c, idx: i })).filter(c => c.name?.trim());
 
   const head = document.getElementById('callQuestionsHead');
@@ -1234,12 +1311,11 @@ function renderCalls() {
           <select class="rating-select ${scoreClass(sc)}" onchange="setCallScore(${qi},${c.idx},this.value)">
             ${[0, 0.5, 0.7, 1].map(v => `<option value="${v}" ${sc == v ? 'selected' : ''}>${v === 1 ? '1.0' : v}</option>`).join('')}
           </select>
-        </td>`;
+         </td>`;
       }).join('')}
     </tr>
   `).join('');
 
-  // Results
   document.getElementById('callResults').innerHTML = (state.call.candidates || []).map((c, i) => {
     if (!c.name?.trim()) return '';
     const r = calcCallResult(i);
@@ -1264,7 +1340,6 @@ function addCandidate() {
 
 function removeCandidate(i) {
   state.call.candidates.splice(i, 1);
-  // Shift scores
   const newScores = {};
   Object.entries(state.call.scores || {}).forEach(([qi, qScores]) => {
     newScores[qi] = {};
@@ -1281,7 +1356,6 @@ function removeCandidate(i) {
 
 function setCandidate(i, field, val) {
   state.call.candidates[i][field] = val;
-  // Don't re-render on every keystroke, just save
   scheduleSave();
 }
 
@@ -1322,6 +1396,13 @@ function fillRankSelects() {
 
 function renderAdmin() {
   fillRankSelects();
+  const cfg = getSyncConfig();
+  document.getElementById('syncOwner').value = cfg.owner || '';
+  document.getElementById('syncRepo').value = cfg.repo || '';
+  document.getElementById('syncBranch').value = cfg.branch || 'main';
+  document.getElementById('syncPath').value = cfg.path || 'data/state.json';
+  document.getElementById('syncToken').value = cfg.token || '';
+
   document.getElementById('adminMembersList').innerHTML = state.members.map(m => `
     <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)">
       <div>
@@ -1354,6 +1435,7 @@ function renderAdmin() {
       <button class="btn btn-danger btn-xs" onclick="deleteQuestion('${q.id}')">×</button>
     </div>
   `).join('');
+  updateGithubSyncLock();
 }
 
 function addMemberFromSettings() {
@@ -1407,6 +1489,20 @@ function deleteMember(id) {
   delete state.meeting.attendance[id];
   scheduleSave();
   renderAdmin();
+}
+
+function saveSyncSettings() {
+  if (!isGithubSyncUnlocked()) { toast('Сначала введите пароль'); return; }
+  const cfg = {
+    owner: document.getElementById('syncOwner').value.trim(),
+    repo: document.getElementById('syncRepo').value.trim(),
+    branch: document.getElementById('syncBranch').value.trim() || 'main',
+    path: document.getElementById('syncPath').value.trim() || 'data/state.json',
+    token: document.getElementById('syncToken').value.trim(),
+    pollSec: 30
+  };
+  saveSyncConfigLocal(cfg);
+  pullRemote().then(() => { startPolling(); toast('Синхронизация настроена'); });
 }
 
 function addRank() {
@@ -1469,7 +1565,9 @@ function deleteQuestion(id) {
 }
 
 function exportData() {
-  const blob = new Blob(['\uFEFF' + JSON.stringify(stateForGitHub(), null, 2)], { type: 'application/json;charset=utf-8' });
+  // При экспорте тоже не включаем токен
+  const exportState = stripTokenFromState(state);
+  const blob = new Blob(['\uFEFF' + JSON.stringify(exportState, null, 2)], { type: 'application/json;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `pai_data_${new Date().toISOString().split('T')[0]}.json`;
@@ -1484,7 +1582,9 @@ function importData(input) {
   reader.onload = e => {
     try {
       if (confirm('Заменить все данные импортом?')) {
-        state = migrateState(JSON.parse(e.target.result));
+        const imported = JSON.parse(e.target.result);
+        if (imported.sync) delete imported.sync.token;
+        state = migrateState(imported);
         scheduleSave();
         renderTab(currentTab);
         toast('Импорт выполнен');
@@ -1506,8 +1606,6 @@ async function clearAllData() {
 
 // ─── INIT ──────────────────────────────────────────────
 async function init() {
-  localStorage.removeItem('pai_sync_config');
-  await ensureSyncConfig();
   setSyncUI('pending', 'Загрузка...');
   state = defaultState();
   ensureMeetingAttendance();
@@ -1526,6 +1624,7 @@ async function init() {
   }
 
   startPolling();
+  updateGithubSyncLock();
   window.addEventListener('resize', () => {
     if (currentTab === 'dashboard') renderActivityChart();
   });
