@@ -633,6 +633,8 @@ let saveTimer = null;
 let pollTimer = null;
 let editMemberId = null;
 let remoteSha = '';
+let isSaving = false;   // save lock — only one PUT at a time
+let pendingSave = false; // re-save requested while lock was held
 
 const tabTitles = {
   dashboard: 'Дашборд', members: 'Состав отдела', scores: 'Еженедельные баллы',
@@ -856,9 +858,18 @@ async function loadFromGitHub(cfg) {
 }
 
 async function saveToGitHub(cfg) {
+  // Always fetch the current SHA right before PUT — prevents "does not match" on concurrent edits
+  const shaApi = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path || 'data/state.json')}?ref=${encodeURIComponent(cfg.branch || 'main')}`;
+  const shaRes = await fetch(shaApi, {
+    headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${cfg.token}` }
+  });
+  if (!shaRes.ok) throw new Error('GitHub SHA ' + shaRes.status);
+  const shaData = await shaRes.json();
+  remoteSha = shaData.sha;
+
   const content = encodeBase64Utf8(JSON.stringify(state, null, 2));
   const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path || 'data/state.json')}`;
-  const body = { message: 'PAI CRM: update state', content, branch: cfg.branch || 'main', sha: remoteSha || cfg.sha || undefined };
+  const body = { message: 'PAI CRM: update state', content, branch: cfg.branch || 'main', sha: remoteSha };
   const res = await fetch(api, {
     method: 'PUT',
     headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${cfg.token}`, 'Content-Type': 'application/json' },
@@ -867,8 +878,6 @@ async function saveToGitHub(cfg) {
   if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.message || 'GitHub save ' + res.status); }
   const data = await res.json();
   remoteSha = data.content.sha;
-  cfg.sha = remoteSha;
-  saveSyncConfigLocal(cfg);
 }
 
 async function loadStateFromNetwork() {
@@ -914,12 +923,15 @@ async function pullRemote() {
 
 function scheduleSave() {
   clearTimeout(saveTimer);
-  saveTimer = setTimeout(pushRemote, 800);
+  saveTimer = setTimeout(pushRemote, 1000);
 }
 
 async function pushRemote() {
+  // If already saving — mark that another save is needed and return
+  if (isSaving) { pendingSave = true; return; }
   const cfg = getSyncConfig();
   if (cfg.owner && cfg.repo && cfg.token) {
+    isSaving = true;
     setSyncUI('pending', 'Сохранение...');
     try {
       await saveToGitHub(cfg);
@@ -927,6 +939,10 @@ async function pushRemote() {
     } catch (e) {
       setSyncUI('err', 'Ошибка сохранения');
       toast('Сохранение: ' + e.message);
+    } finally {
+      isSaving = false;
+      // If a change happened while we were saving — save again
+      if (pendingSave) { pendingSave = false; scheduleSave(); }
     }
   } else {
     setSyncUI('', 'Настройте GitHub для сохранения');
