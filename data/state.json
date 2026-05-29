@@ -297,7 +297,7 @@
   ],
   "weeklyScores": {},
   "meeting": {
-    "date": "",
+    "date": "2026-05-29",
     "attendance": {
       "m1": {
         "status": "none",
@@ -393,7 +393,7 @@
     "date": "2026-05-29",
     "candidates": [
       {
-        "name": "",
+        "name": "test",
         "gameId": ""
       }
     ],
