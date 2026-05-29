@@ -21,15 +21,21 @@
     --font: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --mono: 'DM Mono', monospace;
 
+    /* Reprimand colors */
+    --reprimand-verbal-color: #fb923c;
+    --reprimand-verbal-dim: rgba(251,146,60,0.12);
+    --reprimand-strict-color: #f43f5e;
+    --reprimand-strict-dim: rgba(244,63,94,0.12);
+
     /* Rank colors */
-    --curator-color: #f0e68c;
-    --curator-glow: rgba(240,230,140,0.35);
-    --head-color: #d4d4d4;
-    --head-glow: rgba(212,212,212,0.3);
-    --deputy-color: #93c5fd;
-    --deputy-glow: rgba(147,197,253,0.3);
-    --instructor-color: #9a9a9a;
-    --instructor-glow: rgba(154,154,154,0.15);
+    --curator-color: #ffd700;
+    --curator-glow: rgba(255,215,0,0.4);
+    --head-color: #e879f9;
+    --head-glow: rgba(232,121,249,0.35);
+    --deputy-color: #38bdf8;
+    --deputy-glow: rgba(56,189,248,0.35);
+    --instructor-color: #86efac;
+    --instructor-glow: rgba(134,239,172,0.25);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; font-size: 14px; line-height: 1.5; overflow-x: hidden; }
@@ -128,15 +134,15 @@
   .modal-footer { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
 
   /* Rank colors with glow */
-  .rank-curator { color: var(--curator-color); text-shadow: 0 0 16px var(--curator-glow); }
-  .rank-head { color: var(--head-color); text-shadow: 0 0 16px var(--head-glow); }
-  .rank-deputy { color: var(--deputy-color); text-shadow: 0 0 16px var(--deputy-glow); }
-  .rank-instructor { color: var(--instructor-color); }
+  .rank-curator { color: var(--text); font-weight: 600; text-shadow: 0 0 12px rgba(255,255,255,0.45); }
+  .rank-head { color: var(--text); font-weight: 600; text-shadow: 0 0 12px rgba(255,255,255,0.45); }
+  .rank-deputy { color: var(--text); font-weight: 600; text-shadow: 0 0 12px rgba(255,255,255,0.45); }
+  .rank-instructor { color: var(--text); font-weight: 600; text-shadow: 0 0 12px rgba(255,255,255,0.45); }
 
-  .rank-badge-curator { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(240,230,140,0.1);color:var(--curator-color);border:1px solid rgba(240,230,140,0.2);text-shadow:0 0 8px var(--curator-glow); }
-  .rank-badge-head { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(212,212,212,0.08);color:var(--head-color);border:1px solid rgba(212,212,212,0.18);text-shadow:0 0 8px var(--head-glow); }
-  .rank-badge-deputy { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(147,197,253,0.08);color:var(--deputy-color);border:1px solid rgba(147,197,253,0.2);text-shadow:0 0 8px var(--deputy-glow); }
-  .rank-badge-instructor { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(154,154,154,0.07);color:var(--instructor-color);border:1px solid rgba(154,154,154,0.15); }
+  .rank-badge-curator { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(255,255,255,0.07);color:var(--text);border:1px solid rgba(255,255,255,0.18);box-shadow:0 0 8px rgba(255,255,255,0.1),inset 0 0 8px rgba(255,255,255,0.04); }
+  .rank-badge-head { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(255,255,255,0.07);color:var(--text);border:1px solid rgba(255,255,255,0.18);box-shadow:0 0 8px rgba(255,255,255,0.1),inset 0 0 8px rgba(255,255,255,0.04); }
+  .rank-badge-deputy { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(255,255,255,0.07);color:var(--text);border:1px solid rgba(255,255,255,0.18);box-shadow:0 0 8px rgba(255,255,255,0.1),inset 0 0 8px rgba(255,255,255,0.04); }
+  .rank-badge-instructor { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(255,255,255,0.05);color:var(--text2);border:1px solid rgba(255,255,255,0.12);box-shadow:0 0 6px rgba(255,255,255,0.07); }
 
   .act-code { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 4px; background: rgba(255,255,255,0.08); font-family: var(--mono); font-size: 9px; color: rgba(255,255,255,0.75); flex-shrink: 0; }
 
@@ -189,6 +195,29 @@
   ::-webkit-scrollbar { width: 4px; height: 4px; }
   ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 4px; }
 
+  /* Reprimands */
+  .reprimand-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; transition: border-color 0.15s; }
+  .reprimand-card:hover { border-color: var(--border-hover); }
+  .reprimand-verbal { border-left: 3px solid var(--reprimand-verbal-color); }
+  .reprimand-strict { border-left: 3px solid var(--reprimand-strict-color); }
+  .reprimand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .reprimand-member-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .reprimand-member-header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .reprimand-member-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .reprimand-counter { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .reprimand-counter-label { font-size: 12px; color: var(--text2); display: flex; align-items: center; gap: 8px; }
+  .reprimand-dots { display: flex; gap: 5px; }
+  .reprimand-dot { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid; cursor: pointer; transition: all 0.12s; display: flex; align-items: center; justify-content: center; font-size: 9px; }
+  .reprimand-dot.verbal-empty { border-color: rgba(251,146,60,0.3); background: transparent; }
+  .reprimand-dot.verbal-empty:hover { background: rgba(251,146,60,0.15); }
+  .reprimand-dot.verbal-filled { border-color: var(--reprimand-verbal-color); background: rgba(251,146,60,0.25); color: var(--reprimand-verbal-color); box-shadow: 0 0 8px rgba(251,146,60,0.3); }
+  .reprimand-dot.strict-empty { border-color: rgba(244,63,94,0.3); background: transparent; }
+  .reprimand-dot.strict-empty:hover { background: rgba(244,63,94,0.15); }
+  .reprimand-dot.strict-filled { border-color: var(--reprimand-strict-color); background: rgba(244,63,94,0.25); color: var(--reprimand-strict-color); box-shadow: 0 0 8px rgba(244,63,94,0.3); }
+  .reprimand-badge-verbal { background: var(--reprimand-verbal-dim); color: var(--reprimand-verbal-color); border: 1px solid rgba(251,146,60,0.25); }
+  .reprimand-badge-strict { background: var(--reprimand-strict-dim); color: var(--reprimand-strict-color); border: 1px solid rgba(244,63,94,0.25); }
+  .rep-filter-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+
   @media (max-width: 1100px) {
     .dash-panels, .admin-grid { grid-template-columns: 1fr; }
   }
@@ -217,6 +246,7 @@
     <button class="nav-item" data-tab="scores" onclick="showTab('scores', this)"><span class="nav-icon">◎</span> Еженеделька</button>
     <button class="nav-item" data-tab="meetings" onclick="showTab('meetings', this)"><span class="nav-icon">◷</span> Собрания</button>
     <button class="nav-item" data-tab="calls" onclick="showTab('calls', this)"><span class="nav-icon">◌</span> Обзвон</button>
+    <button class="nav-item" data-tab="reprimands" onclick="showTab('reprimands', this)"><span class="nav-icon">⚠</span> Выговоры</button>
     <span class="nav-group-label">Система</span>
     <button class="nav-item" data-tab="admin" onclick="showTab('admin', this)"><span class="nav-icon">◆</span> Настройки</button>
   </nav>
@@ -366,6 +396,33 @@
           <div class="call-results" id="callResults"></div>
         </div>
       </div>
+    </div>
+
+    <!-- REPRIMANDS -->
+    <div id="tab-reprimands" class="tab-content tabs-hidden">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Выговоры</div>
+          <div class="section-sub">Максимум: 2 устных и 2 строгих выговора на сотрудника</div>
+        </div>
+        <div class="rep-filter-bar">
+          <input type="text" id="repSearchInput" placeholder="Поиск..." style="width:180px;padding:6px 10px;font-size:12px" oninput="filterReprimands(this.value)">
+          <select id="repFilterType" style="width:160px;padding:6px 10px;font-size:12px" onchange="filterReprimands(document.getElementById('repSearchInput')?.value||'')">
+            <option value="all">Все сотрудники</option>
+            <option value="has-verbal">Есть устный</option>
+            <option value="has-strict">Есть строгий</option>
+            <option value="max-verbal">Макс. устных</option>
+            <option value="max-strict">Макс. строгих</option>
+          </select>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header">
+          <span class="card-title">Статистика выговоров</span>
+          <div id="repSummary" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+        </div>
+      </div>
+      <div class="reprimand-grid" id="reprimandGrid"></div>
     </div>
 
     <!-- ADMIN -->
@@ -638,7 +695,7 @@ let pendingSave = false; // re-save requested while lock was held
 
 const tabTitles = {
   dashboard: 'Дашборд', members: 'Состав отдела', scores: 'Еженедельные баллы',
-  meetings: 'Собрания', calls: 'Обзвон в отдел', admin: 'Настройки'
+  meetings: 'Собрания', calls: 'Обзвон в отдел', reprimands: 'Выговоры', admin: 'Настройки'
 };
 
 function uid() { return 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2); }
@@ -917,6 +974,7 @@ async function pullRemote() {
     const result = await loadStateFromNetwork();
     state = result.state;
     ensureMeetingAttendance();
+    ensureReprimands();
     if (repairStateTexts()) scheduleSave();
     renderTab(currentTab);
     setSyncUI('ok', 'Обновлено ' + new Date().toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' }));
@@ -976,6 +1034,7 @@ function migrateState(raw) {
     weeklyScores: raw.weeklyScores || base.weeklyScores || {},
     meeting: raw.meeting || base.meeting || { date: '', attendance: {} },
     call: raw.call || base.call,
+    reprimands: raw.reprimands || base.reprimands || {},
     sync: { ...(base.sync || {}), ...(raw.sync || {}) }
   };
   s.members = (s.members || []).map(normalizeMember);
@@ -1033,6 +1092,7 @@ function renderTab(tab) {
   else if (tab === 'scores') renderScores();
   else if (tab === 'meetings') renderMeetings();
   else if (tab === 'calls') renderCalls();
+  else if (tab === 'reprimands') renderReprimands();
   else if (tab === 'admin') renderAdmin();
 }
 
@@ -1051,13 +1111,23 @@ function renderDashboard() {
   const present = Object.values(att).filter(a => a.status === 'present').length;
   const warned = Object.values(att).filter(a => a.status === 'warned').length;
   const absent = Object.values(att).filter(a => a.status === 'absent').length;
+  const reps = state.reprimands || {};
+  let totalVerbal = 0, totalStrict = 0, totalVerbalMax = 0, totalStrictMax = 0;
+  state.members.forEach(m => {
+    const r = reps[m.id] || { verbal: 0, strict: 0 };
+    totalVerbal += r.verbal || 0;
+    totalStrict += r.strict || 0;
+    totalVerbalMax += 2;
+    totalStrictMax += 2;
+  });
 
   document.getElementById('dashStats').innerHTML = `
     <div class="stat-card"><div class="stat-label">Сотрудников</div><div class="stat-value">${total}</div><div class="stat-sub">${total - onOoc} активных</div></div>
     <div class="stat-card"><div class="stat-label">OOC</div><div class="stat-value">${onOoc}</div></div>
     <div class="stat-card"><div class="stat-label">Баллов за неделю</div><div class="stat-value">${totalPts}</div></div>
     <div class="stat-card"><div class="stat-label">На собрании</div><div class="stat-value">${present}</div><div class="stat-sub">предупр.: ${warned} · отс.: ${absent}</div></div>
-    <div class="stat-card"><div class="stat-label">Вопросов обзвона</div><div class="stat-value">${state.questions.length}</div></div>
+    <div class="stat-card" style="border-left:3px solid var(--reprimand-verbal-color)"><div class="stat-label">Устных выговоров</div><div class="stat-value" style="color:var(--reprimand-verbal-color)">${totalVerbal}</div><div class="stat-sub">из ${totalVerbalMax} макс.</div></div>
+    <div class="stat-card" style="border-left:3px solid var(--reprimand-strict-color)"><div class="stat-label">Строгих выговоров</div><div class="stat-value" style="color:var(--reprimand-strict-color)">${totalStrict}</div><div class="stat-sub">из ${totalStrictMax} макс.</div></div>
   `;
 
   const sorted = [...state.members].map(m => ({ ...m, total: getMemberTotal(m.id) })).sort((a, b) => b.total - a.total).slice(0, 8);
@@ -1108,7 +1178,7 @@ function renderActivityChart() {
     ctx.fillStyle = 'rgba(255,255,255,0.35)';
     ctx.font = '9px DM Mono, monospace';
     ctx.textAlign = 'center';
-    const label = (act.code || '•').slice(0, 4);
+    const label = (act.name || act.code || '•').slice(0, 10);
     ctx.fillText(label, x + barW / 2, drawH - 2);
   });
 }
@@ -1138,7 +1208,7 @@ function filterMembers(val) { memberFilter = val; renderMembers(); }
 function renderScores() {
   document.getElementById('legendBadges').innerHTML = state.activities.map(a => `
     <span class="badge badge-gray">${actLabel(a)} ${a.name} · <strong style="color:var(--text)">${a.points} б.</strong>
-    ${a.highStaff ? ' · <span style="color:var(--yellow)">HS</span>' : ''}</span>
+    ${a.highStaff ? ' · <span style="color:var(--red);font-weight:600">HS</span>' : ''}</span>
   `).join('');
 
   document.getElementById('scoresGrid').innerHTML = state.members.map(m => {
@@ -1412,7 +1482,7 @@ function renderAdmin() {
 
   document.getElementById('ranksList').innerHTML = state.ranks.map((r, i) => `
     <div style="display:flex;justify-content:space-between;align-items:center;background:var(--bg3);padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border)">
-      <span class="${rankClass(r)}">${r}</span>${i > 0 ? `<button class="btn btn-danger btn-xs" onclick="deleteRank(${i})">×</button>` : ''}
+      <span>${r}</span>${i > 0 ? `<button class="btn btn-danger btn-xs" onclick="deleteRank(${i})">×</button>` : ''}
     </div>
   `).join('');
 
@@ -1581,6 +1651,118 @@ async function clearAllData() {
   toast('Сброшено к начальным данным');
 }
 
+// ─── REPRIMANDS ────────────────────────────────────────
+let repFilter = '';
+
+function ensureReprimands(s = state) {
+  if (!s.reprimands) s.reprimands = {};
+  s.members.forEach(m => {
+    if (!s.reprimands[m.id]) s.reprimands[m.id] = { verbal: 0, strict: 0 };
+    s.reprimands[m.id].verbal = Math.min(2, Math.max(0, s.reprimands[m.id].verbal || 0));
+    s.reprimands[m.id].strict = Math.min(2, Math.max(0, s.reprimands[m.id].strict || 0));
+  });
+}
+
+function setReprimand(memberId, type, value) {
+  ensureReprimands();
+  state.reprimands[memberId][type] = Math.min(2, Math.max(0, value));
+  renderReprimands();
+  renderDashboard();
+  scheduleSave();
+}
+
+function filterReprimands(val) {
+  repFilter = val || '';
+  renderReprimands();
+}
+
+function renderReprimands() {
+  ensureReprimands();
+  const filterVal = repFilter.toLowerCase();
+  const filterType = document.getElementById('repFilterType')?.value || 'all';
+
+  let members = state.members.filter(m => {
+    const nameMatch = m.name.toLowerCase().includes(filterVal) || (m.gameId || '').includes(filterVal);
+    if (!nameMatch) return false;
+    const r = state.reprimands[m.id] || { verbal: 0, strict: 0 };
+    if (filterType === 'has-verbal') return r.verbal > 0;
+    if (filterType === 'has-strict') return r.strict > 0;
+    if (filterType === 'max-verbal') return r.verbal >= 2;
+    if (filterType === 'max-strict') return r.strict >= 2;
+    return true;
+  });
+
+  // Summary
+  const all = state.members;
+  let sv = 0, ss = 0, mv = 0, ms = 0;
+  all.forEach(m => {
+    const r = state.reprimands[m.id] || { verbal: 0, strict: 0 };
+    sv += r.verbal; ss += r.strict;
+    if (r.verbal >= 2) mv++;
+    if (r.strict >= 2) ms++;
+  });
+  document.getElementById('repSummary').innerHTML = `
+    <span class="badge" style="background:rgba(251,146,60,0.12);color:#fb923c;border:1px solid rgba(251,146,60,0.25)">Устных: ${sv} / ${all.length * 2}</span>
+    <span class="badge" style="background:rgba(244,63,94,0.12);color:#f43f5e;border:1px solid rgba(244,63,94,0.25)">Строгих: ${ss} / ${all.length * 2}</span>
+    ${mv > 0 ? `<span class="badge badge-red">⚠ Макс. устных: ${mv} чел.</span>` : ''}
+    ${ms > 0 ? `<span class="badge badge-red">⛔ Макс. строгих: ${ms} чел.</span>` : ''}
+  `;
+
+  document.getElementById('reprimandGrid').innerHTML = members.map(m => {
+    const r = state.reprimands[m.id] || { verbal: 0, strict: 0 };
+    const verbalDots = [0, 1].map(i => {
+      const filled = i < r.verbal;
+      return `<div class="reprimand-dot ${filled ? 'verbal-filled' : 'verbal-empty'}" title="${filled ? 'Снять устный выговор' : 'Выдать устный выговор'}"
+        onclick="setReprimand('${m.id}','verbal',${filled ? r.verbal - 1 : r.verbal + 1})">
+        ${filled ? '!' : ''}
+      </div>`;
+    }).join('');
+    const strictDots = [0, 1].map(i => {
+      const filled = i < r.strict;
+      return `<div class="reprimand-dot ${filled ? 'strict-filled' : 'strict-empty'}" title="${filled ? 'Снять строгий выговор' : 'Выдать строгий выговор'}"
+        onclick="setReprimand('${m.id}','strict',${filled ? r.strict - 1 : r.strict + 1})">
+        ${filled ? '!!' : ''}
+      </div>`;
+    }).join('');
+
+    const hasVerbal = r.verbal > 0;
+    const hasStrict = r.strict > 0;
+    const maxedVerbal = r.verbal >= 2;
+    const maxedStrict = r.strict >= 2;
+
+    return `
+      <div class="reprimand-member-card">
+        <div class="reprimand-member-header">
+          <div>
+            <div class="${rankClass(m.rank)}" style="font-size:13px;font-weight:500">${m.name}</div>
+            <div style="font-size:11px;color:var(--text3);font-family:var(--mono)">${m.rank} · #${m.gameId}</div>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            ${hasVerbal ? `<span class="badge" style="background:rgba(251,146,60,0.12);color:#fb923c;border:1px solid rgba(251,146,60,0.25)">УВ: ${r.verbal}</span>` : ''}
+            ${hasStrict ? `<span class="badge" style="background:rgba(244,63,94,0.12);color:#f43f5e;border:1px solid rgba(244,63,94,0.25)">СВ: ${r.strict}</span>` : ''}
+            ${maxedVerbal ? '<span class="badge badge-yellow">Макс. устных</span>' : ''}
+            ${maxedStrict ? '<span class="badge badge-red">Макс. строгих</span>' : ''}
+          </div>
+        </div>
+        <div class="reprimand-member-body">
+          <div class="reprimand-counter">
+            <span class="reprimand-counter-label" style="color:#fb923c">
+              <span style="font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.06em;color:var(--text)">Устный выговор</span>
+            </span>
+            <div class="reprimand-dots">${verbalDots}</div>
+          </div>
+          <div class="reprimand-counter">
+            <span class="reprimand-counter-label" style="color:#f43f5e">
+              <span style="font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:0.06em;color:var(--text)">Строгий выговор</span>
+            </span>
+            <div class="reprimand-dots">${strictDots}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('') || '<div class="empty-state">Нет сотрудников по фильтру</div>';
+}
+
 // ─── INIT ──────────────────────────────────────────────
 async function init() {
   setSyncUI('pending', 'Загрузка...');
@@ -1596,10 +1778,12 @@ async function init() {
     const result = await loadStateFromNetwork();
     state = result.state;
     ensureMeetingAttendance();
+    ensureReprimands();
     if (repairStateTexts()) scheduleSave();
     renderTab(currentTab);
     setSyncUI('ok', 'Загружено · ' + state.members.length + ' чел.');
   } catch (e) {
+    ensureReprimands();
     repairStateTexts();
     setSyncUI('ok', 'Встроенные данные · ' + state.members.length + ' чел.');
   }
