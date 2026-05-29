@@ -2,6 +2,7 @@
 Thumbs.db
 *.log
 
-# Секреты синхронизации (токен GitHub) — не коммитить
+# Токен GitHub — только локально / генерируется при деплое Pages, в Git не коммитить
 sync.local.json
+sync.config.js
 data/sync.local.json
