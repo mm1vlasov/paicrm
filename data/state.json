@@ -398,8 +398,13 @@
     }
   },
   "call": {
-    "date": "",
-    "candidates": [],
+    "date": "2026-05-29",
+    "candidates": [
+      {
+        "name": "O",
+        "gameId": ""
+      }
+    ],
     "scores": {}
   },
   "questions": [
