@@ -299,6 +299,9 @@
   "weeklyScores": {
     "m1": {
       "a1": 5
+    },
+    "m2": {
+      "a9": 7
     }
   },
   "meeting": {
