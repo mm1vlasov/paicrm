@@ -49,7 +49,7 @@
   .nav-icon { width: 16px; text-align: center; font-size: 14px; flex-shrink: 0; opacity: 0.85; }
   .sidebar-footer { padding: 14px 20px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text3); font-family: var(--mono); }
 
-  .main { margin-left: 220px; flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
+  .main { margin-left: 220px; flex: 1; min-height: 100vh; min-width: 0; display: flex; flex-direction: column; }
   .topbar { height: 56px; background: var(--bg2); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; position: sticky; top: 0; z-index: 50; }
   .topbar-title { font-size: 15px; font-weight: 500; }
   .topbar-actions { display: flex; align-items: center; gap: 10px; }
@@ -58,7 +58,7 @@
   .sync-dot.ok { background: var(--green); box-shadow: 0 0 8px rgba(74,222,128,0.5); }
   .sync-dot.err { background: var(--red); box-shadow: 0 0 8px rgba(248,113,113,0.4); }
   .sync-dot.pending { background: var(--yellow); box-shadow: 0 0 8px rgba(251,191,36,0.4); animation: pulse-dot 1s infinite; }
-  .page-content { padding: 28px; flex: 1; }
+  .page-content { padding: 28px; flex: 1; min-width: 0; max-width: 100%; overflow-x: hidden; box-sizing: border-box; }
 
   .tabs-hidden { display: none !important; }
   .tab-content { animation: fadeIn 0.2s ease; }
@@ -72,7 +72,17 @@
   .section-title { font-size: 20px; font-weight: 500; letter-spacing: -0.03em; }
   .section-sub { font-size: 12px; color: var(--text3); margin-top: 3px; }
 
-  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr)); gap: 12px; margin-bottom: 24px; max-width: 100%; }
+  .dash-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 100%; }
+  .dash-chart-card { margin-top: 16px; max-width: 100%; overflow: hidden; }
+  .chart-wrap { width: 100%; overflow: hidden; position: relative; }
+  .chart-wrap canvas { display: block; width: 100% !important; max-width: 100%; height: 100px; }
+  .admin-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; max-width: 100%; }
+
+  .github-sync-card { position: relative; }
+  .github-sync-body.locked { filter: blur(10px); user-select: none; pointer-events: none; }
+  .github-sync-lock { position: absolute; inset: 44px 0 0; display: flex; align-items: center; justify-content: center; z-index: 5; padding: 20px; }
+  .github-sync-lock.hidden { display: none; }
   .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; transition: border-color 0.15s; }
   .stat-card:hover { border-color: var(--border-hover); }
   .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); margin-bottom: 6px; }
@@ -182,10 +192,15 @@
   ::-webkit-scrollbar { width: 4px; height: 4px; }
   ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 4px; }
 
+  @media (max-width: 1100px) {
+    .dash-panels, .admin-grid { grid-template-columns: 1fr; }
+  }
   @media (max-width: 768px) {
     .sidebar { width: 180px; }
     .main { margin-left: 180px; }
     .form-row, .form-row-3 { grid-template-columns: 1fr; }
+    .page-content { padding: 16px; }
+    .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 </style>
 </head>
@@ -234,7 +249,7 @@
         </div>
       </div>
       <div class="stats-grid" id="dashStats"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="dash-panels">
         <div class="card">
           <div class="card-header"><span class="card-title">Топ по баллам — текущая неделя</span></div>
           <div class="table-wrap"><table id="topScoresTable"><thead><tr><th>#</th><th>Имя</th><th>Должность</th><th>Баллы</th></tr></thead><tbody></tbody></table></div>
@@ -244,9 +259,9 @@
           <div class="table-wrap"><table id="oocTable"><thead><tr><th>Имя</th><th>Статус</th></tr></thead><tbody></tbody></table></div>
         </div>
       </div>
-      <div style="margin-top:16px" class="card">
+      <div class="card dash-chart-card">
         <div class="card-header"><span class="card-title">Активность баллов</span></div>
-        <div class="card-body"><canvas id="activityChart" height="80"></canvas></div>
+        <div class="card-body chart-wrap"><canvas id="activityChart" height="100"></canvas></div>
       </div>
     </div>
 
@@ -365,7 +380,7 @@
         </div>
       </div>
 
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div class="admin-grid">
 
         <div class="card">
           <div class="card-header"><span class="card-title">Добавить в состав</span></div>
@@ -383,25 +398,28 @@
           </div>
         </div>
 
-        <div class="card">
+        <div class="card github-sync-card">
           <div class="card-header"><span class="card-title">Синхронизация (GitHub)</span></div>
-          <div class="card-body">
+          <div class="card-body github-sync-body locked" id="githubSyncBody">
             <p style="color:var(--text2);font-size:12px;margin-bottom:12px;line-height:1.6">
               Данные хранятся в <code style="color:var(--text)">data/state.json</code> репозитория. Укажите репозиторий и токен с правом <code style="color:var(--text)">repo</code> — изменения будут видны всем на сайте.
             </p>
             <div class="form-row">
-              <div class="form-group"><label>Owner</label><input type="text" id="syncOwner" placeholder="username"></div>
-              <div class="form-group"><label>Repo</label><input type="text" id="syncRepo" placeholder="pai-department"></div>
+              <div class="form-group"><label>Owner</label><input type="text" id="syncOwner" placeholder="username" disabled></div>
+              <div class="form-group"><label>Repo</label><input type="text" id="syncRepo" placeholder="pai-department" disabled></div>
             </div>
             <div class="form-row">
-              <div class="form-group"><label>Ветка</label><input type="text" id="syncBranch" value="main"></div>
-              <div class="form-group"><label>Путь к JSON</label><input type="text" id="syncPath" value="data/state.json"></div>
+              <div class="form-group"><label>Ветка</label><input type="text" id="syncBranch" value="main" disabled></div>
+              <div class="form-group"><label>Путь к JSON</label><input type="text" id="syncPath" value="data/state.json" disabled></div>
             </div>
             <div class="form-group">
               <label>GitHub Token (PAT)</label>
-              <input type="password" id="syncToken" placeholder="ghp_..." autocomplete="off">
+              <input type="password" id="syncToken" placeholder="ghp_..." autocomplete="off" disabled>
             </div>
-            <button class="btn btn-primary btn-sm" onclick="saveSyncSettings()">Сохранить и синхронизировать</button>
+            <button class="btn btn-primary btn-sm" onclick="saveSyncSettings()" disabled id="syncSaveBtn">Сохранить и синхронизировать</button>
+          </div>
+          <div class="github-sync-lock" id="githubSyncLock">
+            <button type="button" class="btn btn-primary" onclick="unlockGithubSync()">Введите пароль</button>
           </div>
         </div>
 
@@ -595,6 +613,8 @@
 
 <script>
 const DATA_PATH = 'data/state.json';
+const GITHUB_SETTINGS_PASSWORD = '981864';
+const GITHUB_UNLOCK_KEY = 'pai_github_unlock';
 let state = null;
 let currentTab = 'dashboard';
 let memberFilter = '';
@@ -678,6 +698,71 @@ function setSyncUI(status, text) {
   document.getElementById('syncText').textContent = text;
 }
 
+// ─── UTF-8 / ENCODING ───────────────────────────────────
+function decodeBase64Utf8(b64) {
+  const binary = atob(String(b64).replace(/\s/g, ''));
+  const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+  return new TextDecoder('utf-8').decode(bytes);
+}
+
+function encodeBase64Utf8(text) {
+  const bytes = new TextEncoder().encode(text);
+  let bin = '';
+  bytes.forEach(b => { bin += String.fromCharCode(b); });
+  return btoa(bin);
+}
+
+function fixUtf8Mojibake(str) {
+  if (!str || typeof str !== 'string' || !/[\u00C0-\u00FF\u00D0\u00D1]/.test(str)) return str;
+  try {
+    const bytes = Uint8Array.from(str, c => c.charCodeAt(0) & 0xff);
+    const fixed = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+    if (/[\u0400-\u04FF]/.test(fixed)) return fixed;
+  } catch {}
+  return str;
+}
+
+function fixStateEncoding(obj) {
+  if (typeof obj === 'string') return fixUtf8Mojibake(obj);
+  if (Array.isArray(obj)) return obj.map(fixStateEncoding);
+  if (obj && typeof obj === 'object') {
+    const out = {};
+    for (const [k, v] of Object.entries(obj)) out[k] = fixStateEncoding(v);
+    return out;
+  }
+  return obj;
+}
+
+function isGithubSyncUnlocked() {
+  return sessionStorage.getItem(GITHUB_UNLOCK_KEY) === '1';
+}
+
+function unlockGithubSync() {
+  const pwd = prompt('Введите пароль для настроек GitHub:');
+  if (pwd === null) return;
+  if (pwd === GITHUB_SETTINGS_PASSWORD) {
+    sessionStorage.setItem(GITHUB_UNLOCK_KEY, '1');
+    updateGithubSyncLock();
+    toast('Доступ к настройкам GitHub открыт');
+  } else {
+    toast('Неверный пароль');
+  }
+}
+
+function updateGithubSyncLock() {
+  const unlocked = isGithubSyncUnlocked();
+  const body = document.getElementById('githubSyncBody');
+  const lock = document.getElementById('githubSyncLock');
+  const saveBtn = document.getElementById('syncSaveBtn');
+  if (body) body.classList.toggle('locked', !unlocked);
+  if (lock) lock.classList.toggle('hidden', unlocked);
+  ['syncOwner', 'syncRepo', 'syncBranch', 'syncPath', 'syncToken'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.disabled = !unlocked;
+  });
+  if (saveBtn) saveBtn.disabled = !unlocked;
+}
+
 // ─── SYNC / GITHUB ─────────────────────────────────────
 function getSyncConfig() {
   const ls = JSON.parse(localStorage.getItem('pai_sync_config') || '{}');
@@ -695,7 +780,9 @@ function saveSyncConfigLocal(cfg) {
 async function loadStateFromUrl(url) {
   const res = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' });
   if (!res.ok) throw new Error('HTTP ' + res.status);
-  return migrateState(await res.json());
+  const buf = await res.arrayBuffer();
+  const text = new TextDecoder('utf-8').decode(buf);
+  return migrateState(JSON.parse(text));
 }
 
 async function loadFromGitHub(cfg) {
@@ -706,12 +793,12 @@ async function loadFromGitHub(cfg) {
   if (!res.ok) throw new Error('GitHub ' + res.status);
   const data = await res.json();
   remoteSha = data.sha;
-  const json = JSON.parse(atob(data.content.replace(/\n/g, '')));
+  const json = JSON.parse(decodeBase64Utf8(data.content));
   return migrateState(json);
 }
 
 async function saveToGitHub(cfg) {
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2))));
+  const content = encodeBase64Utf8(JSON.stringify(state, null, 2));
   const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path || 'data/state.json')}`;
   const body = { message: 'PAI CRM: update state', content, branch: cfg.branch || 'main', sha: remoteSha || cfg.sha || undefined };
   const res = await fetch(api, {
@@ -796,6 +883,7 @@ function startPolling() {
 
 // ─── STATE ─────────────────────────────────────────────
 function migrateState(raw) {
+  raw = fixStateEncoding(raw);
   const base = getEmbeddedState() || {};
   const s = {
     ...base, ...raw,
@@ -909,21 +997,27 @@ function renderDashboard() {
 function renderActivityChart() {
   const canvas = document.getElementById('activityChart');
   if (!canvas) return;
+  const wrap = canvas.parentElement;
   const ctx = canvas.getContext('2d');
   const acts = state.activities.slice(0, 8);
-  canvas.width = canvas.parentElement.offsetWidth;
-  canvas.height = 100;
+  const w = Math.max(200, Math.min(wrap?.clientWidth || 400, wrap?.getBoundingClientRect().width || 400));
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.floor(w * dpr);
+  canvas.height = Math.floor(100 * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const drawW = w;
+  const drawH = 100;
   const maxVal = Math.max(1, ...acts.map(a => state.members.reduce((s, m) => s + ((state.weeklyScores[m.id] || {})[a.id] || 0), 0) * a.points));
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  const gap = canvas.width / Math.max(acts.length, 1);
+  ctx.clearRect(0, 0, drawW, drawH);
+  const gap = drawW / Math.max(acts.length, 1);
   acts.forEach((act, i) => {
     const total = state.members.reduce((s, m) => s + ((state.weeklyScores[m.id] || {})[act.id] || 0), 0) * act.points;
-    const h = Math.max(2, (total / maxVal) * 80);
+    const h = Math.max(2, (total / maxVal) * 72);
     const x = i * gap + gap * 0.2;
     const barW = gap * 0.6;
     ctx.fillStyle = 'rgba(255,255,255,0.08)';
     ctx.beginPath();
-    if (ctx.roundRect) { ctx.roundRect(x, 0, barW, 80, 3); } else { ctx.rect(x, 0, barW, 80); }
+    if (ctx.roundRect) { ctx.roundRect(x, 8, barW, 72, 3); } else { ctx.rect(x, 8, barW, 72); }
     ctx.fill();
     ctx.fillStyle = 'rgba(255,255,255,0.55)';
     ctx.beginPath();
@@ -932,7 +1026,8 @@ function renderActivityChart() {
     ctx.fillStyle = 'rgba(255,255,255,0.35)';
     ctx.font = '9px DM Mono, monospace';
     ctx.textAlign = 'center';
-    ctx.fillText(act.code || '•', x + barW / 2, 96);
+    const label = (act.code || '•').slice(0, 4);
+    ctx.fillText(label, x + barW / 2, drawH - 2);
   });
 }
 
@@ -1258,6 +1353,7 @@ function renderAdmin() {
       <button class="btn btn-danger btn-xs" onclick="deleteQuestion('${q.id}')">×</button>
     </div>
   `).join('');
+  updateGithubSyncLock();
 }
 
 function addMemberFromSettings() {
@@ -1314,6 +1410,7 @@ function deleteMember(id) {
 }
 
 function saveSyncSettings() {
+  if (!isGithubSyncUnlocked()) { toast('Сначала введите пароль'); return; }
   const cfg = {
     owner: document.getElementById('syncOwner').value.trim(),
     repo: document.getElementById('syncRepo').value.trim(),
@@ -1386,7 +1483,7 @@ function deleteQuestion(id) {
 }
 
 function exportData() {
-  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const blob = new Blob(['\uFEFF' + JSON.stringify(state, null, 2)], { type: 'application/json;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `pai_data_${new Date().toISOString().split('T')[0]}.json`;
@@ -1408,7 +1505,7 @@ function importData(input) {
       }
     } catch { toast('Ошибка формата JSON'); }
   };
-  reader.readAsText(file);
+  reader.readAsText(file, 'UTF-8');
   input.value = '';
 }
 
@@ -1439,6 +1536,10 @@ async function init() {
   }
 
   startPolling();
+  updateGithubSyncLock();
+  window.addEventListener('resize', () => {
+    if (currentTab === 'dashboard') renderActivityChart();
+  });
 }
 
 init();
