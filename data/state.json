@@ -543,5 +543,95 @@
     "token": "",
     "sha": "",
     "pollSec": 30
+  },
+  "reprimands": {
+    "m1": {
+      "verbal": 1,
+      "strict": 0
+    },
+    "m2": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m3": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m4": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m5": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m6": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m7": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m8": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m9": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m10": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m11": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m12": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m13": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m14": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m15": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m16": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m17": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m18": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m19": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m20": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m21": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "m22": {
+      "verbal": 0,
+      "strict": 0
+    }
   }
 }
