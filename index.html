@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PAI Department — Admin Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a; --bg2: #111111; --bg3: #181818; --bg4: #202020;
+    --border: rgba(255,255,255,0.07); --border-hover: rgba(255,255,255,0.14);
+    --text: #f0f0f0; --text2: #9a9a9a; --text3: #5a5a5a;
+    --accent-dim: rgba(255,255,255,0.08); --accent-hover: rgba(255,255,255,0.12);
+    --green: #4ade80; --green-dim: rgba(74,222,128,0.12);
+    --red: #f87171; --red-dim: rgba(248,113,113,0.12);
+    --yellow: #fbbf24; --yellow-dim: rgba(251,191,36,0.12);
+    --radius: 10px; --radius-sm: 6px;
+    --font: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: 'DM Mono', monospace;
+
+    /* Rank colors */
+    --curator-color: #f0e68c;
+    --curator-glow: rgba(240,230,140,0.35);
+    --head-color: #d4d4d4;
+    --head-glow: rgba(212,212,212,0.3);
+    --deputy-color: #93c5fd;
+    --deputy-glow: rgba(147,197,253,0.3);
+    --instructor-color: #9a9a9a;
+    --instructor-glow: rgba(154,154,154,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; display: flex; font-size: 14px; line-height: 1.5; overflow-x: hidden; }
+
+  .sidebar { width: 220px; min-height: 100vh; background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; top: 0; left: 0; z-index: 100; }
+  .sidebar-logo { padding: 24px 20px 20px; border-bottom: 1px solid var(--border); }
+  .logo-badge { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--text2); text-transform: uppercase; }
+  .logo-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text); animation: pulse-dot 2.4s ease-in-out infinite; }
+  @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .logo-title { font-size: 18px; font-weight: 600; letter-spacing: -0.02em; margin-top: 8px; }
+  .logo-sub { font-size: 11px; color: var(--text3); font-family: var(--mono); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+  .sidebar-nav { flex: 1; padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; }
+  .nav-group-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); padding: 12px 10px 6px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.15s; color: var(--text2); font-size: 13.5px; border: none; background: none; width: 100%; text-align: left; }
+  .nav-item:hover { background: var(--accent-dim); color: var(--text); }
+  .nav-item.active { background: var(--accent-hover); color: var(--text); font-weight: 500; }
+  .nav-icon { width: 16px; text-align: center; font-size: 14px; flex-shrink: 0; opacity: 0.85; }
+  .sidebar-footer { padding: 14px 20px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text3); font-family: var(--mono); }
+
+  .main { margin-left: 220px; flex: 1; min-height: 100vh; display: flex; flex-direction: column; }
+  .topbar { height: 56px; background: var(--bg2); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; position: sticky; top: 0; z-index: 50; }
+  .topbar-title { font-size: 15px; font-weight: 500; }
+  .topbar-actions { display: flex; align-items: center; gap: 10px; }
+  .sync-status { font-size: 11px; font-family: var(--mono); color: var(--text3); display: flex; align-items: center; gap: 6px; }
+  .sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text3); }
+  .sync-dot.ok { background: var(--green); box-shadow: 0 0 8px rgba(74,222,128,0.5); }
+  .sync-dot.err { background: var(--red); box-shadow: 0 0 8px rgba(248,113,113,0.4); }
+  .sync-dot.pending { background: var(--yellow); box-shadow: 0 0 8px rgba(251,191,36,0.4); animation: pulse-dot 1s infinite; }
+  .page-content { padding: 28px; flex: 1; }
+
+  .tabs-hidden { display: none !important; }
+  .tab-content { animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .card-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .card-title { font-size: 13px; font-weight: 500; }
+  .card-body { padding: 20px; }
+  .section-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; gap: 16px; flex-wrap: wrap; }
+  .section-title { font-size: 20px; font-weight: 500; letter-spacing: -0.03em; }
+  .section-sub { font-size: 12px; color: var(--text3); margin-top: 3px; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; transition: border-color 0.15s; }
+  .stat-card:hover { border-color: var(--border-hover); }
+  .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.1em; font-family: var(--mono); margin-bottom: 6px; }
+  .stat-value { font-size: 28px; font-weight: 300; font-family: var(--mono); letter-spacing: -0.03em; }
+  .stat-sub { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { text-align: left; padding: 10px 14px; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); font-family: var(--mono); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--accent-dim); color: var(--text); }
+  td.mono { font-family: var(--mono); font-size: 12px; }
+
+  .badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 100px; font-size: 11px; font-weight: 500; font-family: var(--mono); }
+  .badge-green { background: var(--green-dim); color: var(--green); box-shadow: 0 0 10px rgba(74,222,128,0.15); }
+  .badge-red { background: var(--red-dim); color: var(--red); box-shadow: 0 0 10px rgba(248,113,113,0.12); }
+  .badge-yellow { background: var(--yellow-dim); color: var(--yellow); box-shadow: 0 0 10px rgba(251,191,36,0.12); }
+  .badge-gray { background: var(--accent-dim); color: var(--text2); }
+
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; font-family: var(--font); }
+  .btn-primary { background: var(--text); color: var(--bg); }
+  .btn-primary:hover { background: #d0d0d0; }
+  .btn-ghost { background: transparent; color: var(--text2); border-color: var(--border); }
+  .btn-ghost:hover { background: var(--accent-dim); color: var(--text); border-color: var(--border-hover); }
+  .btn-danger { background: var(--red-dim); color: var(--red); border-color: transparent; }
+  .btn-sm { padding: 4px 10px; font-size: 12px; }
+  .btn-xs { padding: 3px 8px; font-size: 11px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  label { font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); font-family: var(--mono); }
+  input, select, textarea { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 13.5px; padding: 9px 12px; font-family: var(--font); outline: none; width: 100%; }
+  input:focus, select:focus, textarea:focus { border-color: rgba(255,255,255,0.25); }
+  input::placeholder { color: var(--text3); }
+  select option { background: var(--bg3); }
+
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 200; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--bg2); border: 1px solid var(--border-hover); border-radius: var(--radius); width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; }
+  .modal-header { padding: 18px 22px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .modal-title { font-size: 15px; font-weight: 500; }
+  .modal-close { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 18px; padding: 2px 6px; }
+  .modal-body { padding: 22px; }
+  .modal-footer { padding: 14px 22px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; }
+
+  /* Rank colors with glow */
+  .rank-curator { color: var(--curator-color); text-shadow: 0 0 16px var(--curator-glow); }
+  .rank-head { color: var(--head-color); text-shadow: 0 0 16px var(--head-glow); }
+  .rank-deputy { color: var(--deputy-color); text-shadow: 0 0 16px var(--deputy-glow); }
+  .rank-instructor { color: var(--instructor-color); }
+
+  .rank-badge-curator { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(240,230,140,0.1);color:var(--curator-color);border:1px solid rgba(240,230,140,0.2);text-shadow:0 0 8px var(--curator-glow); }
+  .rank-badge-head { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(212,212,212,0.08);color:var(--head-color);border:1px solid rgba(212,212,212,0.18);text-shadow:0 0 8px var(--head-glow); }
+  .rank-badge-deputy { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(147,197,253,0.08);color:var(--deputy-color);border:1px solid rgba(147,197,253,0.2);text-shadow:0 0 8px var(--deputy-glow); }
+  .rank-badge-instructor { display:inline-flex;align-items:center;padding:2px 8px;border-radius:100px;font-size:10px;font-family:var(--mono);background:rgba(154,154,154,0.07);color:var(--instructor-color);border:1px solid rgba(154,154,154,0.15); }
+
+  .act-code { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 4px; background: rgba(255,255,255,0.08); font-family: var(--mono); font-size: 9px; color: rgba(255,255,255,0.75); flex-shrink: 0; }
+
+  .weekly-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .weekly-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+  .weekly-card-name { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+  .weekly-card-role { font-size: 11px; color: var(--text3); font-family: var(--mono); margin-bottom: 12px; }
+  .weekly-score-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+  .weekly-score-label { font-size: 11px; color: var(--text2); flex: 1; display: flex; align-items: center; gap: 6px; }
+  .weekly-total { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+  .score-input { width: 54px; text-align: center; padding: 4px 6px; font-family: var(--mono); font-size: 12px; }
+
+  /* Meeting buttons — 3 states */
+  .mark-btn { padding: 4px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg3); color: var(--text3); font-size: 11px; cursor: pointer; transition: all 0.12s; font-family: var(--font); }
+  .mark-btn:hover { border-color: var(--border-hover); color: var(--text); }
+  .mark-btn.on-present { background: var(--green-dim); border-color: rgba(74,222,128,0.35); color: var(--green); box-shadow: 0 0 10px rgba(74,222,128,0.15); }
+  .mark-btn.on-warned { background: var(--yellow-dim); border-color: rgba(251,191,36,0.35); color: var(--yellow); box-shadow: 0 0 10px rgba(251,191,36,0.12); }
+  .mark-btn.on-absent { background: var(--red-dim); border-color: rgba(248,113,113,0.35); color: var(--red); box-shadow: 0 0 10px rgba(248,113,113,0.12); }
+
+  .rating-select { width: 72px; padding: 5px 6px; font-size: 12px; font-family: var(--mono); }
+  .rating-select.s0 { color: var(--text3); }
+  .rating-select.s05 { color: var(--text); background: rgba(255,255,255,0.06); }
+  .rating-select.s07 { color: var(--yellow); background: var(--yellow-dim); }
+  .rating-select.s1 { color: var(--green); background: var(--green-dim); box-shadow: 0 0 8px rgba(74,222,128,0.12); }
+
+  .call-results { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 16px; }
+  .call-result-card { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px; position:relative; }
+  .call-result-card.pass { border-color: rgba(74,222,128,0.3); box-shadow: 0 0 12px rgba(74,222,128,0.08); }
+  .call-result-card.fail { border-color: rgba(248,113,113,0.25); }
+  .call-result-card .remove-candidate { position:absolute;top:6px;right:6px;background:none;border:none;color:var(--text3);cursor:pointer;font-size:14px;padding:2px 4px; }
+  .call-result-card .remove-candidate:hover { color:var(--red); }
+
+  .toolbar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .toolbar input[type="date"] { width: auto; max-width: 160px; }
+
+  .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; flex-direction: column; gap: 8px; }
+  .toast { background: var(--bg3); border: 1px solid var(--border-hover); border-radius: var(--radius-sm); padding: 11px 16px; font-size: 13px; animation: toastIn 0.2s ease; max-width: 320px; }
+  @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: none; } }
+
+  .empty-state { text-align: center; padding: 32px; color: var(--text3); }
+  .divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+  /* Candidates table in calls */
+  .candidates-list { display:flex; flex-direction:column; gap:8px; }
+  .candidate-row { display:flex; align-items:center; gap:10px; background:var(--bg3); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; }
+  .candidate-row input { padding:5px 8px;font-size:12px; }
+  .candidate-row .remove-btn { background:none;border:none;color:var(--text3);cursor:pointer;font-size:16px;padding:2px 6px;flex-shrink:0; }
+  .candidate-row .remove-btn:hover { color:var(--red); }
+
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 4px; }
+
+  @media (max-width: 768px) {
+    .sidebar { width: 180px; }
+    .main { margin-left: 180px; }
+    .form-row, .form-row-3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-badge"><span class="logo-dot"></span><span>Live</span></div>
+    <div class="logo-title">PAI Dept.</div>
+    <div class="logo-sub">Admin Panel v4.0</div>
+  </div>
+  <nav class="sidebar-nav">
+    <span class="nav-group-label">Обзор</span>
+    <button class="nav-item active" data-tab="dashboard" onclick="showTab('dashboard', this)"><span class="nav-icon">◈</span> Дашборд</button>
+    <button class="nav-item" data-tab="members" onclick="showTab('members', this)"><span class="nav-icon">◉</span> Состав</button>
+    <span class="nav-group-label">Учёт</span>
+    <button class="nav-item" data-tab="scores" onclick="showTab('scores', this)"><span class="nav-icon">◎</span> Еженеделька</button>
+    <button class="nav-item" data-tab="meetings" onclick="showTab('meetings', this)"><span class="nav-icon">◷</span> Собрания</button>
+    <button class="nav-item" data-tab="calls" onclick="showTab('calls', this)"><span class="nav-icon">◌</span> Обзвон</button>
+    <span class="nav-group-label">Система</span>
+    <button class="nav-item" data-tab="admin" onclick="showTab('admin', this)"><span class="nav-icon">◆</span> Настройки</button>
+  </nav>
+  <div class="sidebar-footer">PAI Department<br>GTA RP · 2026</div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-title" id="topbarTitle">Дашборд</div>
+    <div class="topbar-actions">
+      <div class="sync-status" id="syncStatus"><span class="sync-dot" id="syncDot"></span><span id="syncText">—</span></div>
+      <button class="btn btn-ghost btn-sm" onclick="pullRemote()">↻ Обновить</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportData()">↑ Экспорт</button>
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('importFile').click()">↓ Импорт</button>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(this)">
+    </div>
+  </div>
+
+  <div class="page-content">
+
+    <!-- DASHBOARD -->
+    <div id="tab-dashboard" class="tab-content">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Обзор отдела</div>
+          <div class="section-sub">Актуальные показатели PAI Department</div>
+        </div>
+      </div>
+      <div class="stats-grid" id="dashStats"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Топ по баллам — текущая неделя</span></div>
+          <div class="table-wrap"><table id="topScoresTable"><thead><tr><th>#</th><th>Имя</th><th>Должность</th><th>Баллы</th></tr></thead><tbody></tbody></table></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">OOC Статусы</span></div>
+          <div class="table-wrap"><table id="oocTable"><thead><tr><th>Имя</th><th>Статус</th></tr></thead><tbody></tbody></table></div>
+        </div>
+      </div>
+      <div style="margin-top:16px" class="card">
+        <div class="card-header"><span class="card-title">Активность баллов</span></div>
+        <div class="card-body"><canvas id="activityChart" height="80"></canvas></div>
+      </div>
+    </div>
+
+    <!-- MEMBERS -->
+    <div id="tab-members" class="tab-content tabs-hidden">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Состав отдела</div>
+          <div class="section-sub" id="memberCount">—</div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Все сотрудники</span>
+          <input type="text" placeholder="Поиск..." style="width:200px;padding:6px 10px;font-size:12px" oninput="filterMembers(this.value)">
+        </div>
+        <div class="table-wrap">
+          <table id="membersTable">
+            <thead><tr><th>#</th><th>Имя</th><th>Должность</th><th>Статик</th><th>OOC</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCORES -->
+    <div id="tab-scores" class="tab-content tabs-hidden">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Еженедельные баллы</div>
+          <div class="section-sub">Количество выполненных действий</div>
+        </div>
+        <button class="btn btn-ghost" onclick="resetWeeklyScores()">↺ Сбросить неделю</button>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header"><span class="card-title">Система баллов</span></div>
+        <div class="card-body" style="padding:14px 20px"><div style="display:flex;flex-wrap:wrap;gap:8px" id="legendBadges"></div></div>
+      </div>
+      <div class="weekly-grid" id="scoresGrid"></div>
+    </div>
+
+    <!-- MEETINGS -->
+    <div id="tab-meetings" class="tab-content tabs-hidden">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Учёт собраний</div>
+          <div class="section-sub">Отмечайте явку — три состояния на кнопку</div>
+        </div>
+        <div class="toolbar">
+          <label style="margin:0">Дата</label>
+          <input type="date" id="meetingDate" onchange="setMeetingDate(this.value)">
+          <button class="btn btn-ghost btn-sm" onclick="clearMeetingMarks()">Сбросить отметки</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Явка сотрудников</span>
+          <div id="meetingSummary" style="display:flex;gap:8px"></div>
+        </div>
+        <div class="table-wrap">
+          <table id="meetingTable">
+            <thead><tr>
+              <th>#</th><th>Должность</th><th>Имя</th><th>Статик</th>
+              <th>Статус</th><th>Примечание</th>
+            </tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- CALLS -->
+    <div id="tab-calls" class="tab-content tabs-hidden">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Обзвон в отдел</div>
+          <div class="section-sub">Оценки 0 / 0.5 / 0.7 / 1.0 — проход от 70%</div>
+        </div>
+        <div class="toolbar">
+          <label style="margin:0">Дата</label>
+          <input type="date" id="callDate" onchange="setCallDate(this.value)">
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-header">
+          <span class="card-title">Кандидаты</span>
+          <button class="btn btn-ghost btn-sm" onclick="addCandidate()">+ Создать кандидата</button>
+        </div>
+        <div class="card-body">
+          <div class="candidates-list" id="candidatesList"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">Вопросы и оценки</span></div>
+        <div class="table-wrap">
+          <table id="callQuestionsTable">
+            <thead><tr id="callQuestionsHead"></tr></thead>
+            <tbody id="callQuestionsTbody"></tbody>
+          </table>
+        </div>
+        <div class="card-body" style="border-top:1px solid var(--border)">
+          <div class="card-title" style="margin-bottom:12px;font-size:12px">Итоги обзвона</div>
+          <div class="call-results" id="callResults"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN -->
+    <div id="tab-admin" class="tab-content tabs-hidden">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Настройки</div>
+          <div class="section-sub">Состав, синхронизация и справочники</div>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Добавить в состав</span></div>
+          <div class="card-body">
+            <div class="form-row">
+              <div class="form-group"><label>Имя</label><input type="text" id="addFirstName" placeholder="Имя"></div>
+              <div class="form-group"><label>Фамилия</label><input type="text" id="addLastName" placeholder="Фамилия"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Статик (ID)</label><input type="text" id="addGameId" placeholder="123456"></div>
+              <div class="form-group"><label>Должность</label><select id="addRank"></select></div>
+            </div>
+            <div class="form-group"><label>OOC статус</label><input type="text" id="addOoc" placeholder="— или OOC Отпуск"></div>
+            <button class="btn btn-primary" onclick="addMemberFromSettings()">+ Добавить сотрудника</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Синхронизация (GitHub)</span></div>
+          <div class="card-body">
+            <p style="color:var(--text2);font-size:12px;margin-bottom:12px;line-height:1.6">
+              Данные хранятся в <code style="color:var(--text)">data/state.json</code> репозитория. Укажите репозиторий и токен с правом <code style="color:var(--text)">repo</code> — изменения будут видны всем на сайте.
+            </p>
+            <div class="form-row">
+              <div class="form-group"><label>Owner</label><input type="text" id="syncOwner" placeholder="username"></div>
+              <div class="form-group"><label>Repo</label><input type="text" id="syncRepo" placeholder="pai-department"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-group"><label>Ветка</label><input type="text" id="syncBranch" value="main"></div>
+              <div class="form-group"><label>Путь к JSON</label><input type="text" id="syncPath" value="data/state.json"></div>
+            </div>
+            <div class="form-group">
+              <label>GitHub Token (PAT)</label>
+              <input type="password" id="syncToken" placeholder="ghp_..." autocomplete="off">
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="saveSyncSettings()">Сохранить и синхронизировать</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Состав (редактирование)</span></div>
+          <div class="card-body" id="adminMembersList" style="max-height:360px;overflow-y:auto"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Должности</span></div>
+          <div class="card-body">
+            <div id="ranksList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
+            <div style="display:flex;gap:8px">
+              <input type="text" id="newRankInput" placeholder="Новая должность">
+              <button class="btn btn-primary btn-sm" onclick="addRank()">+</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Виды активности</span></div>
+          <div class="card-body">
+            <div id="activitiesList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px"></div>
+            <button class="btn btn-ghost btn-sm" onclick="openAddActivity()">+ Активность</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Вопросы обзвона</span></div>
+          <div class="card-body">
+            <div id="questionsList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;max-height:280px;overflow-y:auto"></div>
+            <button class="btn btn-ghost btn-sm" onclick="openAddQuestion()">+ Вопрос</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-title">Данные</span></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:10px">
+            <button class="btn btn-ghost" onclick="exportData()">↑ Экспорт JSON</button>
+            <button class="btn btn-ghost" onclick="document.getElementById('importFile').click()">↓ Импорт JSON</button>
+            <div class="divider"></div>
+            <button class="btn btn-danger" onclick="clearAllData()">Сбросить к начальным</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Modals -->
+<div class="modal-overlay" id="modalMember">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Редактировать сотрудника</span>
+      <button class="modal-close" onclick="closeModal('modalMember')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-row">
+        <div class="form-group"><label>Имя</label><input type="text" id="editFirstName"></div>
+        <div class="form-group"><label>Фамилия</label><input type="text" id="editLastName"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>Статик</label><input type="text" id="editGameId"></div>
+        <div class="form-group"><label>Должность</label><select id="editRank"></select></div>
+      </div>
+      <div class="form-group"><label>OOC</label><input type="text" id="editOoc"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalMember')">Отмена</button>
+      <button class="btn btn-primary" onclick="saveMemberEdit()">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalActivity">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-header">
+      <span class="modal-title">Добавить активность</span>
+      <button class="modal-close" onclick="closeModal('modalActivity')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label>Код (2 буквы)</label><input type="text" id="actCode" maxlength="2" placeholder="LC"></div>
+      <div class="form-group"><label>Название</label><input type="text" id="actName"></div>
+      <div class="form-row">
+        <div class="form-group"><label>Баллов</label><input type="number" id="actPoints" min="1"></div>
+        <div class="form-group"><label>High Staff</label>
+          <select id="actHighStaff"><option value="false">Нет</option><option value="true">Да</option></select>
+        </div>
+      </div>
+      <div class="form-group"><label>Примечание</label><input type="text" id="actNote"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalActivity')">Отмена</button>
+      <button class="btn btn-primary" onclick="saveActivity()">Добавить</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalQuestion">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header">
+      <span class="modal-title">Добавить вопрос</span>
+      <button class="modal-close" onclick="closeModal('modalQuestion')">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label>Вопрос</label><textarea id="qQuestion" rows="3"></textarea></div>
+      <div class="form-group"><label>Ответ</label><textarea id="qAnswer" rows="2"></textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('modalQuestion')">Отмена</button>
+      <button class="btn btn-primary" onclick="saveQuestion()">Добавить</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Встроенные данные -->
+<script type="application/json" id="pai-embedded-state">
+{
+  "members": [
+    { "id": "m1", "firstName": "Richi", "lastName": "Londo", "name": "Richi Londo", "gameId": "232430", "rank": "Curator of Department", "ooc": "—" },
+    { "id": "m2", "firstName": "Mir", "lastName": "Li", "name": "Mir Li", "gameId": "45430", "rank": "Head of Department", "ooc": "—" },
+    { "id": "m3", "firstName": "Francesco", "lastName": "DeLondo", "name": "Francesco DeLondo", "gameId": "99108", "rank": "Head of Department", "ooc": "—" },
+    { "id": "m4", "firstName": "Logan", "lastName": "Brooks", "name": "Logan Brooks", "gameId": "159733", "rank": "Head of Department", "ooc": "—" },
+    { "id": "m5", "firstName": "Kamilla", "lastName": "Initial", "name": "Kamilla Initial", "gameId": "159945", "rank": "Deputy Head of Department", "ooc": "—" },
+    { "id": "m6", "firstName": "Edwin", "lastName": "Milton", "name": "Edwin Milton", "gameId": "218240", "rank": "Deputy Head of Department", "ooc": "OOC Отпуск 16.06.26-30.06.26" },
+    { "id": "m7", "firstName": "Zakura", "lastName": "Londo", "name": "Zakura Londo", "gameId": "273383", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m8", "firstName": "Princess", "lastName": "Londo", "name": "Princess Londo", "gameId": "256278", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m9", "firstName": "Molly", "lastName": "Londo", "name": "Molly Londo", "gameId": "58309", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m10", "firstName": "Miran", "lastName": "Zekari", "name": "Miran Zekari", "gameId": "34987", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m11", "firstName": "Archangel", "lastName": "Londo", "name": "Archangel Londo", "gameId": "239308", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m12", "firstName": "Satoru", "lastName": "Initial", "name": "Satoru Initial", "gameId": "201700", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m13", "firstName": "Naylor", "lastName": "Stella", "name": "Naylor Stella", "gameId": "96776", "rank": "Instructor of Department", "ooc": "OOC Отпуск" },
+    { "id": "m14", "firstName": "Roma", "lastName": "Londovich", "name": "Roma Londovich", "gameId": "258012", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m15", "firstName": "Daryana", "lastName": "Londo", "name": "Daryana Londo", "gameId": "30514", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m16", "firstName": "Neko", "lastName": "Toujou", "name": "Neko Toujou", "gameId": "24300", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m17", "firstName": "Mack", "lastName": "Nightez", "name": "Mack Nightez", "gameId": "289844", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m18", "firstName": "Vanco", "lastName": "Londo", "name": "Vanco Londo", "gameId": "288208", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m19", "firstName": "Anthony", "lastName": "Wilson", "name": "Anthony Wilson", "gameId": "292488", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m20", "firstName": "Aomine", "lastName": "Londo", "name": "Aomine Londo", "gameId": "116222", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m21", "firstName": "Tom", "lastName": "Zerg", "name": "Tom Zerg", "gameId": "226491", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m22", "firstName": "Lana", "lastName": "Westcoast", "name": "Lana Westcoast", "gameId": "267626", "rank": "Instructor of Department", "ooc": "—" }
+  ],
+  "ranks": ["Curator of Department","Head of Department","Deputy Head of Department","Instructor of Department"],
+  "activities": [
+    { "id": "a1", "code": "LC", "name": "Выдача лицензии", "points": 15, "highStaff": false, "note": "Заполнить количество выданных лицензий" },
+    { "id": "a2", "code": "EM", "name": "Трудоустройство (кадр. аудит)", "points": 30, "highStaff": false, "note": "Оформление нового сотрудника" },
+    { "id": "a3", "code": "EX", "name": "Практический экзамен", "points": 20, "highStaff": false, "note": "Проведение практического экзамена" },
+    { "id": "a4", "code": "RP", "name": "Проверка отчётность-pa", "points": 10, "highStaff": false, "note": "Проверка отчётности в канале" },
+    { "id": "a5", "code": "GV", "name": "Отчётность по гос. волнам", "points": 30, "highStaff": false, "note": "3 скриншота = 1 запись" },
+    { "id": "a6", "code": "CK", "name": "Проверка трудоустройство", "points": 10, "highStaff": false, "note": "Проверка документов трудоустройства" },
+    { "id": "a7", "code": "UP", "name": "Запрос-на-повышение", "points": 5, "highStaff": false, "note": "Рассмотрение запроса на повышение" },
+    { "id": "a8", "code": "AC", "name": "Перевод из академии", "points": 10, "highStaff": false, "note": "Перевод курсанта в полноценный состав" },
+    { "id": "a9", "code": "AG", "name": "Агитация в канал", "points": 5, "highStaff": true, "note": "Только для High Staff (Head+)" },
+    { "id": "a10", "code": "CL", "name": "Обзвон в отдел PAI", "points": 30, "highStaff": true, "note": "Только для High Staff (Head+)" },
+    { "id": "a11", "code": "DS", "name": "Рапорт-на-увольнение", "points": 5, "highStaff": true, "note": "Только для High Staff (Head+)" }
+  ],
+  "weeklyScores": {},
+  "meeting": { "date": "", "attendance": {} },
+  "call": { "date": "", "candidates": [], "scores": {} },
+  "questions": [
+    { "id": "q1", "q": "Кто является старшим составом?", "a": "От Dep.H и выше" },
+    { "id": "q2", "q": "Иерархия хай рангов?", "a": "Deputy Head → Head → Curator → Assistant → Advisor → Deputy Chief → Chief" },
+    { "id": "q3", "q": "Какой отдел отвечает за внутренний контроль и надзор за сотрудниками?", "a": "IAD" },
+    { "id": "q4", "q": "Кто выдаёт спецуху?", "a": "Storekeeper" },
+    { "id": "q5", "q": "Что нужно сделать после получения спецухи?", "a": "Составить отчёт о получении. Рабочее время 14:00–22:00" },
+    { "id": "q6", "q": "Правила IC и OOC отпуска?", "a": "IC: перерыв не более 5 ч, 1 раз в день, не освобождает от строёв. OOC: не более 7 дней, нельзя заходить в игру" },
+    { "id": "q7", "q": "Кто может стоять в холле?", "a": "IAD и PAI" },
+    { "id": "q8", "q": "Как принимать человека во фракцию?", "a": "Проверить заявку, провести собеседование, оформить кадровый аудит" },
+    { "id": "q9", "q": "Что самое важное при проверке отчёта?", "a": "1. Имя/фамилия/статик вручную и совпадают. 2. Не повышался сегодня. 3. Есть бодик. 4. Нет варнов" },
+    { "id": "q10", "q": "Что делаем после проверки отчёта?", "a": "СОЗДАТЬ ВЕТКУ. Если ДА — отправить в канал запроса на повышение. Если НЕТ — объяснить причину отказа" },
+    { "id": "q11", "q": "Почему нельзя проверять отчёты не по порядку?", "a": "Есть вероятность, что те, кто выше, останутся непроверенными" },
+    { "id": "q12", "q": "Правила агитаций?", "a": "Агитация подаётся с 10:00 до 22:00 МСК. Пауза между агитациями отделов — 1 час (60 минут)" },
+    { "id": "q13", "q": "Правила выдачи лицензий?", "a": "Проверить документы, выдать лицензию, зафиксировать в журнале" },
+    { "id": "q14", "q": "Как повышать человека по восстановлению или переводу?", "a": "Проверить одобренный запрос, одобренный ранг (реакцией), в кадровом указать ссылку на одобренный запрос" },
+    { "id": "q15", "q": "Что делать, если написал кадровый неправильно?", "a": "Удалить или поставить реакцию крестика" },
+    { "id": "q16", "q": "Разрешено ли младшему составу (PA Cadet, Officer) проводить задержание?", "a": "Нет. Исключение: обездвижить и надеть наручники для передачи агентам" },
+    { "id": "q17", "q": "Может ли отдел PAI выдавать наказания (ВУ) отделу PA?", "a": "Да, может" },
+    { "id": "q18", "q": "Обязан ли сотрудник вызвать прока по запросу адвоката?", "a": "Да, если аргументированно и с перечислением статей" },
+    { "id": "q19", "q": "Почему обязательно проверять человека с розыском по базе данных?", "a": "Проверить — функциональный розыск или нет" },
+    { "id": "q20", "q": "Можно ли дать больше 5 лет срока?", "a": "Только по решению суда с постановлением" },
+    { "id": "q21", "q": "Послать на хуй — какая статья?", "a": "15.8 Провокация" },
+    { "id": "q22", "q": "Отличие 12.8 от 12.8.1?", "a": "Гос. и негос. оружие" }
+  ],
+  "sync": { "owner": "", "repo": "", "branch": "main", "path": "data/state.json", "token": "", "sha": "", "pollSec": 30 }
+}
+</script>
+
+<script>
+const DATA_PATH = 'data/state.json';
+let state = null;
+let currentTab = 'dashboard';
+let memberFilter = '';
+let saveTimer = null;
+let pollTimer = null;
+let editMemberId = null;
+let remoteSha = '';
+
+const tabTitles = {
+  dashboard: 'Дашборд', members: 'Состав отдела', scores: 'Еженедельные баллы',
+  meetings: 'Собрания', calls: 'Обзвон в отдел', admin: 'Настройки'
+};
+
+function uid() { return 'id_' + Date.now() + '_' + Math.random().toString(36).slice(2); }
+function escapeAttr(s) { return (s || '').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+
+function memberName(m) {
+  if (m.firstName || m.lastName) return `${m.firstName || ''} ${m.lastName || ''}`.trim();
+  return m.name || '';
+}
+
+function normalizeMember(m) {
+  if (!m.firstName && m.name) {
+    const parts = m.name.trim().split(/\s+/);
+    m.firstName = parts[0] || '';
+    m.lastName = parts.slice(1).join(' ') || '';
+  }
+  m.name = memberName(m);
+  return m;
+}
+
+function getEmbeddedState() {
+  const el = document.getElementById('pai-embedded-state');
+  if (!el) return null;
+  try { return JSON.parse(el.textContent); } catch { return null; }
+}
+
+function rankClass(rank) {
+  if (rank?.includes('Curator')) return 'rank-curator';
+  if (rank?.includes('Head of')) return 'rank-head';
+  if (rank?.includes('Deputy')) return 'rank-deputy';
+  return 'rank-instructor';
+}
+
+function rankBadgeClass(rank) {
+  if (rank?.includes('Curator')) return 'rank-badge-curator';
+  if (rank?.includes('Head of')) return 'rank-badge-head';
+  if (rank?.includes('Deputy')) return 'rank-badge-deputy';
+  return 'rank-badge-instructor';
+}
+
+function isHighStaff(rank) {
+  return rank?.includes('Curator') || rank?.includes('Head of') || rank?.includes('Deputy Head');
+}
+
+function getMemberTotal(memberId) {
+  const scores = state.weeklyScores[memberId] || {};
+  let total = 0;
+  for (const [actId, count] of Object.entries(scores)) {
+    const act = state.activities.find(a => a.id === actId);
+    if (act) total += act.points * (parseInt(count) || 0);
+  }
+  return total;
+}
+
+function actLabel(a) {
+  const code = a.code || '•';
+  return `<span class="act-code" title="${a.name}">${code}</span>`;
+}
+
+function toast(msg) {
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.textContent = msg;
+  document.getElementById('toastContainer').appendChild(el);
+  setTimeout(() => el.remove(), 3200);
+}
+
+function setSyncUI(status, text) {
+  document.getElementById('syncDot').className = 'sync-dot ' + (status || '');
+  document.getElementById('syncText').textContent = text;
+}
+
+// ─── SYNC / GITHUB ─────────────────────────────────────
+function getSyncConfig() {
+  const ls = JSON.parse(localStorage.getItem('pai_sync_config') || '{}');
+  const sync = state?.sync || getEmbeddedState()?.sync || {};
+  return { ...sync, ...ls };
+}
+
+function saveSyncConfigLocal(cfg) {
+  localStorage.setItem('pai_sync_config', JSON.stringify({
+    owner: cfg.owner, repo: cfg.repo, branch: cfg.branch, path: cfg.path, token: cfg.token, pollSec: cfg.pollSec
+  }));
+  state.sync = { ...state.sync, ...cfg };
+}
+
+async function loadStateFromUrl(url) {
+  const res = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return migrateState(await res.json());
+}
+
+async function loadFromGitHub(cfg) {
+  const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path || 'data/state.json')}?ref=${encodeURIComponent(cfg.branch || 'main')}`;
+  const res = await fetch(api, {
+    headers: { Accept: 'application/vnd.github+json', Authorization: cfg.token ? `Bearer ${cfg.token}` : '' }
+  });
+  if (!res.ok) throw new Error('GitHub ' + res.status);
+  const data = await res.json();
+  remoteSha = data.sha;
+  const json = JSON.parse(atob(data.content.replace(/\n/g, '')));
+  return migrateState(json);
+}
+
+async function saveToGitHub(cfg) {
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2))));
+  const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path || 'data/state.json')}`;
+  const body = { message: 'PAI CRM: update state', content, branch: cfg.branch || 'main', sha: remoteSha || cfg.sha || undefined };
+  const res = await fetch(api, {
+    method: 'PUT',
+    headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${cfg.token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.message || 'GitHub save ' + res.status); }
+  const data = await res.json();
+  remoteSha = data.content.sha;
+  cfg.sha = remoteSha;
+  saveSyncConfigLocal(cfg);
+}
+
+async function loadStateFromNetwork() {
+  const cfg = getSyncConfig();
+  if (cfg.owner && cfg.repo && cfg.token) {
+    try {
+      const loaded = await loadFromGitHub(cfg);
+      if (loaded.members?.length) return { state: loaded, source: 'GitHub API' };
+    } catch (e) { console.warn('GitHub API load failed', e); }
+  }
+  const base = window.location.href.replace(/[^/]*$/, '');
+  const urls = [new URL(DATA_PATH, window.location.href).href, base + DATA_PATH];
+  if (cfg.owner && cfg.repo) {
+    const branch = cfg.branch || 'main';
+    const path = (cfg.path || DATA_PATH).replace(/^\//, '');
+    urls.unshift(`https://raw.githubusercontent.com/${cfg.owner}/${cfg.repo}/${branch}/${path}`);
+  }
+  for (const url of [...new Set(urls)]) {
+    try {
+      const loaded = await loadStateFromUrl(url);
+      if (loaded.members?.length) return { state: loaded, source: url };
+    } catch {}
+  }
+  throw new Error('Нет источника данных');
+}
+
+async function pullRemote() {
+  setSyncUI('pending', 'Загрузка...');
+  try {
+    const result = await loadStateFromNetwork();
+    state = result.state;
+    ensureMeetingAttendance();
+    renderTab(currentTab);
+    setSyncUI('ok', 'Обновлено ' + new Date().toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' }));
+  } catch (e) {
+    if (!state?.members?.length) state = defaultState();
+    ensureMeetingAttendance();
+    renderTab(currentTab);
+    setSyncUI('err', 'JSON недоступен');
+  }
+}
+
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(pushRemote, 800);
+}
+
+async function pushRemote() {
+  const cfg = getSyncConfig();
+  if (cfg.owner && cfg.repo && cfg.token) {
+    setSyncUI('pending', 'Сохранение...');
+    try {
+      await saveToGitHub(cfg);
+      setSyncUI('ok', 'Сохранено ' + new Date().toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' }));
+    } catch (e) {
+      setSyncUI('err', 'Ошибка сохранения');
+      toast('Сохранение: ' + e.message);
+    }
+  } else {
+    setSyncUI('', 'Настройте GitHub для сохранения');
+  }
+}
+
+function startPolling() {
+  clearInterval(pollTimer);
+  const cfg = getSyncConfig();
+  const sec = cfg.pollSec || 30;
+  pollTimer = setInterval(pullRemote, sec * 1000);
+}
+
+// ─── STATE ─────────────────────────────────────────────
+function migrateState(raw) {
+  const base = getEmbeddedState() || {};
+  const s = {
+    ...base, ...raw,
+    members: raw.members?.length ? raw.members : (base.members || []),
+    activities: raw.activities?.length ? raw.activities : (base.activities || []),
+    questions: raw.questions?.length ? raw.questions : (base.questions || []),
+    ranks: raw.ranks?.length ? raw.ranks : (base.ranks || []),
+    weeklyScores: raw.weeklyScores || base.weeklyScores || {},
+    meeting: raw.meeting || base.meeting || { date: '', attendance: {} },
+    call: raw.call || base.call,
+    sync: { ...(base.sync || {}), ...(raw.sync || {}) }
+  };
+  s.members = (s.members || []).map(normalizeMember);
+  if (!s.meeting) s.meeting = { date: '', attendance: {} };
+  if (!s.call) s.call = { date: '', candidates: [], scores: {} };
+  if (!s.call.candidates) s.call.candidates = [];
+  // Migrate old fixed 6-slot candidates to dynamic array
+  s.call.candidates = s.call.candidates.filter(c => c && (c.name || c.gameId));
+  if (!s.sync) s.sync = {};
+  (s.activities || []).forEach(a => {
+    if (!a.code) a.code = (a.name || 'AC').replace(/[^\wа-яА-Я]/gi, '').slice(0, 2).toUpperCase() || 'AC';
+    delete a.icon;
+  });
+  ensureMeetingAttendance(s);
+  return s;
+}
+
+function ensureMeetingAttendance(s = state) {
+  s.meeting.attendance = s.meeting.attendance || {};
+  s.members.forEach(m => {
+    if (!s.meeting.attendance[m.id]) {
+      s.meeting.attendance[m.id] = { status: 'none', note: '' };
+    }
+    // Migrate old format
+    const a = s.meeting.attendance[m.id];
+    if (a.present !== undefined || a.warned !== undefined) {
+      a.status = a.present ? 'present' : a.warned ? 'warned' : 'absent';
+      delete a.present; delete a.warned;
+    }
+    if (!a.status) a.status = 'none';
+  });
+}
+
+function defaultState() {
+  const embedded = getEmbeddedState();
+  if (embedded) return migrateState(JSON.parse(JSON.stringify(embedded)));
+  return migrateState({ members: [], ranks: ['Curator of Department','Head of Department','Deputy Head of Department','Instructor of Department'], activities: [], weeklyScores: {}, questions: [], meeting: { date: '', attendance: {} }, call: { date: '', candidates: [], scores: {} }, sync: {} });
+}
+
+// ─── NAV ───────────────────────────────────────────────
+function showTab(tab, el) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.add('tabs-hidden'));
+  document.getElementById('tab-' + tab)?.classList.remove('tabs-hidden');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (el) el.classList.add('active');
+  else document.querySelector(`[data-tab="${tab}"]`)?.classList.add('active');
+  document.getElementById('topbarTitle').textContent = tabTitles[tab] || tab;
+  renderTab(tab);
+}
+
+function renderTab(tab) {
+  if (tab === 'dashboard') renderDashboard();
+  else if (tab === 'members') renderMembers();
+  else if (tab === 'scores') renderScores();
+  else if (tab === 'meetings') renderMeetings();
+  else if (tab === 'calls') renderCalls();
+  else if (tab === 'admin') renderAdmin();
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+function openModal(id) { document.getElementById(id).classList.add('open'); }
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+});
+
+// ─── DASHBOARD ─────────────────────────────────────────
+function renderDashboard() {
+  const total = state.members.length;
+  const onOoc = state.members.filter(m => m.ooc && m.ooc !== '—').length;
+  const totalPts = state.members.reduce((s, m) => s + getMemberTotal(m.id), 0);
+  const att = state.meeting.attendance || {};
+  const present = Object.values(att).filter(a => a.status === 'present').length;
+  const warned = Object.values(att).filter(a => a.status === 'warned').length;
+  const absent = Object.values(att).filter(a => a.status === 'absent').length;
+
+  document.getElementById('dashStats').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Сотрудников</div><div class="stat-value">${total}</div><div class="stat-sub">${total - onOoc} активных</div></div>
+    <div class="stat-card"><div class="stat-label">OOC</div><div class="stat-value">${onOoc}</div></div>
+    <div class="stat-card"><div class="stat-label">Баллов за неделю</div><div class="stat-value">${totalPts}</div></div>
+    <div class="stat-card"><div class="stat-label">На собрании</div><div class="stat-value">${present}</div><div class="stat-sub">предупр.: ${warned} · отс.: ${absent}</div></div>
+    <div class="stat-card"><div class="stat-label">Вопросов обзвона</div><div class="stat-value">${state.questions.length}</div></div>
+  `;
+
+  const sorted = [...state.members].map(m => ({ ...m, total: getMemberTotal(m.id) })).sort((a, b) => b.total - a.total).slice(0, 8);
+  document.querySelector('#topScoresTable tbody').innerHTML = sorted.map((m, i) => `
+    <tr><td class="mono">${i + 1}</td>
+    <td><span class="${rankClass(m.rank)}">${m.name}</span></td>
+    <td><span class="${rankBadgeClass(m.rank)}">${m.rank}</span></td>
+    <td class="mono" style="color:${m.total > 0 ? 'var(--green)' : 'var(--text3)'}">${m.total}</td></tr>
+  `).join('');
+
+  const oocMembers = state.members.filter(m => m.ooc && m.ooc !== '—');
+  document.querySelector('#oocTable tbody').innerHTML = oocMembers.length
+    ? oocMembers.map(m => `<tr><td><span class="${rankClass(m.rank)}">${m.name}</span></td><td><span class="badge badge-yellow">${m.ooc}</span></td></tr>`).join('')
+    : `<tr><td colspan="2" style="text-align:center;color:var(--text3);padding:20px">Все активны</td></tr>`;
+
+  renderActivityChart();
+}
+
+function renderActivityChart() {
+  const canvas = document.getElementById('activityChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const acts = state.activities.slice(0, 8);
+  canvas.width = canvas.parentElement.offsetWidth;
+  canvas.height = 100;
+  const maxVal = Math.max(1, ...acts.map(a => state.members.reduce((s, m) => s + ((state.weeklyScores[m.id] || {})[a.id] || 0), 0) * a.points));
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const gap = canvas.width / Math.max(acts.length, 1);
+  acts.forEach((act, i) => {
+    const total = state.members.reduce((s, m) => s + ((state.weeklyScores[m.id] || {})[act.id] || 0), 0) * act.points;
+    const h = Math.max(2, (total / maxVal) * 80);
+    const x = i * gap + gap * 0.2;
+    const barW = gap * 0.6;
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ctx.beginPath();
+    if (ctx.roundRect) { ctx.roundRect(x, 0, barW, 80, 3); } else { ctx.rect(x, 0, barW, 80); }
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.55)';
+    ctx.beginPath();
+    if (ctx.roundRect) { ctx.roundRect(x, 80 - h, barW, h, 3); } else { ctx.rect(x, 80 - h, barW, h); }
+    ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+    ctx.font = '9px DM Mono, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(act.code || '•', x + barW / 2, 96);
+  });
+}
+
+// ─── MEMBERS ───────────────────────────────────────────
+function renderMembers() {
+  const filtered = state.members.filter(m =>
+    memberName(m).toLowerCase().includes(memberFilter.toLowerCase()) ||
+    (m.gameId || '').includes(memberFilter) ||
+    (m.rank || '').toLowerCase().includes(memberFilter.toLowerCase())
+  );
+  document.getElementById('memberCount').textContent = `${state.members.length} сотрудников`;
+  document.querySelector('#membersTable tbody').innerHTML = filtered.map((m, i) => `
+    <tr>
+      <td class="mono" style="color:var(--text3)">${i + 1}</td>
+      <td><span class="${rankClass(m.rank)}" style="font-weight:500">${m.name}</span></td>
+      <td><span class="${rankBadgeClass(m.rank)}">${m.rank}</span></td>
+      <td class="mono">#${m.gameId}</td>
+      <td>${m.ooc && m.ooc !== '—' ? `<span class="badge badge-yellow">${m.ooc}</span>` : '<span style="color:var(--text3)">—</span>'}</td>
+    </tr>
+  `).join('');
+}
+
+function filterMembers(val) { memberFilter = val; renderMembers(); }
+
+// ─── SCORES ────────────────────────────────────────────
+function renderScores() {
+  document.getElementById('legendBadges').innerHTML = state.activities.map(a => `
+    <span class="badge badge-gray">${actLabel(a)} ${a.name} · <strong style="color:var(--text)">${a.points} б.</strong>
+    ${a.highStaff ? ' · <span style="color:var(--yellow)">HS</span>' : ''}</span>
+  `).join('');
+
+  document.getElementById('scoresGrid').innerHTML = state.members.map(m => {
+    const hs = isHighStaff(m.rank);
+    const acts = state.activities.filter(a => !a.highStaff || hs);
+    const scores = state.weeklyScores[m.id] || {};
+    const total = getMemberTotal(m.id);
+    return `
+      <div class="weekly-card">
+        <div class="weekly-card-name ${rankClass(m.rank)}">${m.name}</div>
+        <div class="weekly-card-role">${m.rank} · #${m.gameId}</div>
+        ${acts.map(a => `
+          <div class="weekly-score-row">
+            <span class="weekly-score-label">${actLabel(a)} ${a.name}</span>
+            <input type="number" class="score-input" min="0" value="${scores[a.id] || 0}"
+              onchange="updateScore('${m.id}','${a.id}',this.value)">
+          </div>
+        `).join('')}
+        <div class="weekly-total">
+          <span style="font-size:11px;color:var(--text3);font-family:var(--mono)">ИТОГО</span>
+          <span class="stat-value" style="font-size:20px" id="total_${m.id}">${total}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function updateScore(memberId, actId, val) {
+  if (!state.weeklyScores[memberId]) state.weeklyScores[memberId] = {};
+  state.weeklyScores[memberId][actId] = parseInt(val) || 0;
+  const el = document.getElementById('total_' + memberId);
+  if (el) el.textContent = getMemberTotal(memberId);
+  scheduleSave();
+}
+
+function resetWeeklyScores() {
+  if (!confirm('Сбросить все баллы за неделю?')) return;
+  state.weeklyScores = {};
+  scheduleSave();
+  renderScores();
+  toast('Баллы сброшены');
+}
+
+// ─── MEETINGS ──────────────────────────────────────────
+// Status cycle: none → present → warned → absent → none
+function cycleStatus(current) {
+  if (current === 'none' || !current) return 'present';
+  if (current === 'present') return 'warned';
+  if (current === 'warned') return 'absent';
+  return 'none';
+}
+
+function statusLabel(status) {
+  if (status === 'present') return 'Присутствовал';
+  if (status === 'warned') return 'Предупредил';
+  if (status === 'absent') return 'Отсутствовал';
+  return 'Не отмечен';
+}
+
+function statusBtnClass(status) {
+  if (status === 'present') return 'on-present';
+  if (status === 'warned') return 'on-warned';
+  if (status === 'absent') return 'on-absent';
+  return '';
+}
+
+function renderMeetings() {
+  const today = new Date().toISOString().split('T')[0];
+  if (!state.meeting.date) state.meeting.date = today;
+  document.getElementById('meetingDate').value = state.meeting.date;
+
+  const att = state.meeting.attendance;
+  let present = 0, warned = 0, absent = 0;
+  state.members.forEach(m => {
+    const a = att[m.id] || {};
+    if (a.status === 'present') present++;
+    else if (a.status === 'warned') warned++;
+    else if (a.status === 'absent') absent++;
+  });
+
+  document.getElementById('meetingSummary').innerHTML = `
+    <span class="badge badge-green">Присутствовал: ${present}</span>
+    <span class="badge badge-yellow">Предупредил: ${warned}</span>
+    <span class="badge badge-red">Отсутствовал: ${absent}</span>
+    <span class="badge badge-gray">Не отмечен: ${state.members.length - present - warned - absent}</span>
+  `;
+
+  document.querySelector('#meetingTable tbody').innerHTML = state.members.map((m, i) => {
+    const a = att[m.id] || { status: 'none', note: '' };
+    const status = a.status || 'none';
+    return `
+      <tr>
+        <td class="mono" style="color:var(--text3)">${i + 1}</td>
+        <td><span class="${rankBadgeClass(m.rank)}">${m.rank}</span></td>
+        <td><span class="${rankClass(m.rank)}">${m.name}</span></td>
+        <td class="mono">#${m.gameId}</td>
+        <td>
+          <button type="button" class="mark-btn ${statusBtnClass(status)}"
+            onclick="cycleMeetingStatus('${m.id}')">
+            ${statusLabel(status)}
+          </button>
+        </td>
+        <td><input type="text" value="${escapeAttr(a.note)}" placeholder="—" style="width:160px;padding:5px 8px;font-size:12px"
+          onchange="setMeetingNote('${m.id}', this.value)"></td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function cycleMeetingStatus(mid) {
+  ensureMeetingAttendance();
+  const a = state.meeting.attendance[mid];
+  a.status = cycleStatus(a.status);
+  renderMeetings();
+  scheduleSave();
+}
+
+function setMeetingDate(v) { state.meeting.date = v; scheduleSave(); }
+function setMeetingNote(mid, note) {
+  ensureMeetingAttendance();
+  state.meeting.attendance[mid].note = note;
+  scheduleSave();
+}
+
+function clearMeetingMarks() {
+  if (!confirm('Сбросить все отметки собрания?')) return;
+  state.members.forEach(m => { state.meeting.attendance[m.id] = { status: 'none', note: '' }; });
+  renderMeetings();
+  scheduleSave();
+}
+
+// ─── CALLS ─────────────────────────────────────────────
+function renderCalls() {
+  const today = new Date().toISOString().split('T')[0];
+  if (!state.call.date) state.call.date = today;
+  document.getElementById('callDate').value = state.call.date;
+
+  // Candidates list
+  const list = document.getElementById('candidatesList');
+  if (!state.call.candidates) state.call.candidates = [];
+  list.innerHTML = state.call.candidates.map((c, i) => `
+    <div class="candidate-row">
+      <span class="mono" style="color:var(--text3);min-width:20px">${i + 1}</span>
+      <input type="text" value="${escapeAttr(c.name)}" placeholder="Имя кандидата" style="flex:1"
+        oninput="setCandidate(${i},'name',this.value)">
+      <input type="text" value="${escapeAttr(c.gameId)}" placeholder="Статик" style="width:120px"
+        oninput="setCandidate(${i},'gameId',this.value)">
+      <button class="remove-btn" onclick="removeCandidate(${i})">×</button>
+    </div>
+  `).join('') || '<div style="color:var(--text3);font-size:12px;padding:8px 0">Нажмите «+ Создать кандидата», чтобы добавить</div>';
+
+  // Questions table
+  const active = (state.call.candidates || []).map((c, i) => ({ ...c, idx: i })).filter(c => c.name?.trim());
+
+  const head = document.getElementById('callQuestionsHead');
+  head.innerHTML = '<th style="width:36px">#</th><th>Вопрос</th><th style="font-size:10px">Ответ</th>' +
+    active.map(c => `<th style="text-align:center;min-width:72px">${escapeAttr((c.name || '').split(' ')[0])}</th>`).join('');
+
+  document.getElementById('callQuestionsTbody').innerHTML = state.questions.map((q, qi) => `
+    <tr>
+      <td class="mono" style="color:var(--text3)">${qi + 1}</td>
+      <td style="font-size:12px;max-width:240px">${q.q}</td>
+      <td style="font-size:11px;color:var(--text3);max-width:160px" title="${escapeAttr(q.a)}">${(q.a || '').slice(0, 40)}${(q.a || '').length > 40 ? '…' : ''}</td>
+      ${active.map(c => {
+        const sc = getCallScore(qi, c.idx);
+        return `<td style="text-align:center">
+          <select class="rating-select ${scoreClass(sc)}" onchange="setCallScore(${qi},${c.idx},this.value)">
+            ${[0, 0.5, 0.7, 1].map(v => `<option value="${v}" ${sc == v ? 'selected' : ''}>${v === 1 ? '1.0' : v}</option>`).join('')}
+          </select>
+        </td>`;
+      }).join('')}
+    </tr>
+  `).join('');
+
+  // Results
+  document.getElementById('callResults').innerHTML = (state.call.candidates || []).map((c, i) => {
+    if (!c.name?.trim()) return '';
+    const r = calcCallResult(i);
+    return `
+      <div class="call-result-card ${r.pass ? 'pass' : 'fail'}">
+        <div style="font-size:13px;font-weight:500">${c.name}</div>
+        <div style="font-size:11px;color:var(--text3);margin:4px 0">#${c.gameId || '—'}</div>
+        <div class="stat-value" style="font-size:22px">${r.pct}%</div>
+        <div style="margin-top:6px"><span class="badge ${r.pass ? 'badge-green' : 'badge-red'}">${r.pass ? 'ПРИНЯТ' : 'ОТКАЗ'}</span></div>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px;font-family:var(--mono)">${r.total.toFixed(1)} / ${state.questions.length}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function addCandidate() {
+  if (!state.call.candidates) state.call.candidates = [];
+  state.call.candidates.push({ name: '', gameId: '' });
+  renderCalls();
+  scheduleSave();
+}
+
+function removeCandidate(i) {
+  state.call.candidates.splice(i, 1);
+  // Shift scores
+  const newScores = {};
+  Object.entries(state.call.scores || {}).forEach(([qi, qScores]) => {
+    newScores[qi] = {};
+    Object.entries(qScores).forEach(([ci, val]) => {
+      const idx = parseInt(ci);
+      if (idx < i) newScores[qi][ci] = val;
+      else if (idx > i) newScores[qi][idx - 1] = val;
+    });
+  });
+  state.call.scores = newScores;
+  renderCalls();
+  scheduleSave();
+}
+
+function setCandidate(i, field, val) {
+  state.call.candidates[i][field] = val;
+  // Don't re-render on every keystroke, just save
+  scheduleSave();
+}
+
+function scoreClass(v) {
+  if (v >= 1) return 's1';
+  if (v >= 0.7) return 's07';
+  if (v >= 0.5) return 's05';
+  return 's0';
+}
+
+function getCallScore(qi, ci) {
+  return parseFloat((state.call.scores[qi] || {})[ci] ?? 0) || 0;
+}
+
+function setCallScore(qi, ci, val) {
+  if (!state.call.scores[qi]) state.call.scores[qi] = {};
+  state.call.scores[qi][ci] = parseFloat(val) || 0;
+  renderCalls();
+  scheduleSave();
+}
+
+function setCallDate(v) { state.call.date = v; scheduleSave(); }
+
+function calcCallResult(cIdx) {
+  let total = 0;
+  const max = state.questions.length;
+  state.questions.forEach((_, qi) => { total += getCallScore(qi, cIdx); });
+  const pct = max > 0 ? Math.round((total / max) * 100) : 0;
+  return { total, pct, pass: pct >= 70 };
+}
+
+// ─── ADMIN ─────────────────────────────────────────────
+function fillRankSelects() {
+  const opts = state.ranks.map(r => `<option value="${r}">${r}</option>`).join('');
+  document.getElementById('addRank').innerHTML = opts;
+  document.getElementById('editRank').innerHTML = opts;
+}
+
+function renderAdmin() {
+  fillRankSelects();
+  const cfg = getSyncConfig();
+  document.getElementById('syncOwner').value = cfg.owner || '';
+  document.getElementById('syncRepo').value = cfg.repo || '';
+  document.getElementById('syncBranch').value = cfg.branch || 'main';
+  document.getElementById('syncPath').value = cfg.path || 'data/state.json';
+  document.getElementById('syncToken').value = cfg.token || '';
+
+  document.getElementById('adminMembersList').innerHTML = state.members.map(m => `
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)">
+      <div>
+        <div class="${rankClass(m.rank)}" style="font-size:13px">${m.name}</div>
+        <div style="font-size:11px;color:var(--text3)">${m.rank} · #${m.gameId}</div>
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="btn btn-ghost btn-xs" onclick="openEditMember('${m.id}')">Ред.</button>
+        <button class="btn btn-danger btn-xs" onclick="deleteMember('${m.id}')">×</button>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('ranksList').innerHTML = state.ranks.map((r, i) => `
+    <div style="display:flex;justify-content:space-between;align-items:center;background:var(--bg3);padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border)">
+      <span class="${rankClass(r)}">${r}</span>${i > 0 ? `<button class="btn btn-danger btn-xs" onclick="deleteRank(${i})">×</button>` : ''}
+    </div>
+  `).join('');
+
+  document.getElementById('activitiesList').innerHTML = state.activities.map(a => `
+    <div style="display:flex;justify-content:space-between;align-items:center;background:var(--bg3);padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border)">
+      <span>${actLabel(a)} ${a.name} · <span class="mono" style="color:var(--text3)">${a.points} б.</span></span>
+      <button class="btn btn-danger btn-xs" onclick="deleteActivity('${a.id}')">×</button>
+    </div>
+  `).join('');
+
+  document.getElementById('questionsList').innerHTML = state.questions.map((q, i) => `
+    <div style="display:flex;gap:8px;justify-content:space-between;background:var(--bg3);padding:8px 12px;border-radius:var(--radius-sm);border:1px solid var(--border)">
+      <span style="font-size:12px;color:var(--text2);flex:1"><span class="mono" style="color:var(--text3)">${i+1}.</span> ${q.q}</span>
+      <button class="btn btn-danger btn-xs" onclick="deleteQuestion('${q.id}')">×</button>
+    </div>
+  `).join('');
+}
+
+function addMemberFromSettings() {
+  const firstName = document.getElementById('addFirstName').value.trim();
+  const lastName = document.getElementById('addLastName').value.trim();
+  const gameId = document.getElementById('addGameId').value.trim();
+  const rank = document.getElementById('addRank').value;
+  const ooc = document.getElementById('addOoc').value.trim() || '—';
+  if (!firstName || !lastName || !gameId) { toast('Заполните имя, фамилию и статик'); return; }
+  const m = normalizeMember({ id: uid(), firstName, lastName, gameId, rank, ooc });
+  state.members.push(m);
+  ensureMeetingAttendance();
+  ['addFirstName','addLastName','addGameId','addOoc'].forEach(id => document.getElementById(id).value = id === 'addOoc' ? '—' : '');
+  scheduleSave();
+  renderAdmin();
+  toast('Сотрудник добавлен');
+}
+
+function openEditMember(id) {
+  editMemberId = id;
+  const m = state.members.find(x => x.id === id);
+  if (!m) return;
+  document.getElementById('editFirstName').value = m.firstName || '';
+  document.getElementById('editLastName').value = m.lastName || '';
+  document.getElementById('editGameId').value = m.gameId || '';
+  document.getElementById('editOoc').value = m.ooc || '—';
+  fillRankSelects();
+  document.getElementById('editRank').value = m.rank;
+  openModal('modalMember');
+}
+
+function saveMemberEdit() {
+  const m = state.members.find(x => x.id === editMemberId);
+  if (!m) return;
+  m.firstName = document.getElementById('editFirstName').value.trim();
+  m.lastName = document.getElementById('editLastName').value.trim();
+  m.gameId = document.getElementById('editGameId').value.trim();
+  m.rank = document.getElementById('editRank').value;
+  m.ooc = document.getElementById('editOoc').value.trim() || '—';
+  normalizeMember(m);
+  closeModal('modalMember');
+  scheduleSave();
+  renderAdmin();
+  toast('Сохранено');
+}
+
+function deleteMember(id) {
+  if (!confirm('Удалить сотрудника?')) return;
+  state.members = state.members.filter(m => m.id !== id);
+  delete state.weeklyScores[id];
+  delete state.meeting.attendance[id];
+  scheduleSave();
+  renderAdmin();
+}
+
+function saveSyncSettings() {
+  const cfg = {
+    owner: document.getElementById('syncOwner').value.trim(),
+    repo: document.getElementById('syncRepo').value.trim(),
+    branch: document.getElementById('syncBranch').value.trim() || 'main',
+    path: document.getElementById('syncPath').value.trim() || 'data/state.json',
+    token: document.getElementById('syncToken').value.trim(),
+    pollSec: 30
+  };
+  saveSyncConfigLocal(cfg);
+  pullRemote().then(() => { startPolling(); toast('Синхронизация настроена'); });
+}
+
+function addRank() {
+  const v = document.getElementById('newRankInput').value.trim();
+  if (!v) return;
+  state.ranks.push(v);
+  document.getElementById('newRankInput').value = '';
+  scheduleSave();
+  renderAdmin();
+}
+
+function deleteRank(i) { state.ranks.splice(i, 1); scheduleSave(); renderAdmin(); }
+
+function openAddActivity() {
+  ['actCode','actName','actPoints','actNote'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('actHighStaff').value = 'false';
+  openModal('modalActivity');
+}
+
+function saveActivity() {
+  const code = document.getElementById('actCode').value.trim().toUpperCase() || '•';
+  const name = document.getElementById('actName').value.trim();
+  const points = parseInt(document.getElementById('actPoints').value) || 0;
+  if (!name || !points) { toast('Название и баллы обязательны'); return; }
+  state.activities.push({ id: uid(), code, name, points, highStaff: document.getElementById('actHighStaff').value === 'true', note: document.getElementById('actNote').value.trim() });
+  closeModal('modalActivity');
+  scheduleSave();
+  renderAdmin();
+}
+
+function deleteActivity(id) {
+  if (!confirm('Удалить?')) return;
+  state.activities = state.activities.filter(a => a.id !== id);
+  scheduleSave();
+  renderAdmin();
+}
+
+function openAddQuestion() {
+  document.getElementById('qQuestion').value = '';
+  document.getElementById('qAnswer').value = '';
+  openModal('modalQuestion');
+}
+
+function saveQuestion() {
+  const q = document.getElementById('qQuestion').value.trim();
+  const a = document.getElementById('qAnswer').value.trim();
+  if (!q) return;
+  state.questions.push({ id: uid(), q, a });
+  closeModal('modalQuestion');
+  scheduleSave();
+  renderAdmin();
+  if (currentTab === 'calls') renderCalls();
+}
+
+function deleteQuestion(id) {
+  if (!confirm('Удалить вопрос?')) return;
+  state.questions = state.questions.filter(q => q.id !== id);
+  scheduleSave();
+  renderAdmin();
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `pai_data_${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  toast('Экспортировано');
+}
+
+function importData(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      if (confirm('Заменить все данные импортом?')) {
+        state = migrateState(JSON.parse(e.target.result));
+        scheduleSave();
+        renderTab(currentTab);
+        toast('Импорт выполнен');
+      }
+    } catch { toast('Ошибка формата JSON'); }
+  };
+  reader.readAsText(file);
+  input.value = '';
+}
+
+async function clearAllData() {
+  if (!confirm('Сбросить все данные к начальным?')) return;
+  state = defaultState();
+  ensureMeetingAttendance();
+  scheduleSave();
+  renderTab(currentTab);
+  toast('Сброшено к начальным данным');
+}
+
+// ─── INIT ──────────────────────────────────────────────
+async function init() {
+  setSyncUI('pending', 'Загрузка...');
+  state = defaultState();
+  ensureMeetingAttendance();
+  renderDashboard();
+
+  try {
+    const result = await loadStateFromNetwork();
+    state = result.state;
+    ensureMeetingAttendance();
+    renderTab(currentTab);
+    setSyncUI('ok', 'Загружено · ' + state.members.length + ' чел.');
+  } catch (e) {
+    setSyncUI('ok', 'Встроенные данные · ' + state.members.length + ' чел.');
+  }
+
+  startPolling();
+}
+
+init();
+</script>
+</body>
+</html>
