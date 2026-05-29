@@ -210,7 +210,7 @@
   <div class="sidebar-logo">
     <div class="logo-badge"><span class="logo-dot"></span><span>Live</span></div>
     <div class="logo-title">PAI Dept.</div>
-    <div class="logo-sub">Admin Panel v4.0</div>
+    <div class="logo-sub">Admin Panel</div>
   </div>
   <nav class="sidebar-nav">
     <span class="nav-group-label">Обзор</span>
@@ -223,14 +223,14 @@
     <span class="nav-group-label">Система</span>
     <button class="nav-item" data-tab="admin" onclick="showTab('admin', this)"><span class="nav-icon">◆</span> Настройки</button>
   </nav>
-  <div class="sidebar-footer">PAI Department<br>GTA RP · 2026</div>
+  <div class="sidebar-footer">PAI Department<br>MAJESTIC RP · 2026</div>
 </aside>
 
 <main class="main">
   <div class="topbar">
     <div class="topbar-title" id="topbarTitle">Дашборд</div>
     <div class="topbar-actions">
-      <div class="sync-status" id="syncStatus"><span class="sync-dot" id="syncDot"></span><span id="syncText">—</span></div>
+      <div class="sync-status" id="syncStatus"><span class="sync-dot" id="syncDot"></span><span id="syncText">-</span></div>
       <button class="btn btn-ghost btn-sm" onclick="pullRemote()">↻ Обновить</button>
       <button class="btn btn-ghost btn-sm" onclick="exportData()">↑ Экспорт</button>
       <button class="btn btn-ghost btn-sm" onclick="document.getElementById('importFile').click()">↓ Импорт</button>
@@ -270,7 +270,7 @@
       <div class="section-header">
         <div>
           <div class="section-title">Состав отдела</div>
-          <div class="section-sub" id="memberCount">—</div>
+          <div class="section-sub" id="memberCount">-</div>
         </div>
       </div>
       <div class="card">
@@ -393,7 +393,7 @@
               <div class="form-group"><label>Статик (ID)</label><input type="text" id="addGameId" placeholder="123456"></div>
               <div class="form-group"><label>Должность</label><select id="addRank"></select></div>
             </div>
-            <div class="form-group"><label>OOC статус</label><input type="text" id="addOoc" placeholder="— или OOC Отпуск"></div>
+            <div class="form-group"><label>OOC статус</label><input type="text" id="addOoc" placeholder="- или OOC Отпуск" value="-"></div>
             <button class="btn btn-primary" onclick="addMemberFromSettings()">+ Добавить сотрудника</button>
           </div>
         </div>
@@ -543,28 +543,28 @@
 <script type="application/json" id="pai-embedded-state">
 {
   "members": [
-    { "id": "m1", "firstName": "Richi", "lastName": "Londo", "name": "Richi Londo", "gameId": "232430", "rank": "Curator of Department", "ooc": "—" },
-    { "id": "m2", "firstName": "Mir", "lastName": "Li", "name": "Mir Li", "gameId": "45430", "rank": "Head of Department", "ooc": "—" },
-    { "id": "m3", "firstName": "Francesco", "lastName": "DeLondo", "name": "Francesco DeLondo", "gameId": "99108", "rank": "Head of Department", "ooc": "—" },
-    { "id": "m4", "firstName": "Logan", "lastName": "Brooks", "name": "Logan Brooks", "gameId": "159733", "rank": "Head of Department", "ooc": "—" },
-    { "id": "m5", "firstName": "Kamilla", "lastName": "Initial", "name": "Kamilla Initial", "gameId": "159945", "rank": "Deputy Head of Department", "ooc": "—" },
+    { "id": "m1", "firstName": "Richi", "lastName": "Londo", "name": "Richi Londo", "gameId": "232430", "rank": "Curator of Department", "ooc": "-" },
+    { "id": "m2", "firstName": "Mir", "lastName": "Li", "name": "Mir Li", "gameId": "45430", "rank": "Head of Department", "ooc": "-" },
+    { "id": "m3", "firstName": "Francesco", "lastName": "DeLondo", "name": "Francesco DeLondo", "gameId": "99108", "rank": "Head of Department", "ooc": "-" },
+    { "id": "m4", "firstName": "Logan", "lastName": "Brooks", "name": "Logan Brooks", "gameId": "159733", "rank": "Head of Department", "ooc": "-" },
+    { "id": "m5", "firstName": "Kamilla", "lastName": "Initial", "name": "Kamilla Initial", "gameId": "159945", "rank": "Deputy Head of Department", "ooc": "-" },
     { "id": "m6", "firstName": "Edwin", "lastName": "Milton", "name": "Edwin Milton", "gameId": "218240", "rank": "Deputy Head of Department", "ooc": "OOC Отпуск 16.06.26-30.06.26" },
-    { "id": "m7", "firstName": "Zakura", "lastName": "Londo", "name": "Zakura Londo", "gameId": "273383", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m8", "firstName": "Princess", "lastName": "Londo", "name": "Princess Londo", "gameId": "256278", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m9", "firstName": "Molly", "lastName": "Londo", "name": "Molly Londo", "gameId": "58309", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m10", "firstName": "Miran", "lastName": "Zekari", "name": "Miran Zekari", "gameId": "34987", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m11", "firstName": "Archangel", "lastName": "Londo", "name": "Archangel Londo", "gameId": "239308", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m12", "firstName": "Satoru", "lastName": "Initial", "name": "Satoru Initial", "gameId": "201700", "rank": "Instructor of Department", "ooc": "—" },
+    { "id": "m7", "firstName": "Zakura", "lastName": "Londo", "name": "Zakura Londo", "gameId": "273383", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m8", "firstName": "Princess", "lastName": "Londo", "name": "Princess Londo", "gameId": "256278", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m9", "firstName": "Molly", "lastName": "Londo", "name": "Molly Londo", "gameId": "58309", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m10", "firstName": "Miran", "lastName": "Zekari", "name": "Miran Zekari", "gameId": "34987", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m11", "firstName": "Archangel", "lastName": "Londo", "name": "Archangel Londo", "gameId": "239308", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m12", "firstName": "Satoru", "lastName": "Initial", "name": "Satoru Initial", "gameId": "201700", "rank": "Instructor of Department", "ooc": "-" },
     { "id": "m13", "firstName": "Naylor", "lastName": "Stella", "name": "Naylor Stella", "gameId": "96776", "rank": "Instructor of Department", "ooc": "OOC Отпуск" },
-    { "id": "m14", "firstName": "Roma", "lastName": "Londovich", "name": "Roma Londovich", "gameId": "258012", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m15", "firstName": "Daryana", "lastName": "Londo", "name": "Daryana Londo", "gameId": "30514", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m16", "firstName": "Neko", "lastName": "Toujou", "name": "Neko Toujou", "gameId": "24300", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m17", "firstName": "Mack", "lastName": "Nightez", "name": "Mack Nightez", "gameId": "289844", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m18", "firstName": "Vanco", "lastName": "Londo", "name": "Vanco Londo", "gameId": "288208", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m19", "firstName": "Anthony", "lastName": "Wilson", "name": "Anthony Wilson", "gameId": "292488", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m20", "firstName": "Aomine", "lastName": "Londo", "name": "Aomine Londo", "gameId": "116222", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m21", "firstName": "Tom", "lastName": "Zerg", "name": "Tom Zerg", "gameId": "226491", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m22", "firstName": "Lana", "lastName": "Westcoast", "name": "Lana Westcoast", "gameId": "267626", "rank": "Instructor of Department", "ooc": "—" }
+    { "id": "m14", "firstName": "Roma", "lastName": "Londovich", "name": "Roma Londovich", "gameId": "258012", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m15", "firstName": "Daryana", "lastName": "Londo", "name": "Daryana Londo", "gameId": "30514", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m16", "firstName": "Neko", "lastName": "Toujou", "name": "Neko Toujou", "gameId": "24300", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m17", "firstName": "Mack", "lastName": "Nightez", "name": "Mack Nightez", "gameId": "289844", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m18", "firstName": "Vanco", "lastName": "Londo", "name": "Vanco Londo", "gameId": "288208", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m19", "firstName": "Anthony", "lastName": "Wilson", "name": "Anthony Wilson", "gameId": "292488", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m20", "firstName": "Aomine", "lastName": "Londo", "name": "Aomine Londo", "gameId": "116222", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m21", "firstName": "Tom", "lastName": "Zerg", "name": "Tom Zerg", "gameId": "226491", "rank": "Instructor of Department", "ooc": "-" },
+    { "id": "m22", "firstName": "Lana", "lastName": "Westcoast", "name": "Lana Westcoast", "gameId": "267626", "rank": "Instructor of Department", "ooc": "-" }
   ],
   "ranks": ["Curator of Department","Head of Department","Deputy Head of Department","Instructor of Department"],
   "activities": [
@@ -613,6 +613,7 @@
 
 <script>
 const DATA_PATH = 'data/state.json';
+const EMPTY_STATUS = '-';
 const GITHUB_SETTINGS_PASSWORD = '981864';
 const GITHUB_UNLOCK_KEY = 'pai_github_unlock';
 let state = null;
@@ -643,7 +644,37 @@ function normalizeMember(m) {
     m.lastName = parts.slice(1).join(' ') || '';
   }
   m.name = memberName(m);
+  if ('ooc' in m) m.ooc = normalizeStatus(m.ooc);
   return m;
+}
+
+function isEmptyStatus(s) {
+  return normalizeStatus(s) === EMPTY_STATUS;
+}
+
+function normalizeStatus(str) {
+  if (str == null || str === '') return EMPTY_STATUS;
+  let s = fixUtf8Mojibake(String(str).trim());
+  if (s === '\u2014' || s === '\u2013' || s === '\u2015' || s === EMPTY_STATUS) return EMPTY_STATUS;
+  if (/^â/.test(s) || s.includes('\uFFFD')) {
+    try {
+      const bytes = Uint8Array.from(s, c => c.charCodeAt(0) & 0xff);
+      const decoded = new TextDecoder('utf-8').decode(bytes);
+      if (decoded === '\u2014' || decoded === '\u2013' || decoded === EMPTY_STATUS) return EMPTY_STATUS;
+    } catch {}
+    if (s.length <= 4) return EMPTY_STATUS;
+  }
+  return s;
+}
+
+function repairStateTexts() {
+  let changed = false;
+  (state.members || []).forEach(m => {
+    const before = m.ooc;
+    m.ooc = normalizeStatus(m.ooc);
+    if (m.ooc !== before) changed = true;
+  });
+  return changed;
 }
 
 function getEmbeddedState() {
@@ -713,11 +744,12 @@ function encodeBase64Utf8(text) {
 }
 
 function fixUtf8Mojibake(str) {
-  if (!str || typeof str !== 'string' || !/[\u00C0-\u00FF\u00D0\u00D1]/.test(str)) return str;
+  if (!str || typeof str !== 'string') return str;
+  if (!/[\u0080-\u00FF\u00D0-\u00D1\uFFFD]/.test(str)) return str;
   try {
     const bytes = Uint8Array.from(str, c => c.charCodeAt(0) & 0xff);
     const fixed = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
-    if (/[\u0400-\u04FF]/.test(fixed)) return fixed;
+    if (fixed !== str) return fixed;
   } catch {}
   return str;
 }
@@ -843,6 +875,7 @@ async function pullRemote() {
     const result = await loadStateFromNetwork();
     state = result.state;
     ensureMeetingAttendance();
+    if (repairStateTexts()) scheduleSave();
     renderTab(currentTab);
     setSyncUI('ok', 'Обновлено ' + new Date().toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' }));
   } catch (e) {
@@ -963,7 +996,7 @@ document.querySelectorAll('.modal-overlay').forEach(o => {
 // ─── DASHBOARD ─────────────────────────────────────────
 function renderDashboard() {
   const total = state.members.length;
-  const onOoc = state.members.filter(m => m.ooc && m.ooc !== '—').length;
+  const onOoc = state.members.filter(m => !isEmptyStatus(m.ooc)).length;
   const totalPts = state.members.reduce((s, m) => s + getMemberTotal(m.id), 0);
   const att = state.meeting.attendance || {};
   const present = Object.values(att).filter(a => a.status === 'present').length;
@@ -986,7 +1019,7 @@ function renderDashboard() {
     <td class="mono" style="color:${m.total > 0 ? 'var(--green)' : 'var(--text3)'}">${m.total}</td></tr>
   `).join('');
 
-  const oocMembers = state.members.filter(m => m.ooc && m.ooc !== '—');
+  const oocMembers = state.members.filter(m => !isEmptyStatus(m.ooc));
   document.querySelector('#oocTable tbody').innerHTML = oocMembers.length
     ? oocMembers.map(m => `<tr><td><span class="${rankClass(m.rank)}">${m.name}</span></td><td><span class="badge badge-yellow">${m.ooc}</span></td></tr>`).join('')
     : `<tr><td colspan="2" style="text-align:center;color:var(--text3);padding:20px">Все активны</td></tr>`;
@@ -1045,7 +1078,7 @@ function renderMembers() {
       <td><span class="${rankClass(m.rank)}" style="font-weight:500">${m.name}</span></td>
       <td><span class="${rankBadgeClass(m.rank)}">${m.rank}</span></td>
       <td class="mono">#${m.gameId}</td>
-      <td>${m.ooc && m.ooc !== '—' ? `<span class="badge badge-yellow">${m.ooc}</span>` : '<span style="color:var(--text3)">—</span>'}</td>
+      <td>${!isEmptyStatus(m.ooc) ? `<span class="badge badge-yellow">${escapeAttr(m.ooc)}</span>` : `<span style="color:var(--text3)">${EMPTY_STATUS}</span>`}</td>
     </tr>
   `).join('');
 }
@@ -1159,7 +1192,7 @@ function renderMeetings() {
             ${statusLabel(status)}
           </button>
         </td>
-        <td><input type="text" value="${escapeAttr(a.note)}" placeholder="—" style="width:160px;padding:5px 8px;font-size:12px"
+        <td><input type="text" value="${escapeAttr(a.note)}" placeholder="${EMPTY_STATUS}" style="width:160px;padding:5px 8px;font-size:12px"
           onchange="setMeetingNote('${m.id}', this.value)"></td>
       </tr>
     `;
@@ -1238,7 +1271,7 @@ function renderCalls() {
     return `
       <div class="call-result-card ${r.pass ? 'pass' : 'fail'}">
         <div style="font-size:13px;font-weight:500">${c.name}</div>
-        <div style="font-size:11px;color:var(--text3);margin:4px 0">#${c.gameId || '—'}</div>
+        <div style="font-size:11px;color:var(--text3);margin:4px 0">#${c.gameId || EMPTY_STATUS}</div>
         <div class="stat-value" style="font-size:22px">${r.pct}%</div>
         <div style="margin-top:6px"><span class="badge ${r.pass ? 'badge-green' : 'badge-red'}">${r.pass ? 'ПРИНЯТ' : 'ОТКАЗ'}</span></div>
         <div style="font-size:11px;color:var(--text3);margin-top:4px;font-family:var(--mono)">${r.total.toFixed(1)} / ${state.questions.length}</div>
@@ -1361,12 +1394,12 @@ function addMemberFromSettings() {
   const lastName = document.getElementById('addLastName').value.trim();
   const gameId = document.getElementById('addGameId').value.trim();
   const rank = document.getElementById('addRank').value;
-  const ooc = document.getElementById('addOoc').value.trim() || '—';
+  const ooc = normalizeStatus(document.getElementById('addOoc').value.trim() || EMPTY_STATUS);
   if (!firstName || !lastName || !gameId) { toast('Заполните имя, фамилию и статик'); return; }
   const m = normalizeMember({ id: uid(), firstName, lastName, gameId, rank, ooc });
   state.members.push(m);
   ensureMeetingAttendance();
-  ['addFirstName','addLastName','addGameId','addOoc'].forEach(id => document.getElementById(id).value = id === 'addOoc' ? '—' : '');
+  ['addFirstName','addLastName','addGameId','addOoc'].forEach(id => document.getElementById(id).value = id === 'addOoc' ? EMPTY_STATUS : '');
   scheduleSave();
   renderAdmin();
   toast('Сотрудник добавлен');
@@ -1379,7 +1412,7 @@ function openEditMember(id) {
   document.getElementById('editFirstName').value = m.firstName || '';
   document.getElementById('editLastName').value = m.lastName || '';
   document.getElementById('editGameId').value = m.gameId || '';
-  document.getElementById('editOoc').value = m.ooc || '—';
+  document.getElementById('editOoc').value = m.ooc || EMPTY_STATUS;
   fillRankSelects();
   document.getElementById('editRank').value = m.rank;
   openModal('modalMember');
@@ -1392,7 +1425,7 @@ function saveMemberEdit() {
   m.lastName = document.getElementById('editLastName').value.trim();
   m.gameId = document.getElementById('editGameId').value.trim();
   m.rank = document.getElementById('editRank').value;
-  m.ooc = document.getElementById('editOoc').value.trim() || '—';
+  m.ooc = normalizeStatus(document.getElementById('editOoc').value.trim() || EMPTY_STATUS);
   normalizeMember(m);
   closeModal('modalMember');
   scheduleSave();
@@ -1529,9 +1562,11 @@ async function init() {
     const result = await loadStateFromNetwork();
     state = result.state;
     ensureMeetingAttendance();
+    if (repairStateTexts()) scheduleSave();
     renderTab(currentTab);
     setSyncUI('ok', 'Загружено · ' + state.members.length + ' чел.');
   } catch (e) {
+    repairStateTexts();
     setSyncUI('ok', 'Встроенные данные · ' + state.members.length + ' чел.');
   }
 
