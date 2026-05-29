@@ -308,11 +308,11 @@
     "date": "2026-05-29",
     "attendance": {
       "m1": {
-        "status": "present",
+        "status": "none",
         "note": ""
       },
       "m2": {
-        "status": "present",
+        "status": "none",
         "note": ""
       },
       "m3": {
