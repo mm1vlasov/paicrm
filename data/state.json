@@ -1,51 +1,394 @@
 {
   "members": [
-    { "id": "m1", "firstName": "Richi", "lastName": "Londo", "name": "Richi Londo", "gameId": "232430", "rank": "Curator of Department", "ooc": "-" },
-    { "id": "m2", "firstName": "Mir", "lastName": "Li", "name": "Mir Li", "gameId": "45430", "rank": "Head of Department", "ooc": "-" },
-    { "id": "m3", "firstName": "Francesco", "lastName": "DeLondo", "name": "Francesco DeLondo", "gameId": "99108", "rank": "Head of Department", "ooc": "-" },
-    { "id": "m4", "firstName": "Logan", "lastName": "Brooks", "name": "Logan Brooks", "gameId": "159733", "rank": "Head of Department", "ooc": "-" },
-    { "id": "m5", "firstName": "Kamilla", "lastName": "Initial", "name": "Kamilla Initial", "gameId": "159945", "rank": "Deputy Head of Department", "ooc": "-" },
-    { "id": "m6", "firstName": "Edwin", "lastName": "Milton", "name": "Edwin Milton", "gameId": "218240", "rank": "Deputy Head of Department", "ooc": "OOC Отпуск 16.06.26-30.06.26" },
-    { "id": "m7", "firstName": "Zakura", "lastName": "Londo", "name": "Zakura Londo", "gameId": "273383", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m8", "firstName": "Princess", "lastName": "Londo", "name": "Princess Londo", "gameId": "256278", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m9", "firstName": "Molly", "lastName": "Londo", "name": "Molly Londo", "gameId": "58309", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m10", "firstName": "Miran", "lastName": "Zekari", "name": "Miran Zekari", "gameId": "34987", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m11", "firstName": "Archangel", "lastName": "Londo", "name": "Archangel Londo", "gameId": "239308", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m12", "firstName": "Satoru", "lastName": "Initial", "name": "Satoru Initial", "gameId": "201700", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m13", "firstName": "Naylor", "lastName": "Stella", "name": "Naylor Stella", "gameId": "96776", "rank": "Instructor of Department", "ooc": "OOC Отпуск" },
-    { "id": "m14", "firstName": "Roma", "lastName": "Londovich", "name": "Roma Londovich", "gameId": "258012", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m15", "firstName": "Daryana", "lastName": "Londo", "name": "Daryana Londo", "gameId": "30514", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m16", "firstName": "Neko", "lastName": "Toujou", "name": "Neko Toujou", "gameId": "24300", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m17", "firstName": "Mack", "lastName": "Nightez", "name": "Mack Nightez", "gameId": "289844", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m18", "firstName": "Vanco", "lastName": "Londo", "name": "Vanco Londo", "gameId": "288208", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m19", "firstName": "Anthony", "lastName": "Wilson", "name": "Anthony Wilson", "gameId": "292488", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m20", "firstName": "Aomine", "lastName": "Londo", "name": "Aomine Londo", "gameId": "116222", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m21", "firstName": "Tom", "lastName": "Zerg", "name": "Tom Zerg", "gameId": "226491", "rank": "Instructor of Department", "ooc": "-" },
-    { "id": "m22", "firstName": "Lana", "lastName": "Westcoast", "name": "Lana Westcoast", "gameId": "267626", "rank": "Instructor of Department", "ooc": "-" }
+    {
+      "id": "m1",
+      "firstName": "Richi",
+      "lastName": "Londo",
+      "name": "Richi Londo",
+      "gameId": "232430",
+      "rank": "Curator of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m2",
+      "firstName": "Mir",
+      "lastName": "Li",
+      "name": "Mir Li",
+      "gameId": "45430",
+      "rank": "Head of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m3",
+      "firstName": "Francesco",
+      "lastName": "DeLondo",
+      "name": "Francesco DeLondo",
+      "gameId": "99108",
+      "rank": "Head of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m4",
+      "firstName": "Logan",
+      "lastName": "Brooks",
+      "name": "Logan Brooks",
+      "gameId": "159733",
+      "rank": "Head of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m5",
+      "firstName": "Kamilla",
+      "lastName": "Initial",
+      "name": "Kamilla Initial",
+      "gameId": "159945",
+      "rank": "Deputy Head of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m6",
+      "firstName": "Edwin",
+      "lastName": "Milton",
+      "name": "Edwin Milton",
+      "gameId": "218240",
+      "rank": "Deputy Head of Department",
+      "ooc": "OOC Отпуск 16.06.26-30.06.26"
+    },
+    {
+      "id": "m7",
+      "firstName": "Zakura",
+      "lastName": "Londo",
+      "name": "Zakura Londo",
+      "gameId": "273383",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m8",
+      "firstName": "Princess",
+      "lastName": "Londo",
+      "name": "Princess Londo",
+      "gameId": "256278",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m9",
+      "firstName": "Molly",
+      "lastName": "Londo",
+      "name": "Molly Londo",
+      "gameId": "58309",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m10",
+      "firstName": "Miran",
+      "lastName": "Zekari",
+      "name": "Miran Zekari",
+      "gameId": "34987",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m11",
+      "firstName": "Archangel",
+      "lastName": "Londo",
+      "name": "Archangel Londo",
+      "gameId": "239308",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m12",
+      "firstName": "Satoru",
+      "lastName": "Initial",
+      "name": "Satoru Initial",
+      "gameId": "201700",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m13",
+      "firstName": "Naylor",
+      "lastName": "Stella",
+      "name": "Naylor Stella",
+      "gameId": "96776",
+      "rank": "Instructor of Department",
+      "ooc": "OOC Отпуск"
+    },
+    {
+      "id": "m14",
+      "firstName": "Roma",
+      "lastName": "Londovich",
+      "name": "Roma Londovich",
+      "gameId": "258012",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m15",
+      "firstName": "Daryana",
+      "lastName": "Londo",
+      "name": "Daryana Londo",
+      "gameId": "30514",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m16",
+      "firstName": "Neko",
+      "lastName": "Toujou",
+      "name": "Neko Toujou",
+      "gameId": "24300",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m17",
+      "firstName": "Mack",
+      "lastName": "Nightez",
+      "name": "Mack Nightez",
+      "gameId": "289844",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m18",
+      "firstName": "Vanco",
+      "lastName": "Londo",
+      "name": "Vanco Londo",
+      "gameId": "288208",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m19",
+      "firstName": "Anthony",
+      "lastName": "Wilson",
+      "name": "Anthony Wilson",
+      "gameId": "292488",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m20",
+      "firstName": "Aomine",
+      "lastName": "Londo",
+      "name": "Aomine Londo",
+      "gameId": "116222",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m21",
+      "firstName": "Tom",
+      "lastName": "Zerg",
+      "name": "Tom Zerg",
+      "gameId": "226491",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    },
+    {
+      "id": "m22",
+      "firstName": "Lana",
+      "lastName": "Westcoast",
+      "name": "Lana Westcoast",
+      "gameId": "267626",
+      "rank": "Instructor of Department",
+      "ooc": "-"
+    }
   ],
   "ranks": [
     "Curator of Department",
     "Head of Department",
     "Deputy Head of Department",
-    "Instructor of Department"
+    "Instructor of Department",
+    "Main Staff"
   ],
   "activities": [
-    { "id": "a1", "code": "LC", "name": "Выдача лицензии", "points": 15, "highStaff": false, "note": "Заполнить количество выданных лицензий" },
-    { "id": "a2", "code": "EM", "name": "Трудоустройство (кадр. аудит)", "points": 30, "highStaff": false, "note": "Оформление нового сотрудника" },
-    { "id": "a3", "code": "EX", "name": "Практический экзамен", "points": 20, "highStaff": false, "note": "Проведение практического экзамена" },
-    { "id": "a4", "code": "RP", "name": "Проверка отчётность-pa", "points": 10, "highStaff": false, "note": "Проверка отчётности в канале" },
-    { "id": "a5", "code": "GV", "name": "Отчётность по гос. волнам", "points": 30, "highStaff": false, "note": "3 скриншота = 1 запись" },
-    { "id": "a6", "code": "CK", "name": "Проверка трудоустройство", "points": 10, "highStaff": false, "note": "Проверка документов трудоустройства" },
-    { "id": "a7", "code": "UP", "name": "Запрос-на-повышение", "points": 5, "highStaff": false, "note": "Рассмотрение запроса на повышение" },
-    { "id": "a8", "code": "AC", "name": "Перевод из академии", "points": 10, "highStaff": false, "note": "Перевод курсанта в полноценный состав" },
-    { "id": "a9", "code": "AG", "name": "Агитация в канал", "points": 5, "highStaff": true, "note": "Только для High Staff (Head+)" },
-    { "id": "a10", "code": "CL", "name": "Обзвон в отдел PAI", "points": 30, "highStaff": true, "note": "Только для High Staff (Head+)" },
-    { "id": "a11", "code": "DS", "name": "Рапорт-на-увольнение", "points": 5, "highStaff": true, "note": "Только для High Staff (Head+)" }
+    {
+      "id": "a1",
+      "code": "LC",
+      "name": "Выдача лицензии",
+      "points": 15,
+      "highStaff": false,
+      "note": "Заполнить количество выданных лицензий"
+    },
+    {
+      "id": "a2",
+      "code": "EM",
+      "name": "Трудоустройство (кадр. аудит)",
+      "points": 30,
+      "highStaff": false,
+      "note": "Оформление нового сотрудника"
+    },
+    {
+      "id": "a3",
+      "code": "EX",
+      "name": "Практический экзамен",
+      "points": 20,
+      "highStaff": false,
+      "note": "Проведение практического экзамена"
+    },
+    {
+      "id": "a4",
+      "code": "RP",
+      "name": "Проверка отчётность-pa",
+      "points": 10,
+      "highStaff": false,
+      "note": "Проверка отчётности в канале"
+    },
+    {
+      "id": "a5",
+      "code": "GV",
+      "name": "Отчётность по гос. волнам",
+      "points": 30,
+      "highStaff": false,
+      "note": "3 скриншота = 1 запись"
+    },
+    {
+      "id": "a6",
+      "code": "CK",
+      "name": "Проверка трудоустройство",
+      "points": 10,
+      "highStaff": false,
+      "note": "Проверка документов трудоустройства"
+    },
+    {
+      "id": "a7",
+      "code": "UP",
+      "name": "Запрос-на-повышение",
+      "points": 5,
+      "highStaff": false,
+      "note": "Рассмотрение запроса на повышение"
+    },
+    {
+      "id": "a8",
+      "code": "AC",
+      "name": "Перевод из академии",
+      "points": 10,
+      "highStaff": false,
+      "note": "Перевод курсанта в полноценный состав"
+    },
+    {
+      "id": "a9",
+      "code": "AG",
+      "name": "Агитация в канал",
+      "points": 5,
+      "highStaff": true,
+      "note": "Только для High Staff (Head+)"
+    },
+    {
+      "id": "a10",
+      "code": "CL",
+      "name": "Обзвон в отдел PAI",
+      "points": 30,
+      "highStaff": true,
+      "note": "Только для High Staff (Head+)"
+    },
+    {
+      "id": "a11",
+      "code": "DS",
+      "name": "Рапорт-на-увольнение",
+      "points": 5,
+      "highStaff": true,
+      "note": "Только для High Staff (Head+)"
+    }
   ],
   "weeklyScores": {},
   "meeting": {
-    "date": "",
-    "attendance": {}
+    "date": "2026-05-29",
+    "attendance": {
+      "m1": {
+        "status": "none",
+        "note": ""
+      },
+      "m2": {
+        "status": "none",
+        "note": ""
+      },
+      "m3": {
+        "status": "none",
+        "note": ""
+      },
+      "m4": {
+        "status": "none",
+        "note": ""
+      },
+      "m5": {
+        "status": "none",
+        "note": ""
+      },
+      "m6": {
+        "status": "none",
+        "note": ""
+      },
+      "m7": {
+        "status": "none",
+        "note": ""
+      },
+      "m8": {
+        "status": "none",
+        "note": ""
+      },
+      "m9": {
+        "status": "none",
+        "note": ""
+      },
+      "m10": {
+        "status": "none",
+        "note": ""
+      },
+      "m11": {
+        "status": "none",
+        "note": ""
+      },
+      "m12": {
+        "status": "none",
+        "note": ""
+      },
+      "m13": {
+        "status": "none",
+        "note": ""
+      },
+      "m14": {
+        "status": "none",
+        "note": ""
+      },
+      "m15": {
+        "status": "none",
+        "note": ""
+      },
+      "m16": {
+        "status": "none",
+        "note": ""
+      },
+      "m17": {
+        "status": "none",
+        "note": ""
+      },
+      "m18": {
+        "status": "none",
+        "note": ""
+      },
+      "m19": {
+        "status": "none",
+        "note": ""
+      },
+      "m20": {
+        "status": "none",
+        "note": ""
+      },
+      "m21": {
+        "status": "none",
+        "note": ""
+      },
+      "m22": {
+        "status": "none",
+        "note": ""
+      }
+    }
   },
   "call": {
     "date": "",
@@ -53,27 +396,124 @@
     "scores": {}
   },
   "questions": [
-    { "id": "q1", "q": "Кто является старшим составом?", "a": "От Dep.H и выше" },
-    { "id": "q2", "q": "Иерархия хай рангов?", "a": "Deputy Head → Head → Curator → Assistant → Advisor → Deputy Chief → Chief" },
-    { "id": "q3", "q": "Какой отдел отвечает за внутренний контроль и надзор за сотрудниками?", "a": "IAD" },
-    { "id": "q4", "q": "Кто выдаёт спецуху?", "a": "Storekeeper" },
-    { "id": "q5", "q": "Что нужно сделать после получения спецухи?", "a": "Составить отчёт о получении. Рабочее время 14:00–22:00" },
-    { "id": "q6", "q": "Правила IC и OOC отпуска?", "a": "IC: перерыв не более 5 ч, 1 раз в день, не освобождает от строёв. OOC: не более 7 дней, нельзя заходить в игру" },
-    { "id": "q7", "q": "Кто может стоять в холле?", "a": "IAD и PAI" },
-    { "id": "q8", "q": "Как принимать человека во фракцию?", "a": "Проверить заявку, провести собеседование, оформить кадровый аудит" },
-    { "id": "q9", "q": "Что самое важное при проверке отчёта?", "a": "1. Имя/фамилия/статик вручную и совпадают. 2. Не повышался сегодня. 3. Есть бодик. 4. Нет варнов" },
-    { "id": "q10", "q": "Что делаем после проверки отчёта?", "a": "СОЗДАТЬ ВЕТКУ. Если ДА — отправить в канал запроса на повышение. Если НЕТ — объяснить причину отказа" },
-    { "id": "q11", "q": "Почему нельзя проверять отчёты не по порядку?", "a": "Есть вероятность, что те, кто выше, останутся непроверенными" },
-    { "id": "q12", "q": "Правила агитаций?", "a": "Агитация подаётся с 10:00 до 22:00 МСК. Пауза между агитациями отделов — 1 час (60 минут)" },
-    { "id": "q13", "q": "Правила выдачи лицензий?", "a": "Проверить документы, выдать лицензию, зафиксировать в журнале" },
-    { "id": "q14", "q": "Как повышать человека по восстановлению или переводу?", "a": "Проверить одобренный запрос, одобренный ранг (реакцией), в кадровом указать ссылку на одобренный запрос" },
-    { "id": "q15", "q": "Что делать, если написал кадровый неправильно?", "a": "Удалить или поставить реакцию крестика" },
-    { "id": "q16", "q": "Разрешено ли младшему составу (PA Cadet, Officer) проводить задержание?", "a": "Нет. Исключение: обездвижить и надеть наручники для передачи агентам" },
-    { "id": "q17", "q": "Может ли отдел PAI выдавать наказания (ВУ) отделу PA?", "a": "Да, может" },
-    { "id": "q18", "q": "Обязан ли сотрудник вызвать прока по запросу адвоката?", "a": "Да, если аргументированно и с перечислением статей" },
-    { "id": "q19", "q": "Почему обязательно проверять человека с розыском по базе данных?", "a": "Проверить — функциональный розыск или нет" },
-    { "id": "q20", "q": "Можно ли дать больше 5 лет срока?", "a": "Только по решению суда с постановлением" },
-    { "id": "q21", "q": "Послать на хуй — какая статья?", "a": "15.8 Провокация" },
-    { "id": "q22", "q": "Отличие 12.8 от 12.8.1?", "a": "Гос. и негос. оружие" }
-  ]
+    {
+      "id": "q1",
+      "q": "Кто является старшим составом?",
+      "a": "От Dep.H и выше"
+    },
+    {
+      "id": "q2",
+      "q": "Иерархия хай рангов?",
+      "a": "Deputy Head → Head → Curator → Assistant → Advisor → Deputy Chief → Chief"
+    },
+    {
+      "id": "q3",
+      "q": "Какой отдел отвечает за внутренний контроль и надзор за сотрудниками?",
+      "a": "IAD"
+    },
+    {
+      "id": "q4",
+      "q": "Кто выдаёт спецуху?",
+      "a": "Storekeeper"
+    },
+    {
+      "id": "q5",
+      "q": "Что нужно сделать после получения спецухи?",
+      "a": "Составить отчёт о получении. Рабочее время 14:00–22:00"
+    },
+    {
+      "id": "q6",
+      "q": "Правила IC и OOC отпуска?",
+      "a": "IC: перерыв не более 5 ч, 1 раз в день, не освобождает от строёв. OOC: не более 7 дней, нельзя заходить в игру"
+    },
+    {
+      "id": "q7",
+      "q": "Кто может стоять в холле?",
+      "a": "IAD и PAI"
+    },
+    {
+      "id": "q8",
+      "q": "Как принимать человека во фракцию?",
+      "a": "Проверить заявку, провести собеседование, оформить кадровый аудит"
+    },
+    {
+      "id": "q9",
+      "q": "Что самое важное при проверке отчёта?",
+      "a": "1. Имя/фамилия/статик вручную и совпадают. 2. Не повышался сегодня. 3. Есть бодик. 4. Нет варнов"
+    },
+    {
+      "id": "q10",
+      "q": "Что делаем после проверки отчёта?",
+      "a": "СОЗДАТЬ ВЕТКУ. Если ДА — отправить в канал запроса на повышение. Если НЕТ — объяснить причину отказа"
+    },
+    {
+      "id": "q11",
+      "q": "Почему нельзя проверять отчёты не по порядку?",
+      "a": "Есть вероятность, что те, кто выше, останутся непроверенными"
+    },
+    {
+      "id": "q12",
+      "q": "Правила агитаций?",
+      "a": "Агитация подаётся с 10:00 до 22:00 МСК. Пауза между агитациями отделов — 1 час (60 минут)"
+    },
+    {
+      "id": "q13",
+      "q": "Правила выдачи лицензий?",
+      "a": "Проверить документы, выдать лицензию, зафиксировать в журнале"
+    },
+    {
+      "id": "q14",
+      "q": "Как повышать человека по восстановлению или переводу?",
+      "a": "Проверить одобренный запрос, одобренный ранг (реакцией), в кадровом указать ссылку на одобренный запрос"
+    },
+    {
+      "id": "q15",
+      "q": "Что делать, если написал кадровый неправильно?",
+      "a": "Удалить или поставить реакцию крестика"
+    },
+    {
+      "id": "q16",
+      "q": "Разрешено ли младшему составу (PA Cadet, Officer) проводить задержание?",
+      "a": "Нет. Исключение: обездвижить и надеть наручники для передачи агентам"
+    },
+    {
+      "id": "q17",
+      "q": "Может ли отдел PAI выдавать наказания (ВУ) отделу PA?",
+      "a": "Да, может"
+    },
+    {
+      "id": "q18",
+      "q": "Обязан ли сотрудник вызвать прока по запросу адвоката?",
+      "a": "Да, если аргументированно и с перечислением статей"
+    },
+    {
+      "id": "q19",
+      "q": "Почему обязательно проверять человека с розыском по базе данных?",
+      "a": "Проверить — функциональный розыск или нет"
+    },
+    {
+      "id": "q20",
+      "q": "Можно ли дать больше 5 лет срока?",
+      "a": "Только по решению суда с постановлением"
+    },
+    {
+      "id": "q21",
+      "q": "Послать на хуй — какая статья?",
+      "a": "15.8 Провокация"
+    },
+    {
+      "id": "q22",
+      "q": "Отличие 12.8 от 12.8.1?",
+      "a": "Гос. и негос. оружие"
+    }
+  ],
+  "sync": {
+    "owner": "",
+    "repo": "",
+    "branch": "main",
+    "path": "data/state.json",
+    "token": "",
+    "sha": "",
+    "pollSec": 30
+  }
 }
