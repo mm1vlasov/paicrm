@@ -301,7 +301,7 @@
     "date": "2026-05-29",
     "attendance": {
       "m1": {
-        "status": "none",
+        "status": "present",
         "note": ""
       },
       "m2": {
