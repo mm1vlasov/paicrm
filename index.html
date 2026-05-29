@@ -420,7 +420,7 @@
             <button class="btn btn-primary btn-sm" onclick="saveSyncSettings()" disabled id="syncSaveBtn">Сохранить и синхронизировать</button>
           </div>
           <div class="github-sync-lock" id="githubSyncLock">
-            <button type="button" class="btn btn-primary" onclick="unlockGithubSync()">Введите пароль</button>
+            <button type="button" class="btn btn-primary" onclick="unlockGithubSync()">Ввести пароль: 981864</button>
           </div>
         </div>
 
@@ -1660,6 +1660,7 @@ async function init() {
   setSyncUI('pending', 'Загрузка из GitHub...');
   try { localStorage.removeItem('pai_sync_config'); } catch {}
   await loadLocalSyncFile();
+  if (getGithubToken()) saveGithubToken(getGithubToken());
 
   try {
     const result = await loadStateFromNetwork();
@@ -1669,8 +1670,8 @@ async function init() {
     renderTab(currentTab);
     const cfg = getSyncConfig();
     if (!cfg.token && cfg.owner && cfg.repo) {
-      setSyncUI('err', 'Нужен токен для записи');
-      toast('Данные загружены из Git. Введите токен в настройках для сохранения.');
+      setSyncUI('err', 'Нужен токен');
+      toast('Настройки → Синхронизация → пароль 981864 → вставьте токен → Сохранить');
     } else {
       setSyncUI('ok', 'Git · ' + state.members.length + ' чел.');
     }
