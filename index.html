@@ -403,7 +403,7 @@
           <div class="card-body github-sync-body locked" id="githubSyncBody">
             <p style="color:var(--text2);font-size:12px;margin-bottom:12px;line-height:1.6">
               Данные хранятся в <code style="color:var(--text)">data/state.json</code> репозитория. Укажите репозиторий и токен с правом <code style="color:var(--text)">repo</code> — изменения будут видны всем на сайте.
-              <br><span style="color:var(--text3)">Токен в <code style="color:var(--text)">sync.config.js</code> (в .gitignore, на сервер попадает при деплое).</span>
+              <br><span style="color:var(--text3)">Токен — в файле <code style="color:var(--text)">github.token</code> (указан в <code style="color:var(--text)">.gitignore</code>, в Git не попадает). На GitHub Pages — введите один раз ниже.</span>
             </p>
             <div class="form-row">
               <div class="form-group"><label>Owner</label><input type="text" id="syncOwner" placeholder="username" disabled></div>
@@ -612,9 +612,9 @@
 }
 </script>
 
-<script src="sync.config.js"></script>
 <script>
 const DATA_PATH = 'data/state.json';
+const GITHUB_TOKEN_FILE = 'github.token';
 const DEFAULT_SYNC = { owner: 'mm1vlasov', repo: 'paicrm', branch: 'main', path: 'data/state.json', pollSec: 30 };
 const EMPTY_STATUS = '-';
 const GITHUB_SETTINGS_PASSWORD = '981864';
@@ -627,9 +627,6 @@ let saveTimer = null;
 let pollTimer = null;
 let editMemberId = null;
 let remoteSha = '';
-let localSyncSecrets = null;
-
-const LOCAL_SYNC_PATHS = ['sync.local.json', 'sync.config.json', 'data/sync.local.json'];
 
 const tabTitles = {
   dashboard: 'Дашборд', members: 'Состав отдела', scores: 'Еженедельные баллы',
@@ -803,22 +800,8 @@ function updateGithubSyncLock() {
 }
 
 // ─── SYNC / GITHUB ─────────────────────────────────────
-function applyWindowSyncConfig() {
-  const c = window.PAI_SYNC_CONFIG;
-  if (!c || typeof c !== 'object') return null;
-  localSyncSecrets = {
-    owner: c.owner || '',
-    repo: c.repo || '',
-    branch: c.branch || 'main',
-    path: c.path || 'data/state.json',
-    token: c.token || ''
-  };
-  if (localSyncSecrets.token) saveGithubToken(localSyncSecrets.token);
-  return localSyncSecrets;
-}
-
 function getGithubToken() {
-  return window.PAI_SYNC_CONFIG?.token || localStorage.getItem(GITHUB_TOKEN_KEY) || localSyncSecrets?.token || '';
+  return localStorage.getItem(GITHUB_TOKEN_KEY) || '';
 }
 
 function saveGithubToken(token) {
@@ -826,38 +809,29 @@ function saveGithubToken(token) {
   else localStorage.removeItem(GITHUB_TOKEN_KEY);
 }
 
-async function loadLocalSyncFile() {
-  if (applyWindowSyncConfig()) return localSyncSecrets;
-  for (const path of LOCAL_SYNC_PATHS) {
-    try {
-      const res = await fetch(path + '?t=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) continue;
-      const data = JSON.parse(await res.text());
-      localSyncSecrets = {
-        owner: data.owner || '',
-        repo: data.repo || '',
-        branch: data.branch || 'main',
-        path: data.path || 'data/state.json',
-        token: data.token || ''
-      };
-      if (localSyncSecrets.token) saveGithubToken(localSyncSecrets.token);
-      return localSyncSecrets;
-    } catch {}
-  }
-  return null;
+async function loadGithubTokenFile() {
+  try {
+    const res = await fetch(GITHUB_TOKEN_FILE + '?t=' + Date.now(), { cache: 'no-store' });
+    if (!res.ok) return false;
+    const t = (await res.text()).trim().split(/\r?\n/)[0].trim();
+    if (t && /^(ghp_|github_pat_)/.test(t)) {
+      saveGithubToken(t);
+      return true;
+    }
+  } catch {}
+  return false;
 }
 
 function getSyncConfig() {
   const sync = state?.sync || getEmbeddedState()?.sync || {};
-  const local = localSyncSecrets || {};
   const d = DEFAULT_SYNC;
   return {
-    owner: sync.owner || local.owner || d.owner,
-    repo: sync.repo || local.repo || d.repo,
-    branch: sync.branch || local.branch || d.branch,
-    path: sync.path || local.path || d.path,
-    pollSec: sync.pollSec || local.pollSec || d.pollSec,
-    sha: sync.sha || local.sha || '',
+    owner: sync.owner || d.owner,
+    repo: sync.repo || d.repo,
+    branch: sync.branch || d.branch,
+    path: sync.path || d.path,
+    pollSec: sync.pollSec || d.pollSec,
+    sha: sync.sha || '',
     token: getGithubToken()
   };
 }
@@ -1675,8 +1649,7 @@ async function clearAllData() {
 async function init() {
   setSyncUI('pending', 'Загрузка из GitHub...');
   try { localStorage.removeItem('pai_sync_config'); } catch {}
-  await loadLocalSyncFile();
-  if (getGithubToken()) saveGithubToken(getGithubToken());
+  await loadGithubTokenFile();
 
   try {
     const result = await loadStateFromNetwork();
