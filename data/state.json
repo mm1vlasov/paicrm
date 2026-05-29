@@ -296,7 +296,11 @@
       "note": "Только для High Staff (Head+)"
     }
   ],
-  "weeklyScores": {},
+  "weeklyScores": {
+    "m1": {
+      "a1": 1
+    }
+  },
   "meeting": {
     "date": "2026-05-29",
     "attendance": {
