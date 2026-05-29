@@ -546,7 +546,7 @@
   },
   "reprimands": {
     "m1": {
-      "verbal": 2,
+      "verbal": 0,
       "strict": 0
     },
     "m2": {
