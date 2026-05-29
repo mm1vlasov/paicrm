@@ -1,0 +1,7 @@
+window.PAI_SYNC_CONFIG = {
+  owner: 'mm1vlasov',
+  repo: 'paicrm',
+  branch: 'main',
+  path: 'data/state.json',
+  token: 'ghp_ВАШ_ТОКЕН'
+};
