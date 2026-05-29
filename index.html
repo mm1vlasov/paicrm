@@ -845,10 +845,16 @@ async function loadStateFromUrl(url) {
   return migrateState(JSON.parse(text));
 }
 
+// Helper: path must keep real slashes — encodeURIComponent breaks nested paths like data/state.json
+function ghFilePath(cfg) {
+  return (cfg.path || 'data/state.json').replace(/^\//, '');
+}
+
 async function loadFromGitHub(cfg) {
-  const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path || 'data/state.json')}?ref=${encodeURIComponent(cfg.branch || 'main')}`;
+  const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${ghFilePath(cfg)}?ref=${encodeURIComponent(cfg.branch || 'main')}&t=${Date.now()}`;
   const res = await fetch(api, {
-    headers: { Accept: 'application/vnd.github+json', Authorization: cfg.token ? `Bearer ${cfg.token}` : '' }
+    cache: 'no-store',
+    headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${cfg.token}` }
   });
   if (!res.ok) throw new Error('GitHub ' + res.status);
   const data = await res.json();
@@ -858,9 +864,10 @@ async function loadFromGitHub(cfg) {
 }
 
 async function saveToGitHub(cfg) {
-  // Always fetch the current SHA right before PUT — prevents "does not match" on concurrent edits
-  const shaApi = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path || 'data/state.json')}?ref=${encodeURIComponent(cfg.branch || 'main')}`;
+  // Fetch fresh SHA every time — no-store + timestamp ensures no browser cache
+  const shaApi = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${ghFilePath(cfg)}?ref=${encodeURIComponent(cfg.branch || 'main')}&t=${Date.now()}`;
   const shaRes = await fetch(shaApi, {
+    cache: 'no-store',
     headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${cfg.token}` }
   });
   if (!shaRes.ok) throw new Error('GitHub SHA ' + shaRes.status);
@@ -868,7 +875,7 @@ async function saveToGitHub(cfg) {
   remoteSha = shaData.sha;
 
   const content = encodeBase64Utf8(JSON.stringify(state, null, 2));
-  const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path || 'data/state.json')}`;
+  const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${ghFilePath(cfg)}`;
   const body = { message: 'PAI CRM: update state', content, branch: cfg.branch || 'main', sha: remoteSha };
   const res = await fetch(api, {
     method: 'PUT',
