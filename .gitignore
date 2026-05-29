@@ -1,6 +1,6 @@
 .DS_Store
 Thumbs.db
 *.log
-
-# GitHub PAT — этот файл не коммитится в репозиторий
-github.token
+sync.local.json
+.env
+.env.*
