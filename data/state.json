@@ -512,12 +512,11 @@
     }
   ],
   "sync": {
-    "owner": "",
-    "repo": "",
+    "owner": "mm1vlasov",
+    "repo": "paicrm",
     "branch": "main",
     "path": "data/state.json",
-    "token": "",
-    "sha": "",
-    "pollSec": 30
+    "pollSec": 30,
+    "sha": ""
   }
 }
