@@ -7,7 +7,7 @@
       "name": "Richi Londo",
       "gameId": "232430",
       "rank": "Curator of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m2",
@@ -16,7 +16,7 @@
       "name": "Mir Li",
       "gameId": "45430",
       "rank": "Head of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m3",
@@ -25,7 +25,7 @@
       "name": "Francesco DeLondo",
       "gameId": "99108",
       "rank": "Head of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m4",
@@ -34,7 +34,7 @@
       "name": "Logan Brooks",
       "gameId": "159733",
       "rank": "Head of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m5",
@@ -43,7 +43,7 @@
       "name": "Kamilla Initial",
       "gameId": "159945",
       "rank": "Deputy Head of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m6",
@@ -61,7 +61,7 @@
       "name": "Zakura Londo",
       "gameId": "273383",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m8",
@@ -70,7 +70,7 @@
       "name": "Princess Londo",
       "gameId": "256278",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m9",
@@ -79,7 +79,7 @@
       "name": "Molly Londo",
       "gameId": "58309",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m10",
@@ -88,7 +88,7 @@
       "name": "Miran Zekari",
       "gameId": "34987",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m11",
@@ -97,7 +97,7 @@
       "name": "Archangel Londo",
       "gameId": "239308",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m12",
@@ -106,7 +106,7 @@
       "name": "Satoru Initial",
       "gameId": "201700",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m13",
@@ -124,7 +124,7 @@
       "name": "Roma Londovich",
       "gameId": "258012",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m15",
@@ -133,7 +133,7 @@
       "name": "Daryana Londo",
       "gameId": "30514",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m16",
@@ -142,7 +142,7 @@
       "name": "Neko Toujou",
       "gameId": "24300",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m17",
@@ -151,7 +151,7 @@
       "name": "Mack Nightez",
       "gameId": "289844",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m18",
@@ -160,7 +160,7 @@
       "name": "Vanco Londo",
       "gameId": "288208",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m19",
@@ -169,7 +169,7 @@
       "name": "Anthony Wilson",
       "gameId": "292488",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m20",
@@ -178,7 +178,7 @@
       "name": "Aomine Londo",
       "gameId": "116222",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m21",
@@ -187,7 +187,7 @@
       "name": "Tom Zerg",
       "gameId": "226491",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     },
     {
       "id": "m22",
@@ -196,7 +196,7 @@
       "name": "Lana Westcoast",
       "gameId": "267626",
       "rank": "Instructor of Department",
-      "ooc": "â"
+      "ooc": "-"
     }
   ],
   "ranks": [
@@ -390,8 +390,13 @@
     }
   },
   "call": {
-    "date": "",
-    "candidates": [],
+    "date": "2026-05-29",
+    "candidates": [
+      {
+        "name": "",
+        "gameId": ""
+      }
+    ],
     "scores": {}
   },
   "questions": [
@@ -403,7 +408,7 @@
     {
       "id": "q2",
       "q": "Иерархия хай рангов?",
-      "a": "Deputy Head â Head â Curator â Assistant â Advisor â Deputy Chief â Chief"
+      "a": "Deputy Head → Head → Curator → Assistant → Advisor → Deputy Chief → Chief"
     },
     {
       "id": "q3",
