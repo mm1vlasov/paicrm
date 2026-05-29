@@ -2,7 +2,5 @@
 Thumbs.db
 *.log
 
-# Токен GitHub — только локально / генерируется при деплое Pages, в Git не коммитить
-sync.local.json
-sync.config.js
-data/sync.local.json
+# GitHub PAT — этот файл не коммитится в репозиторий
+github.token
