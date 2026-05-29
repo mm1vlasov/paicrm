@@ -403,6 +403,7 @@
           <div class="card-body github-sync-body locked" id="githubSyncBody">
             <p style="color:var(--text2);font-size:12px;margin-bottom:12px;line-height:1.6">
               Данные хранятся в <code style="color:var(--text)">data/state.json</code> репозитория. Укажите репозиторий и токен с правом <code style="color:var(--text)">repo</code> — изменения будут видны всем на сайте.
+              <br><span style="color:var(--text3)">Все данные отдела — в <code style="color:var(--text)">data/state.json</code> на GitHub. Токен только в этой вкладке браузера (не в Git — иначе GitHub блокирует коммит).</span>
             </p>
             <div class="form-row">
               <div class="form-group"><label>Owner</label><input type="text" id="syncOwner" placeholder="username" disabled></div>
@@ -607,7 +608,7 @@
     { "id": "q21", "q": "Послать на хуй — какая статья?", "a": "15.8 Провокация" },
     { "id": "q22", "q": "Отличие 12.8 от 12.8.1?", "a": "Гос. и негос. оружие" }
   ],
-  "sync": { "owner": "", "repo": "", "branch": "main", "path": "data/state.json", "token": "", "sha": "", "pollSec": 30 }
+  "sync": { "owner": "", "repo": "", "branch": "main", "path": "data/state.json", "sha": "", "pollSec": 30 }
 }
 </script>
 
@@ -616,6 +617,7 @@ const DATA_PATH = 'data/state.json';
 const EMPTY_STATUS = '-';
 const GITHUB_SETTINGS_PASSWORD = '981864';
 const GITHUB_UNLOCK_KEY = 'pai_github_unlock';
+const GITHUB_TOKEN_KEY = 'pai_github_token';
 let state = null;
 let currentTab = 'dashboard';
 let memberFilter = '';
@@ -796,17 +798,53 @@ function updateGithubSyncLock() {
 }
 
 // ─── SYNC / GITHUB ─────────────────────────────────────
-function getSyncConfig() {
-  const ls = JSON.parse(localStorage.getItem('pai_sync_config') || '{}');
-  const sync = state?.sync || getEmbeddedState()?.sync || {};
-  return { ...sync, ...ls };
+function getGithubToken() {
+  return sessionStorage.getItem(GITHUB_TOKEN_KEY) || '';
 }
 
-function saveSyncConfigLocal(cfg) {
-  localStorage.setItem('pai_sync_config', JSON.stringify({
-    owner: cfg.owner, repo: cfg.repo, branch: cfg.branch, path: cfg.path, token: cfg.token, pollSec: cfg.pollSec
-  }));
-  state.sync = { ...state.sync, ...cfg };
+function saveGithubToken(token) {
+  if (token) sessionStorage.setItem(GITHUB_TOKEN_KEY, token);
+  else sessionStorage.removeItem(GITHUB_TOKEN_KEY);
+}
+
+function getSyncConfig() {
+  const sync = state?.sync || getEmbeddedState()?.sync || {};
+  return { ...sync, token: getGithubToken() };
+}
+
+function publicSyncMeta(sync = {}) {
+  return {
+    owner: sync.owner || '',
+    repo: sync.repo || '',
+    branch: sync.branch || 'main',
+    path: sync.path || 'data/state.json',
+    pollSec: sync.pollSec || 30,
+    sha: sync.sha || ''
+  };
+}
+
+function stateForRemote() {
+  const copy = JSON.parse(JSON.stringify(state));
+  copy.sync = publicSyncMeta(state.sync);
+  return copy;
+}
+
+function applySyncMeta(cfg) {
+  state.sync = { ...publicSyncMeta(cfg), sha: remoteSha || state.sync?.sha || '' };
+}
+
+async function fetchRemoteSha(cfg) {
+  const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path || 'data/state.json')}?ref=${encodeURIComponent(cfg.branch || 'main')}`;
+  const res = await fetch(api, {
+    headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${cfg.token}` }
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || 'Не удалось получить версию файла (' + res.status + ')');
+  }
+  const data = await res.json();
+  return data.sha;
 }
 
 async function loadStateFromUrl(url) {
@@ -826,23 +864,34 @@ async function loadFromGitHub(cfg) {
   const data = await res.json();
   remoteSha = data.sha;
   const json = JSON.parse(decodeBase64Utf8(data.content));
-  return migrateState(json);
+  const migrated = migrateState(json);
+  migrated.sync = { ...publicSyncMeta(migrated.sync), sha: remoteSha };
+  return migrated;
 }
 
-async function saveToGitHub(cfg) {
-  const content = encodeBase64Utf8(JSON.stringify(state, null, 2));
+async function saveToGitHub(cfg, isRetry) {
+  const sha = await fetchRemoteSha(cfg);
+  remoteSha = sha;
+  const content = encodeBase64Utf8(JSON.stringify(stateForRemote(), null, 2));
   const api = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${encodeURIComponent(cfg.path || 'data/state.json')}`;
-  const body = { message: 'PAI CRM: update state', content, branch: cfg.branch || 'main', sha: remoteSha || cfg.sha || undefined };
+  const body = { message: 'PAI CRM: update state', content, branch: cfg.branch || 'main' };
+  if (sha) body.sha = sha;
   const res = await fetch(api, {
     method: 'PUT',
     headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${cfg.token}`, 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
   });
-  if (!res.ok) { const err = await res.json().catch(() => ({})); throw new Error(err.message || 'GitHub save ' + res.status); }
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    const msg = err.message || 'GitHub save ' + res.status;
+    if (!isRetry && (res.status === 409 || /does not match/i.test(msg))) {
+      return saveToGitHub(cfg, true);
+    }
+    throw new Error(msg);
+  }
   const data = await res.json();
   remoteSha = data.content.sha;
-  cfg.sha = remoteSha;
-  saveSyncConfigLocal(cfg);
+  if (state.sync) state.sync.sha = remoteSha;
 }
 
 async function loadStateFromNetwork() {
@@ -863,7 +912,15 @@ async function loadStateFromNetwork() {
   for (const url of [...new Set(urls)]) {
     try {
       const loaded = await loadStateFromUrl(url);
-      if (loaded.members?.length) return { state: loaded, source: url };
+      if (loaded.members?.length) {
+        if (cfg.owner && cfg.repo && cfg.token) {
+          try {
+            remoteSha = await fetchRemoteSha(cfg);
+            loaded.sync = { ...publicSyncMeta(loaded.sync || cfg), sha: remoteSha || '' };
+          } catch (e) { console.warn('SHA refresh failed', e); }
+        }
+        return { state: loaded, source: url };
+      }
     } catch {}
   }
   throw new Error('Нет источника данных');
@@ -875,7 +932,8 @@ async function pullRemote() {
     const result = await loadStateFromNetwork();
     state = result.state;
     ensureMeetingAttendance();
-    if (repairStateTexts()) scheduleSave();
+    const cfg = getSyncConfig();
+    if (repairStateTexts() && cfg.token && cfg.owner && cfg.repo) scheduleSave();
     renderTab(currentTab);
     setSyncUI('ok', 'Обновлено ' + new Date().toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' }));
   } catch (e) {
@@ -927,7 +985,7 @@ function migrateState(raw) {
     weeklyScores: raw.weeklyScores || base.weeklyScores || {},
     meeting: raw.meeting || base.meeting || { date: '', attendance: {} },
     call: raw.call || base.call,
-    sync: { ...(base.sync || {}), ...(raw.sync || {}) }
+    sync: publicSyncMeta({ ...(base.sync || {}), ...(raw.sync || {}) })
   };
   s.members = (s.members || []).map(normalizeMember);
   if (!s.meeting) s.meeting = { date: '', attendance: {} };
@@ -1352,7 +1410,7 @@ function renderAdmin() {
   document.getElementById('syncRepo').value = cfg.repo || '';
   document.getElementById('syncBranch').value = cfg.branch || 'main';
   document.getElementById('syncPath').value = cfg.path || 'data/state.json';
-  document.getElementById('syncToken').value = cfg.token || '';
+  document.getElementById('syncToken').value = cfg.token || getGithubToken();
 
   document.getElementById('adminMembersList').innerHTML = state.members.map(m => `
     <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)">
@@ -1442,7 +1500,7 @@ function deleteMember(id) {
   renderAdmin();
 }
 
-function saveSyncSettings() {
+async function saveSyncSettings() {
   if (!isGithubSyncUnlocked()) { toast('Сначала введите пароль'); return; }
   const cfg = {
     owner: document.getElementById('syncOwner').value.trim(),
@@ -1452,8 +1510,20 @@ function saveSyncSettings() {
     token: document.getElementById('syncToken').value.trim(),
     pollSec: 30
   };
-  saveSyncConfigLocal(cfg);
-  pullRemote().then(() => { startPolling(); toast('Синхронизация настроена'); });
+  if (!cfg.owner || !cfg.repo || !cfg.token) { toast('Укажите owner, repo и токен'); return; }
+  saveGithubToken(cfg.token);
+  setSyncUI('pending', 'Сохранение настроек в Git...');
+  try {
+    try { await pullRemote(); } catch {}
+    applySyncMeta(cfg);
+    await saveToGitHub(cfg);
+    await pullRemote();
+    startPolling();
+    toast('Настройки и данные в GitHub');
+  } catch (e) {
+    setSyncUI('err', 'Ошибка');
+    toast('Сохранение: ' + e.message);
+  }
 }
 
 function addRank() {
@@ -1516,7 +1586,7 @@ function deleteQuestion(id) {
 }
 
 function exportData() {
-  const blob = new Blob(['\uFEFF' + JSON.stringify(state, null, 2)], { type: 'application/json;charset=utf-8' });
+  const blob = new Blob(['\uFEFF' + JSON.stringify(stateForRemote(), null, 2)], { type: 'application/json;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `pai_data_${new Date().toISOString().split('T')[0]}.json`;
@@ -1553,21 +1623,29 @@ async function clearAllData() {
 
 // ─── INIT ──────────────────────────────────────────────
 async function init() {
-  setSyncUI('pending', 'Загрузка...');
-  state = defaultState();
-  ensureMeetingAttendance();
-  renderDashboard();
+  setSyncUI('pending', 'Загрузка из GitHub...');
+  try { localStorage.removeItem('pai_sync_config'); } catch {}
 
   try {
     const result = await loadStateFromNetwork();
     state = result.state;
     ensureMeetingAttendance();
-    if (repairStateTexts()) scheduleSave();
-    renderTab(currentTab);
-    setSyncUI('ok', 'Загружено · ' + state.members.length + ' чел.');
-  } catch (e) {
     repairStateTexts();
-    setSyncUI('ok', 'Встроенные данные · ' + state.members.length + ' чел.');
+    renderTab(currentTab);
+    const cfg = getSyncConfig();
+    if (!cfg.token && cfg.owner && cfg.repo) {
+      setSyncUI('err', 'Нужен токен для записи');
+      toast('Данные загружены из Git. Введите токен в настройках для сохранения.');
+    } else {
+      setSyncUI('ok', 'Git · ' + state.members.length + ' чел.');
+    }
+  } catch (e) {
+    state = defaultState();
+    ensureMeetingAttendance();
+    repairStateTexts();
+    renderTab(currentTab);
+    setSyncUI('err', 'Нет data/state.json на GitHub');
+    toast('Загрузите data/state.json в репозиторий и укажите синхронизацию');
   }
 
   startPolling();
