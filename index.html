@@ -403,7 +403,7 @@
           <div class="card-body github-sync-body locked" id="githubSyncBody">
             <p style="color:var(--text2);font-size:12px;margin-bottom:12px;line-height:1.6">
               Данные хранятся в <code style="color:var(--text)">data/state.json</code> репозитория. Укажите репозиторий и токен с правом <code style="color:var(--text)">repo</code> — изменения будут видны всем на сайте.
-              <br><span style="color:var(--text3)">Данные отдела — в <code style="color:var(--text)">data/state.json</code> на GitHub. Токен: файл <code style="color:var(--text)">sync.local.json</code> (в .gitignore) или ввод здесь (сохранится в браузере).</span>
+              <br><span style="color:var(--text3)">Токен в <code style="color:var(--text)">sync.config.js</code> (в .gitignore, на сервер попадает при деплое).</span>
             </p>
             <div class="form-row">
               <div class="form-group"><label>Owner</label><input type="text" id="syncOwner" placeholder="username" disabled></div>
@@ -612,6 +612,7 @@
 }
 </script>
 
+<script src="sync.config.js"></script>
 <script>
 const DATA_PATH = 'data/state.json';
 const DEFAULT_SYNC = { owner: 'mm1vlasov', repo: 'paicrm', branch: 'main', path: 'data/state.json', pollSec: 30 };
@@ -628,7 +629,7 @@ let editMemberId = null;
 let remoteSha = '';
 let localSyncSecrets = null;
 
-const LOCAL_SYNC_PATHS = ['sync.local.json', 'data/sync.local.json'];
+const LOCAL_SYNC_PATHS = ['sync.local.json', 'sync.config.json', 'data/sync.local.json'];
 
 const tabTitles = {
   dashboard: 'Дашборд', members: 'Состав отдела', scores: 'Еженедельные баллы',
@@ -802,8 +803,22 @@ function updateGithubSyncLock() {
 }
 
 // ─── SYNC / GITHUB ─────────────────────────────────────
+function applyWindowSyncConfig() {
+  const c = window.PAI_SYNC_CONFIG;
+  if (!c || typeof c !== 'object') return null;
+  localSyncSecrets = {
+    owner: c.owner || '',
+    repo: c.repo || '',
+    branch: c.branch || 'main',
+    path: c.path || 'data/state.json',
+    token: c.token || ''
+  };
+  if (localSyncSecrets.token) saveGithubToken(localSyncSecrets.token);
+  return localSyncSecrets;
+}
+
 function getGithubToken() {
-  return localStorage.getItem(GITHUB_TOKEN_KEY) || localSyncSecrets?.token || '';
+  return window.PAI_SYNC_CONFIG?.token || localStorage.getItem(GITHUB_TOKEN_KEY) || localSyncSecrets?.token || '';
 }
 
 function saveGithubToken(token) {
@@ -812,6 +827,7 @@ function saveGithubToken(token) {
 }
 
 async function loadLocalSyncFile() {
+  if (applyWindowSyncConfig()) return localSyncSecrets;
   for (const path of LOCAL_SYNC_PATHS) {
     try {
       const res = await fetch(path + '?t=' + Date.now(), { cache: 'no-store' });
