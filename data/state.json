@@ -1,51 +1,394 @@
 {
   "members": [
-    { "id": "m1", "firstName": "Richi", "lastName": "Londo", "name": "Richi Londo", "gameId": "232430", "rank": "Curator of Department", "ooc": "—" },
-    { "id": "m2", "firstName": "Mir", "lastName": "Li", "name": "Mir Li", "gameId": "45430", "rank": "Head of Department", "ooc": "—" },
-    { "id": "m3", "firstName": "Francesco", "lastName": "DeLondo", "name": "Francesco DeLondo", "gameId": "99108", "rank": "Head of Department", "ooc": "—" },
-    { "id": "m4", "firstName": "Logan", "lastName": "Brooks", "name": "Logan Brooks", "gameId": "159733", "rank": "Head of Department", "ooc": "—" },
-    { "id": "m5", "firstName": "Kamilla", "lastName": "Initial", "name": "Kamilla Initial", "gameId": "159945", "rank": "Deputy Head of Department", "ooc": "—" },
-    { "id": "m6", "firstName": "Edwin", "lastName": "Milton", "name": "Edwin Milton", "gameId": "218240", "rank": "Deputy Head of Department", "ooc": "OOC Отпуск 16.06.26-30.06.26" },
-    { "id": "m7", "firstName": "Zakura", "lastName": "Londo", "name": "Zakura Londo", "gameId": "273383", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m8", "firstName": "Princess", "lastName": "Londo", "name": "Princess Londo", "gameId": "256278", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m9", "firstName": "Molly", "lastName": "Londo", "name": "Molly Londo", "gameId": "58309", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m10", "firstName": "Miran", "lastName": "Zekari", "name": "Miran Zekari", "gameId": "34987", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m11", "firstName": "Archangel", "lastName": "Londo", "name": "Archangel Londo", "gameId": "239308", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m12", "firstName": "Satoru", "lastName": "Initial", "name": "Satoru Initial", "gameId": "201700", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m13", "firstName": "Naylor", "lastName": "Stella", "name": "Naylor Stella", "gameId": "96776", "rank": "Instructor of Department", "ooc": "OOC Отпуск" },
-    { "id": "m14", "firstName": "Roma", "lastName": "Londovich", "name": "Roma Londovich", "gameId": "258012", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m15", "firstName": "Daryana", "lastName": "Londo", "name": "Daryana Londo", "gameId": "30514", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m16", "firstName": "Neko", "lastName": "Toujou", "name": "Neko Toujou", "gameId": "24300", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m17", "firstName": "Mack", "lastName": "Nightez", "name": "Mack Nightez", "gameId": "289844", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m18", "firstName": "Vanco", "lastName": "Londo", "name": "Vanco Londo", "gameId": "288208", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m19", "firstName": "Anthony", "lastName": "Wilson", "name": "Anthony Wilson", "gameId": "292488", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m20", "firstName": "Aomine", "lastName": "Londo", "name": "Aomine Londo", "gameId": "116222", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m21", "firstName": "Tom", "lastName": "Zerg", "name": "Tom Zerg", "gameId": "226491", "rank": "Instructor of Department", "ooc": "—" },
-    { "id": "m22", "firstName": "Lana", "lastName": "Westcoast", "name": "Lana Westcoast", "gameId": "267626", "rank": "Instructor of Department", "ooc": "—" }
+    {
+      "id": "m1",
+      "firstName": "Richi",
+      "lastName": "Londo",
+      "name": "Richi Londo",
+      "gameId": "232430",
+      "rank": "Curator of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m2",
+      "firstName": "Mir",
+      "lastName": "Li",
+      "name": "Mir Li",
+      "gameId": "45430",
+      "rank": "Head of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m3",
+      "firstName": "Francesco",
+      "lastName": "DeLondo",
+      "name": "Francesco DeLondo",
+      "gameId": "99108",
+      "rank": "Head of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m4",
+      "firstName": "Logan",
+      "lastName": "Brooks",
+      "name": "Logan Brooks",
+      "gameId": "159733",
+      "rank": "Head of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m5",
+      "firstName": "Kamilla",
+      "lastName": "Initial",
+      "name": "Kamilla Initial",
+      "gameId": "159945",
+      "rank": "Deputy Head of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m6",
+      "firstName": "Edwin",
+      "lastName": "Milton",
+      "name": "Edwin Milton",
+      "gameId": "218240",
+      "rank": "Deputy Head of Department",
+      "ooc": "OOC ÐÑÐ¿ÑÑÐº 16.06.26-30.06.26"
+    },
+    {
+      "id": "m7",
+      "firstName": "Zakura",
+      "lastName": "Londo",
+      "name": "Zakura Londo",
+      "gameId": "273383",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m8",
+      "firstName": "Princess",
+      "lastName": "Londo",
+      "name": "Princess Londo",
+      "gameId": "256278",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m9",
+      "firstName": "Molly",
+      "lastName": "Londo",
+      "name": "Molly Londo",
+      "gameId": "58309",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m10",
+      "firstName": "Miran",
+      "lastName": "Zekari",
+      "name": "Miran Zekari",
+      "gameId": "34987",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m11",
+      "firstName": "Archangel",
+      "lastName": "Londo",
+      "name": "Archangel Londo",
+      "gameId": "239308",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m12",
+      "firstName": "Satoru",
+      "lastName": "Initial",
+      "name": "Satoru Initial",
+      "gameId": "201700",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m13",
+      "firstName": "Naylor",
+      "lastName": "Stella",
+      "name": "Naylor Stella",
+      "gameId": "96776",
+      "rank": "Instructor of Department",
+      "ooc": "OOC ÐÑÐ¿ÑÑÐº"
+    },
+    {
+      "id": "m14",
+      "firstName": "Roma",
+      "lastName": "Londovich",
+      "name": "Roma Londovich",
+      "gameId": "258012",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m15",
+      "firstName": "Daryana",
+      "lastName": "Londo",
+      "name": "Daryana Londo",
+      "gameId": "30514",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m16",
+      "firstName": "Neko",
+      "lastName": "Toujou",
+      "name": "Neko Toujou",
+      "gameId": "24300",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m17",
+      "firstName": "Mack",
+      "lastName": "Nightez",
+      "name": "Mack Nightez",
+      "gameId": "289844",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m18",
+      "firstName": "Vanco",
+      "lastName": "Londo",
+      "name": "Vanco Londo",
+      "gameId": "288208",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m19",
+      "firstName": "Anthony",
+      "lastName": "Wilson",
+      "name": "Anthony Wilson",
+      "gameId": "292488",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m20",
+      "firstName": "Aomine",
+      "lastName": "Londo",
+      "name": "Aomine Londo",
+      "gameId": "116222",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m21",
+      "firstName": "Tom",
+      "lastName": "Zerg",
+      "name": "Tom Zerg",
+      "gameId": "226491",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    },
+    {
+      "id": "m22",
+      "firstName": "Lana",
+      "lastName": "Westcoast",
+      "name": "Lana Westcoast",
+      "gameId": "267626",
+      "rank": "Instructor of Department",
+      "ooc": "â"
+    }
   ],
   "ranks": [
     "Curator of Department",
     "Head of Department",
     "Deputy Head of Department",
-    "Instructor of Department"
+    "Instructor of Department",
+    "Main Staff"
   ],
   "activities": [
-    { "id": "a1", "code": "LC", "name": "Выдача лицензии", "points": 15, "highStaff": false, "note": "Заполнить количество выданных лицензий" },
-    { "id": "a2", "code": "EM", "name": "Трудоустройство (кадр. аудит)", "points": 30, "highStaff": false, "note": "Оформление нового сотрудника" },
-    { "id": "a3", "code": "EX", "name": "Практический экзамен", "points": 20, "highStaff": false, "note": "Проведение практического экзамена" },
-    { "id": "a4", "code": "RP", "name": "Проверка отчётность-pa", "points": 10, "highStaff": false, "note": "Проверка отчётности в канале" },
-    { "id": "a5", "code": "GV", "name": "Отчётность по гос. волнам", "points": 30, "highStaff": false, "note": "3 скриншота = 1 запись" },
-    { "id": "a6", "code": "CK", "name": "Проверка трудоустройство", "points": 10, "highStaff": false, "note": "Проверка документов трудоустройства" },
-    { "id": "a7", "code": "UP", "name": "Запрос-на-повышение", "points": 5, "highStaff": false, "note": "Рассмотрение запроса на повышение" },
-    { "id": "a8", "code": "AC", "name": "Перевод из академии", "points": 10, "highStaff": false, "note": "Перевод курсанта в полноценный состав" },
-    { "id": "a9", "code": "AG", "name": "Агитация в канал", "points": 5, "highStaff": true, "note": "Только для High Staff (Head+)" },
-    { "id": "a10", "code": "CL", "name": "Обзвон в отдел PAI", "points": 30, "highStaff": true, "note": "Только для High Staff (Head+)" },
-    { "id": "a11", "code": "DS", "name": "Рапорт-на-увольнение", "points": 5, "highStaff": true, "note": "Только для High Staff (Head+)" }
+    {
+      "id": "a1",
+      "code": "LC",
+      "name": "ÐÑÐ´Ð°ÑÐ° Ð»Ð¸ÑÐµÐ½Ð·Ð¸Ð¸",
+      "points": 15,
+      "highStaff": false,
+      "note": "ÐÐ°Ð¿Ð¾Ð»Ð½Ð¸ÑÑ ÐºÐ¾Ð»Ð¸ÑÐµÑÑÐ²Ð¾ Ð²ÑÐ´Ð°Ð½Ð½ÑÑ Ð»Ð¸ÑÐµÐ½Ð·Ð¸Ð¹"
+    },
+    {
+      "id": "a2",
+      "code": "EM",
+      "name": "Ð¢ÑÑÐ´Ð¾ÑÑÑÑÐ¾Ð¹ÑÑÐ²Ð¾ (ÐºÐ°Ð´Ñ. Ð°ÑÐ´Ð¸Ñ)",
+      "points": 30,
+      "highStaff": false,
+      "note": "ÐÑÐ¾ÑÐ¼Ð»ÐµÐ½Ð¸Ðµ Ð½Ð¾Ð²Ð¾Ð³Ð¾ ÑÐ¾ÑÑÑÐ´Ð½Ð¸ÐºÐ°"
+    },
+    {
+      "id": "a3",
+      "code": "EX",
+      "name": "ÐÑÐ°ÐºÑÐ¸ÑÐµÑÐºÐ¸Ð¹ ÑÐºÐ·Ð°Ð¼ÐµÐ½",
+      "points": 20,
+      "highStaff": false,
+      "note": "ÐÑÐ¾Ð²ÐµÐ´ÐµÐ½Ð¸Ðµ Ð¿ÑÐ°ÐºÑÐ¸ÑÐµÑÐºÐ¾Ð³Ð¾ ÑÐºÐ·Ð°Ð¼ÐµÐ½Ð°"
+    },
+    {
+      "id": "a4",
+      "code": "RP",
+      "name": "ÐÑÐ¾Ð²ÐµÑÐºÐ° Ð¾ÑÑÑÑÐ½Ð¾ÑÑÑ-pa",
+      "points": 10,
+      "highStaff": false,
+      "note": "ÐÑÐ¾Ð²ÐµÑÐºÐ° Ð¾ÑÑÑÑÐ½Ð¾ÑÑÐ¸ Ð² ÐºÐ°Ð½Ð°Ð»Ðµ"
+    },
+    {
+      "id": "a5",
+      "code": "GV",
+      "name": "ÐÑÑÑÑÐ½Ð¾ÑÑÑ Ð¿Ð¾ Ð³Ð¾Ñ. Ð²Ð¾Ð»Ð½Ð°Ð¼",
+      "points": 30,
+      "highStaff": false,
+      "note": "3 ÑÐºÑÐ¸Ð½ÑÐ¾ÑÐ° = 1 Ð·Ð°Ð¿Ð¸ÑÑ"
+    },
+    {
+      "id": "a6",
+      "code": "CK",
+      "name": "ÐÑÐ¾Ð²ÐµÑÐºÐ° ÑÑÑÐ´Ð¾ÑÑÑÑÐ¾Ð¹ÑÑÐ²Ð¾",
+      "points": 10,
+      "highStaff": false,
+      "note": "ÐÑÐ¾Ð²ÐµÑÐºÐ° Ð´Ð¾ÐºÑÐ¼ÐµÐ½ÑÐ¾Ð² ÑÑÑÐ´Ð¾ÑÑÑÑÐ¾Ð¹ÑÑÐ²Ð°"
+    },
+    {
+      "id": "a7",
+      "code": "UP",
+      "name": "ÐÐ°Ð¿ÑÐ¾Ñ-Ð½Ð°-Ð¿Ð¾Ð²ÑÑÐµÐ½Ð¸Ðµ",
+      "points": 5,
+      "highStaff": false,
+      "note": "Ð Ð°ÑÑÐ¼Ð¾ÑÑÐµÐ½Ð¸Ðµ Ð·Ð°Ð¿ÑÐ¾ÑÐ° Ð½Ð° Ð¿Ð¾Ð²ÑÑÐµÐ½Ð¸Ðµ"
+    },
+    {
+      "id": "a8",
+      "code": "AC",
+      "name": "ÐÐµÑÐµÐ²Ð¾Ð´ Ð¸Ð· Ð°ÐºÐ°Ð´ÐµÐ¼Ð¸Ð¸",
+      "points": 10,
+      "highStaff": false,
+      "note": "ÐÐµÑÐµÐ²Ð¾Ð´ ÐºÑÑÑÐ°Ð½ÑÐ° Ð² Ð¿Ð¾Ð»Ð½Ð¾ÑÐµÐ½Ð½ÑÐ¹ ÑÐ¾ÑÑÐ°Ð²"
+    },
+    {
+      "id": "a9",
+      "code": "AG",
+      "name": "ÐÐ³Ð¸ÑÐ°ÑÐ¸Ñ Ð² ÐºÐ°Ð½Ð°Ð»",
+      "points": 5,
+      "highStaff": true,
+      "note": "Ð¢Ð¾Ð»ÑÐºÐ¾ Ð´Ð»Ñ High Staff (Head+)"
+    },
+    {
+      "id": "a10",
+      "code": "CL",
+      "name": "ÐÐ±Ð·Ð²Ð¾Ð½ Ð² Ð¾ÑÐ´ÐµÐ» PAI",
+      "points": 30,
+      "highStaff": true,
+      "note": "Ð¢Ð¾Ð»ÑÐºÐ¾ Ð´Ð»Ñ High Staff (Head+)"
+    },
+    {
+      "id": "a11",
+      "code": "DS",
+      "name": "Ð Ð°Ð¿Ð¾ÑÑ-Ð½Ð°-ÑÐ²Ð¾Ð»ÑÐ½ÐµÐ½Ð¸Ðµ",
+      "points": 5,
+      "highStaff": true,
+      "note": "Ð¢Ð¾Ð»ÑÐºÐ¾ Ð´Ð»Ñ High Staff (Head+)"
+    }
   ],
   "weeklyScores": {},
   "meeting": {
     "date": "",
-    "attendance": {}
+    "attendance": {
+      "m1": {
+        "status": "none",
+        "note": ""
+      },
+      "m2": {
+        "status": "none",
+        "note": ""
+      },
+      "m3": {
+        "status": "none",
+        "note": ""
+      },
+      "m4": {
+        "status": "none",
+        "note": ""
+      },
+      "m5": {
+        "status": "none",
+        "note": ""
+      },
+      "m6": {
+        "status": "none",
+        "note": ""
+      },
+      "m7": {
+        "status": "none",
+        "note": ""
+      },
+      "m8": {
+        "status": "none",
+        "note": ""
+      },
+      "m9": {
+        "status": "none",
+        "note": ""
+      },
+      "m10": {
+        "status": "none",
+        "note": ""
+      },
+      "m11": {
+        "status": "none",
+        "note": ""
+      },
+      "m12": {
+        "status": "none",
+        "note": ""
+      },
+      "m13": {
+        "status": "none",
+        "note": ""
+      },
+      "m14": {
+        "status": "none",
+        "note": ""
+      },
+      "m15": {
+        "status": "none",
+        "note": ""
+      },
+      "m16": {
+        "status": "none",
+        "note": ""
+      },
+      "m17": {
+        "status": "none",
+        "note": ""
+      },
+      "m18": {
+        "status": "none",
+        "note": ""
+      },
+      "m19": {
+        "status": "none",
+        "note": ""
+      },
+      "m20": {
+        "status": "none",
+        "note": ""
+      },
+      "m21": {
+        "status": "none",
+        "note": ""
+      },
+      "m22": {
+        "status": "none",
+        "note": ""
+      }
+    }
   },
   "call": {
     "date": "",
@@ -53,28 +396,116 @@
     "scores": {}
   },
   "questions": [
-    { "id": "q1", "q": "Кто является старшим составом?", "a": "От Dep.H и выше" },
-    { "id": "q2", "q": "Иерархия хай рангов?", "a": "Deputy Head → Head → Curator → Assistant → Advisor → Deputy Chief → Chief" },
-    { "id": "q3", "q": "Какой отдел отвечает за внутренний контроль и надзор за сотрудниками?", "a": "IAD" },
-    { "id": "q4", "q": "Кто выдаёт спецуху?", "a": "Storekeeper" },
-    { "id": "q5", "q": "Что нужно сделать после получения спецухи?", "a": "Составить отчёт о получении. Рабочее время 14:00–22:00" },
-    { "id": "q6", "q": "Правила IC и OOC отпуска?", "a": "IC: перерыв не более 5 ч, 1 раз в день, не освобождает от строёв. OOC: не более 7 дней, нельзя заходить в игру" },
-    { "id": "q7", "q": "Кто может стоять в холле?", "a": "IAD и PAI" },
-    { "id": "q8", "q": "Как принимать человека во фракцию?", "a": "Проверить заявку, провести собеседование, оформить кадровый аудит" },
-    { "id": "q9", "q": "Что самое важное при проверке отчёта?", "a": "1. Имя/фамилия/статик вручную и совпадают. 2. Не повышался сегодня. 3. Есть бодик. 4. Нет варнов" },
-    { "id": "q10", "q": "Что делаем после проверки отчёта?", "a": "СОЗДАТЬ ВЕТКУ. Если ДА — отправить в канал запроса на повышение. Если НЕТ — объяснить причину отказа" },
-    { "id": "q11", "q": "Почему нельзя проверять отчёты не по порядку?", "a": "Есть вероятность, что те, кто выше, останутся непроверенными" },
-    { "id": "q12", "q": "Правила агитаций?", "a": "Агитация подаётся с 10:00 до 22:00 МСК. Пауза между агитациями отделов — 1 час (60 минут)" },
-    { "id": "q13", "q": "Правила выдачи лицензий?", "a": "Проверить документы, выдать лицензию, зафиксировать в журнале" },
-    { "id": "q14", "q": "Как повышать человека по восстановлению или переводу?", "a": "Проверить одобренный запрос, одобренный ранг (реакцией), в кадровом указать ссылку на одобренный запрос" },
-    { "id": "q15", "q": "Что делать, если написал кадровый неправильно?", "a": "Удалить или поставить реакцию крестика" },
-    { "id": "q16", "q": "Разрешено ли младшему составу (PA Cadet, Officer) проводить задержание?", "a": "Нет. Исключение: обездвижить и надеть наручники для передачи агентам" },
-    { "id": "q17", "q": "Может ли отдел PAI выдавать наказания (ВУ) отделу PA?", "a": "Да, может" },
-    { "id": "q18", "q": "Обязан ли сотрудник вызвать прока по запросу адвоката?", "a": "Да, если аргументированно и с перечислением статей" },
-    { "id": "q19", "q": "Почему обязательно проверять человека с розыском по базе данных?", "a": "Проверить — функциональный розыск или нет" },
-    { "id": "q20", "q": "Можно ли дать больше 5 лет срока?", "a": "Только по решению суда с постановлением" },
-    { "id": "q21", "q": "Послать на хуй — какая статья?", "a": "15.8 Провокация" },
-    { "id": "q22", "q": "Отличие 12.8 от 12.8.1?", "a": "Гос. и негос. оружие" }
+    {
+      "id": "q1",
+      "q": "ÐÑÐ¾ ÑÐ²Ð»ÑÐµÑÑÑ ÑÑÐ°ÑÑÐ¸Ð¼ ÑÐ¾ÑÑÐ°Ð²Ð¾Ð¼?",
+      "a": "ÐÑ Dep.H Ð¸ Ð²ÑÑÐµ"
+    },
+    {
+      "id": "q2",
+      "q": "ÐÐµÑÐ°ÑÑÐ¸Ñ ÑÐ°Ð¹ ÑÐ°Ð½Ð³Ð¾Ð²?",
+      "a": "Deputy Head â Head â Curator â Assistant â Advisor â Deputy Chief â Chief"
+    },
+    {
+      "id": "q3",
+      "q": "ÐÐ°ÐºÐ¾Ð¹ Ð¾ÑÐ´ÐµÐ» Ð¾ÑÐ²ÐµÑÐ°ÐµÑ Ð·Ð° Ð²Ð½ÑÑÑÐµÐ½Ð½Ð¸Ð¹ ÐºÐ¾Ð½ÑÑÐ¾Ð»Ñ Ð¸ Ð½Ð°Ð´Ð·Ð¾Ñ Ð·Ð° ÑÐ¾ÑÑÑÐ´Ð½Ð¸ÐºÐ°Ð¼Ð¸?",
+      "a": "IAD"
+    },
+    {
+      "id": "q4",
+      "q": "ÐÑÐ¾ Ð²ÑÐ´Ð°ÑÑ ÑÐ¿ÐµÑÑÑÑ?",
+      "a": "Storekeeper"
+    },
+    {
+      "id": "q5",
+      "q": "Ð§ÑÐ¾ Ð½ÑÐ¶Ð½Ð¾ ÑÐ´ÐµÐ»Ð°ÑÑ Ð¿Ð¾ÑÐ»Ðµ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¸Ñ ÑÐ¿ÐµÑÑÑÐ¸?",
+      "a": "Ð¡Ð¾ÑÑÐ°Ð²Ð¸ÑÑ Ð¾ÑÑÑÑ Ð¾ Ð¿Ð¾Ð»ÑÑÐµÐ½Ð¸Ð¸. Ð Ð°Ð±Ð¾ÑÐµÐµ Ð²ÑÐµÐ¼Ñ 14:00â22:00"
+    },
+    {
+      "id": "q6",
+      "q": "ÐÑÐ°Ð²Ð¸Ð»Ð° IC Ð¸ OOC Ð¾ÑÐ¿ÑÑÐºÐ°?",
+      "a": "IC: Ð¿ÐµÑÐµÑÑÐ² Ð½Ðµ Ð±Ð¾Ð»ÐµÐµ 5 Ñ, 1 ÑÐ°Ð· Ð² Ð´ÐµÐ½Ñ, Ð½Ðµ Ð¾ÑÐ²Ð¾Ð±Ð¾Ð¶Ð´Ð°ÐµÑ Ð¾Ñ ÑÑÑÐ¾ÑÐ². OOC: Ð½Ðµ Ð±Ð¾Ð»ÐµÐµ 7 Ð´Ð½ÐµÐ¹, Ð½ÐµÐ»ÑÐ·Ñ Ð·Ð°ÑÐ¾Ð´Ð¸ÑÑ Ð² Ð¸Ð³ÑÑ"
+    },
+    {
+      "id": "q7",
+      "q": "ÐÑÐ¾ Ð¼Ð¾Ð¶ÐµÑ ÑÑÐ¾ÑÑÑ Ð² ÑÐ¾Ð»Ð»Ðµ?",
+      "a": "IAD Ð¸ PAI"
+    },
+    {
+      "id": "q8",
+      "q": "ÐÐ°Ðº Ð¿ÑÐ¸Ð½Ð¸Ð¼Ð°ÑÑ ÑÐµÐ»Ð¾Ð²ÐµÐºÐ° Ð²Ð¾ ÑÑÐ°ÐºÑÐ¸Ñ?",
+      "a": "ÐÑÐ¾Ð²ÐµÑÐ¸ÑÑ Ð·Ð°ÑÐ²ÐºÑ, Ð¿ÑÐ¾Ð²ÐµÑÑÐ¸ ÑÐ¾Ð±ÐµÑÐµÐ´Ð¾Ð²Ð°Ð½Ð¸Ðµ, Ð¾ÑÐ¾ÑÐ¼Ð¸ÑÑ ÐºÐ°Ð´ÑÐ¾Ð²ÑÐ¹ Ð°ÑÐ´Ð¸Ñ"
+    },
+    {
+      "id": "q9",
+      "q": "Ð§ÑÐ¾ ÑÐ°Ð¼Ð¾Ðµ Ð²Ð°Ð¶Ð½Ð¾Ðµ Ð¿ÑÐ¸ Ð¿ÑÐ¾Ð²ÐµÑÐºÐµ Ð¾ÑÑÑÑÐ°?",
+      "a": "1. ÐÐ¼Ñ/ÑÐ°Ð¼Ð¸Ð»Ð¸Ñ/ÑÑÐ°ÑÐ¸Ðº Ð²ÑÑÑÐ½ÑÑ Ð¸ ÑÐ¾Ð²Ð¿Ð°Ð´Ð°ÑÑ. 2. ÐÐµ Ð¿Ð¾Ð²ÑÑÐ°Ð»ÑÑ ÑÐµÐ³Ð¾Ð´Ð½Ñ. 3. ÐÑÑÑ Ð±Ð¾Ð´Ð¸Ðº. 4. ÐÐµÑ Ð²Ð°ÑÐ½Ð¾Ð²"
+    },
+    {
+      "id": "q10",
+      "q": "Ð§ÑÐ¾ Ð´ÐµÐ»Ð°ÐµÐ¼ Ð¿Ð¾ÑÐ»Ðµ Ð¿ÑÐ¾Ð²ÐµÑÐºÐ¸ Ð¾ÑÑÑÑÐ°?",
+      "a": "Ð¡ÐÐÐÐÐ¢Ð¬ ÐÐÐ¢ÐÐ£. ÐÑÐ»Ð¸ ÐÐ â Ð¾ÑÐ¿ÑÐ°Ð²Ð¸ÑÑ Ð² ÐºÐ°Ð½Ð°Ð» Ð·Ð°Ð¿ÑÐ¾ÑÐ° Ð½Ð° Ð¿Ð¾Ð²ÑÑÐµÐ½Ð¸Ðµ. ÐÑÐ»Ð¸ ÐÐÐ¢ â Ð¾Ð±ÑÑÑÐ½Ð¸ÑÑ Ð¿ÑÐ¸ÑÐ¸Ð½Ñ Ð¾ÑÐºÐ°Ð·Ð°"
+    },
+    {
+      "id": "q11",
+      "q": "ÐÐ¾ÑÐµÐ¼Ñ Ð½ÐµÐ»ÑÐ·Ñ Ð¿ÑÐ¾Ð²ÐµÑÑÑÑ Ð¾ÑÑÑÑÑ Ð½Ðµ Ð¿Ð¾ Ð¿Ð¾ÑÑÐ´ÐºÑ?",
+      "a": "ÐÑÑÑ Ð²ÐµÑÐ¾ÑÑÐ½Ð¾ÑÑÑ, ÑÑÐ¾ ÑÐµ, ÐºÑÐ¾ Ð²ÑÑÐµ, Ð¾ÑÑÐ°Ð½ÑÑÑÑ Ð½ÐµÐ¿ÑÐ¾Ð²ÐµÑÐµÐ½Ð½ÑÐ¼Ð¸"
+    },
+    {
+      "id": "q12",
+      "q": "ÐÑÐ°Ð²Ð¸Ð»Ð° Ð°Ð³Ð¸ÑÐ°ÑÐ¸Ð¹?",
+      "a": "ÐÐ³Ð¸ÑÐ°ÑÐ¸Ñ Ð¿Ð¾Ð´Ð°ÑÑÑÑ Ñ 10:00 Ð´Ð¾ 22:00 ÐÐ¡Ð. ÐÐ°ÑÐ·Ð° Ð¼ÐµÐ¶Ð´Ñ Ð°Ð³Ð¸ÑÐ°ÑÐ¸ÑÐ¼Ð¸ Ð¾ÑÐ´ÐµÐ»Ð¾Ð² â 1 ÑÐ°Ñ (60 Ð¼Ð¸Ð½ÑÑ)"
+    },
+    {
+      "id": "q13",
+      "q": "ÐÑÐ°Ð²Ð¸Ð»Ð° Ð²ÑÐ´Ð°ÑÐ¸ Ð»Ð¸ÑÐµÐ½Ð·Ð¸Ð¹?",
+      "a": "ÐÑÐ¾Ð²ÐµÑÐ¸ÑÑ Ð´Ð¾ÐºÑÐ¼ÐµÐ½ÑÑ, Ð²ÑÐ´Ð°ÑÑ Ð»Ð¸ÑÐµÐ½Ð·Ð¸Ñ, Ð·Ð°ÑÐ¸ÐºÑÐ¸ÑÐ¾Ð²Ð°ÑÑ Ð² Ð¶ÑÑÐ½Ð°Ð»Ðµ"
+    },
+    {
+      "id": "q14",
+      "q": "ÐÐ°Ðº Ð¿Ð¾Ð²ÑÑÐ°ÑÑ ÑÐµÐ»Ð¾Ð²ÐµÐºÐ° Ð¿Ð¾ Ð²Ð¾ÑÑÑÐ°Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸Ñ Ð¸Ð»Ð¸ Ð¿ÐµÑÐµÐ²Ð¾Ð´Ñ?",
+      "a": "ÐÑÐ¾Ð²ÐµÑÐ¸ÑÑ Ð¾Ð´Ð¾Ð±ÑÐµÐ½Ð½ÑÐ¹ Ð·Ð°Ð¿ÑÐ¾Ñ, Ð¾Ð´Ð¾Ð±ÑÐµÐ½Ð½ÑÐ¹ ÑÐ°Ð½Ð³ (ÑÐµÐ°ÐºÑÐ¸ÐµÐ¹), Ð² ÐºÐ°Ð´ÑÐ¾Ð²Ð¾Ð¼ ÑÐºÐ°Ð·Ð°ÑÑ ÑÑÑÐ»ÐºÑ Ð½Ð° Ð¾Ð´Ð¾Ð±ÑÐµÐ½Ð½ÑÐ¹ Ð·Ð°Ð¿ÑÐ¾Ñ"
+    },
+    {
+      "id": "q15",
+      "q": "Ð§ÑÐ¾ Ð´ÐµÐ»Ð°ÑÑ, ÐµÑÐ»Ð¸ Ð½Ð°Ð¿Ð¸ÑÐ°Ð» ÐºÐ°Ð´ÑÐ¾Ð²ÑÐ¹ Ð½ÐµÐ¿ÑÐ°Ð²Ð¸Ð»ÑÐ½Ð¾?",
+      "a": "Ð£Ð´Ð°Ð»Ð¸ÑÑ Ð¸Ð»Ð¸ Ð¿Ð¾ÑÑÐ°Ð²Ð¸ÑÑ ÑÐµÐ°ÐºÑÐ¸Ñ ÐºÑÐµÑÑÐ¸ÐºÐ°"
+    },
+    {
+      "id": "q16",
+      "q": "Ð Ð°Ð·ÑÐµÑÐµÐ½Ð¾ Ð»Ð¸ Ð¼Ð»Ð°Ð´ÑÐµÐ¼Ñ ÑÐ¾ÑÑÐ°Ð²Ñ (PA Cadet, Officer) Ð¿ÑÐ¾Ð²Ð¾Ð´Ð¸ÑÑ Ð·Ð°Ð´ÐµÑÐ¶Ð°Ð½Ð¸Ðµ?",
+      "a": "ÐÐµÑ. ÐÑÐºÐ»ÑÑÐµÐ½Ð¸Ðµ: Ð¾Ð±ÐµÐ·Ð´Ð²Ð¸Ð¶Ð¸ÑÑ Ð¸ Ð½Ð°Ð´ÐµÑÑ Ð½Ð°ÑÑÑÐ½Ð¸ÐºÐ¸ Ð´Ð»Ñ Ð¿ÐµÑÐµÐ´Ð°ÑÐ¸ Ð°Ð³ÐµÐ½ÑÐ°Ð¼"
+    },
+    {
+      "id": "q17",
+      "q": "ÐÐ¾Ð¶ÐµÑ Ð»Ð¸ Ð¾ÑÐ´ÐµÐ» PAI Ð²ÑÐ´Ð°Ð²Ð°ÑÑ Ð½Ð°ÐºÐ°Ð·Ð°Ð½Ð¸Ñ (ÐÐ£) Ð¾ÑÐ´ÐµÐ»Ñ PA?",
+      "a": "ÐÐ°, Ð¼Ð¾Ð¶ÐµÑ"
+    },
+    {
+      "id": "q18",
+      "q": "ÐÐ±ÑÐ·Ð°Ð½ Ð»Ð¸ ÑÐ¾ÑÑÑÐ´Ð½Ð¸Ðº Ð²ÑÐ·Ð²Ð°ÑÑ Ð¿ÑÐ¾ÐºÐ° Ð¿Ð¾ Ð·Ð°Ð¿ÑÐ¾ÑÑ Ð°Ð´Ð²Ð¾ÐºÐ°ÑÐ°?",
+      "a": "ÐÐ°, ÐµÑÐ»Ð¸ Ð°ÑÐ³ÑÐ¼ÐµÐ½ÑÐ¸ÑÐ¾Ð²Ð°Ð½Ð½Ð¾ Ð¸ Ñ Ð¿ÐµÑÐµÑÐ¸ÑÐ»ÐµÐ½Ð¸ÐµÐ¼ ÑÑÐ°ÑÐµÐ¹"
+    },
+    {
+      "id": "q19",
+      "q": "ÐÐ¾ÑÐµÐ¼Ñ Ð¾Ð±ÑÐ·Ð°ÑÐµÐ»ÑÐ½Ð¾ Ð¿ÑÐ¾Ð²ÐµÑÑÑÑ ÑÐµÐ»Ð¾Ð²ÐµÐºÐ° Ñ ÑÐ¾Ð·ÑÑÐºÐ¾Ð¼ Ð¿Ð¾ Ð±Ð°Ð·Ðµ Ð´Ð°Ð½Ð½ÑÑ?",
+      "a": "ÐÑÐ¾Ð²ÐµÑÐ¸ÑÑ â ÑÑÐ½ÐºÑÐ¸Ð¾Ð½Ð°Ð»ÑÐ½ÑÐ¹ ÑÐ¾Ð·ÑÑÐº Ð¸Ð»Ð¸ Ð½ÐµÑ"
+    },
+    {
+      "id": "q20",
+      "q": "ÐÐ¾Ð¶Ð½Ð¾ Ð»Ð¸ Ð´Ð°ÑÑ Ð±Ð¾Ð»ÑÑÐµ 5 Ð»ÐµÑ ÑÑÐ¾ÐºÐ°?",
+      "a": "Ð¢Ð¾Ð»ÑÐºÐ¾ Ð¿Ð¾ ÑÐµÑÐµÐ½Ð¸Ñ ÑÑÐ´Ð° Ñ Ð¿Ð¾ÑÑÐ°Ð½Ð¾Ð²Ð»ÐµÐ½Ð¸ÐµÐ¼"
+    },
+    {
+      "id": "q21",
+      "q": "ÐÐ¾ÑÐ»Ð°ÑÑ Ð½Ð° ÑÑÐ¹ â ÐºÐ°ÐºÐ°Ñ ÑÑÐ°ÑÑÑ?",
+      "a": "15.8 ÐÑÐ¾Ð²Ð¾ÐºÐ°ÑÐ¸Ñ"
+    },
+    {
+      "id": "q22",
+      "q": "ÐÑÐ»Ð¸ÑÐ¸Ðµ 12.8 Ð¾Ñ 12.8.1?",
+      "a": "ÐÐ¾Ñ. Ð¸ Ð½ÐµÐ³Ð¾Ñ. Ð¾ÑÑÐ¶Ð¸Ðµ"
+    }
   ],
   "sync": {
     "owner": "",
