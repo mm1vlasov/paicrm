@@ -506,6 +506,10 @@
       {
         "name": "Angel Angelick",
         "gameId": "385"
+      },
+      {
+        "name": "Egor Blazer",
+        "gameId": ""
       }
     ],
     "scores": {
@@ -700,7 +704,6 @@
         "5": 1,
         "6": 1,
         "7": 1,
-        "8": 1,
         "9": 1
       }
     }
