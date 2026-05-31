@@ -64,15 +64,6 @@
       "ooc": "-"
     },
     {
-      "id": "m8",
-      "firstName": "Princess",
-      "lastName": "Londo",
-      "name": "Princess Londo",
-      "gameId": "256278",
-      "rank": "Instructor of Department",
-      "ooc": "-"
-    },
-    {
       "id": "m9",
       "firstName": "Molly",
       "lastName": "Londo",
@@ -399,10 +390,6 @@
         "note": ""
       },
       "m7": {
-        "status": "none",
-        "note": ""
-      },
-      "m8": {
         "status": "none",
         "note": ""
       },
