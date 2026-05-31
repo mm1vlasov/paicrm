@@ -136,15 +136,6 @@
       "ooc": "-"
     },
     {
-      "id": "m21",
-      "firstName": "Tom",
-      "lastName": "Zerg",
-      "name": "Tom Zerg",
-      "gameId": "226491",
-      "rank": "Instructor of Department",
-      "ooc": "-"
-    },
-    {
       "id": "m22",
       "firstName": "Lana",
       "lastName": "Westcoast",
@@ -373,10 +364,6 @@
         "note": ""
       },
       "m20": {
-        "status": "none",
-        "note": ""
-      },
-      "m21": {
         "status": "none",
         "note": ""
       },
