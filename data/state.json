@@ -143,6 +143,15 @@
       "gameId": "267626",
       "rank": "Instructor of Department",
       "ooc": "-"
+    },
+    {
+      "id": "id_1780246603306_4xyyvp7ddj",
+      "firstName": "Alkotroll",
+      "lastName": "Fierman",
+      "gameId": "244871",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "name": "Alkotroll Fierman"
     }
   ],
   "ranks": [
@@ -368,6 +377,10 @@
         "note": ""
       },
       "m22": {
+        "status": "none",
+        "note": ""
+      },
+      "id_1780246603306_4xyyvp7ddj": {
         "status": "none",
         "note": ""
       }
