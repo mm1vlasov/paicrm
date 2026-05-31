@@ -118,15 +118,6 @@
       "ooc": "-"
     },
     {
-      "id": "m18",
-      "firstName": "Vanco",
-      "lastName": "Londo",
-      "name": "Vanco Londo",
-      "gameId": "288208",
-      "rank": "Instructor of Department",
-      "ooc": "-"
-    },
-    {
       "id": "m19",
       "firstName": "Anthony",
       "lastName": "Wilson",
@@ -374,10 +365,6 @@
         "note": ""
       },
       "m17": {
-        "status": "none",
-        "note": ""
-      },
-      "m18": {
         "status": "none",
         "note": ""
       },
