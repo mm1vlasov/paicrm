@@ -82,15 +82,6 @@
       "ooc": "-"
     },
     {
-      "id": "m11",
-      "firstName": "Archangel",
-      "lastName": "Londo",
-      "name": "Archangel Londo",
-      "gameId": "239308",
-      "rank": "Instructor of Department",
-      "ooc": "-"
-    },
-    {
       "id": "m12",
       "firstName": "Satoru",
       "lastName": "Initial",
@@ -313,11 +304,6 @@
       "a6": 14,
       "a7": 14
     },
-    "m11": {
-      "a1": 11,
-      "a2": 7,
-      "a5": 4
-    },
     "m14": {
       "a1": 6,
       "a2": 2,
@@ -398,10 +384,6 @@
         "note": ""
       },
       "m10": {
-        "status": "none",
-        "note": ""
-      },
-      "m11": {
         "status": "none",
         "note": ""
       },
