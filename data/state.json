@@ -170,6 +170,15 @@
       "rank": "Instructor of Department",
       "ooc": "-",
       "name": "Kalyaka Mart"
+    },
+    {
+      "id": "id_1780246748137_q0q95s05yj",
+      "firstName": "Taras",
+      "lastName": "Andreevich",
+      "gameId": "36850",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "name": "Taras Andreevich"
     }
   ],
   "ranks": [
@@ -407,6 +416,10 @@
         "note": ""
       },
       "id_1780246701085_rt4ppx33i1": {
+        "status": "none",
+        "note": ""
+      },
+      "id_1780246748137_q0q95s05yj": {
         "status": "none",
         "note": ""
       }
@@ -889,6 +902,10 @@
       "strict": 0
     },
     "id_1780246654453_gkl6e4m2ewo": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "id_1780246701085_rt4ppx33i1": {
       "verbal": 0,
       "strict": 0
     }
