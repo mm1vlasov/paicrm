@@ -179,6 +179,15 @@
       "rank": "Curator of Department",
       "ooc": "-",
       "name": "Taras Andreevich"
+    },
+    {
+      "id": "id_1780246783483_wj5t4ndl8j",
+      "firstName": "Vex",
+      "lastName": "Londo",
+      "gameId": "203956",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "name": "Vex Londo"
     }
   ],
   "ranks": [
@@ -420,6 +429,10 @@
         "note": ""
       },
       "id_1780246748137_q0q95s05yj": {
+        "status": "none",
+        "note": ""
+      },
+      "id_1780246783483_wj5t4ndl8j": {
         "status": "none",
         "note": ""
       }
@@ -906,6 +919,10 @@
       "strict": 0
     },
     "id_1780246701085_rt4ppx33i1": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "id_1780246748137_q0q95s05yj": {
       "verbal": 0,
       "strict": 0
     }
