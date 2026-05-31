@@ -188,6 +188,15 @@
       "rank": "Instructor of Department",
       "ooc": "-",
       "name": "Vex Londo"
+    },
+    {
+      "id": "id_1780246795993_72yjh7t9f7d",
+      "firstName": "Egor",
+      "lastName": "Blazer",
+      "gameId": "283663",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "name": "Egor Blazer"
     }
   ],
   "ranks": [
@@ -433,6 +442,10 @@
         "note": ""
       },
       "id_1780246783483_wj5t4ndl8j": {
+        "status": "none",
+        "note": ""
+      },
+      "id_1780246795993_72yjh7t9f7d": {
         "status": "none",
         "note": ""
       }
