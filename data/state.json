@@ -158,7 +158,7 @@
       "firstName": "Shaggy",
       "lastName": "Furia",
       "gameId": "219437",
-      "rank": "Curator of Department",
+      "rank": "Instructor of Department",
       "ooc": "-",
       "name": "Shaggy Furia"
     },
@@ -936,6 +936,14 @@
       "strict": 0
     },
     "id_1780246748137_q0q95s05yj": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "id_1780246783483_wj5t4ndl8j": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "id_1780246795993_72yjh7t9f7d": {
       "verbal": 0,
       "strict": 0
     }
