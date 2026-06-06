@@ -748,7 +748,52 @@
       "a": "Гос. и негос. оружие"
     }
   ],
-  "monthlyLog": [],
+  "monthlyLog": [
+    {
+      "id": "i1780776501143xm2k",
+      "type": "reprimand",
+      "date": "2026-06-06",
+      "data": {
+        "mid": "m1",
+        "memberName": "Richi Londo",
+        "repType": "verbal",
+        "val": 1
+      }
+    },
+    {
+      "id": "i1780776501761mg0t",
+      "type": "reprimand",
+      "date": "2026-06-06",
+      "data": {
+        "mid": "m1",
+        "memberName": "Richi Londo",
+        "repType": "strict",
+        "val": 1
+      }
+    },
+    {
+      "id": "i1780776502253158s",
+      "type": "reprimand",
+      "date": "2026-06-06",
+      "data": {
+        "mid": "m1",
+        "memberName": "Richi Londo",
+        "repType": "verbal",
+        "val": 0
+      }
+    },
+    {
+      "id": "i1780776502642dqnf",
+      "type": "reprimand",
+      "date": "2026-06-06",
+      "data": {
+        "mid": "m1",
+        "memberName": "Richi Londo",
+        "repType": "strict",
+        "val": 0
+      }
+    }
+  ],
   "sync": {
     "owner": "",
     "repo": "",
