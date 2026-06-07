@@ -518,7 +518,12 @@
   },
   "call": {
     "date": "2026-05-29",
-    "candidates": [],
+    "candidates": [
+      {
+        "name": "",
+        "gameId": ""
+      }
+    ],
     "scores": {
       "0": {},
       "1": {},
