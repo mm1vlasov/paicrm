@@ -186,6 +186,17 @@
       "phone": "",
       "bank": "",
       "name": "Wiski IceTwice"
+    },
+    {
+      "id": "i17808337037678l8f",
+      "firstName": "Vanco",
+      "lastName": "Londo",
+      "gameId": "288208",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Vanco Londo"
     }
   ],
   "ranks": [
@@ -497,6 +508,10 @@
       "i1780833688077woux": {
         "status": "none",
         "note": ""
+      },
+      "i17808337037678l8f": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -618,6 +633,10 @@
       "strict": 0
     },
     "i1780833688077woux": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i17808337037678l8f": {
       "verbal": 0,
       "strict": 0
     }
