@@ -100,17 +100,6 @@
       "bank": ""
     },
     {
-      "id": "m17",
-      "firstName": "Mack",
-      "lastName": "Nightez",
-      "name": "Mack Nightez",
-      "gameId": "289844",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "m19",
       "firstName": "Anthony",
       "lastName": "Wilson",
@@ -486,10 +475,6 @@
         "status": "none",
         "note": ""
       },
-      "m17": {
-        "status": "none",
-        "note": ""
-      },
       "m19": {
         "status": "none",
         "note": ""
@@ -610,10 +595,6 @@
       "strict": 0
     },
     "m16": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m17": {
       "verbal": 0,
       "strict": 0
     },
