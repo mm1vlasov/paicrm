@@ -464,13 +464,20 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
     <!-- ══ SCORES ══ -->
     <div id="tab-scores" class="tab-content hidden">
       <div class="section-hd">
-        <div><div class="page-title">Еженедельные баллы</div><div class="page-sub">Учёт выполненных активностей</div></div>
-        <button class="btn btn-ghost btn-sm" onclick="resetWeeklyScores()">↺ Сбросить неделю</button>
+        <div><div class="page-title">Еженедельные баллы</div><div class="page-sub">Учёт выполненных активностей · мин. 500 б.</div></div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn btn-ghost btn-sm" id="weekPrevBtn" onclick="changeWeekView(-1)">‹</button>
+          <span class="mono" id="weekViewLabel" style="font-size:12px;color:var(--t1);min-width:160px;text-align:center">Текущая неделя</span>
+          <button class="btn btn-ghost btn-sm" id="weekNextBtn" onclick="changeWeekView(1)">›</button>
+          <button class="btn btn-ghost btn-sm" onclick="archiveWeek()">💾 Закрыть неделю</button>
+          <button class="btn btn-ghost btn-sm" onclick="resetWeeklyScores()">↺ Сбросить баллы</button>
+        </div>
       </div>
       <div class="card" style="margin-bottom:14px">
-        <div class="card-hd"><span class="card-title">Система баллов</span></div>
+        <div class="card-hd"><span class="card-title">Система баллов</span><span style="font-family:var(--mono);font-size:10px;color:var(--red)">★ High Staff</span></div>
         <div class="card-body" style="padding:12px 18px"><div style="display:flex;flex-wrap:wrap;gap:7px" id="legendBadges"></div></div>
       </div>
+      <div id="weekArchiveBanner" style="display:none;margin-bottom:14px"></div>
       <div class="scores-grid" id="scoresGrid"></div>
     </div>
 
@@ -566,7 +573,8 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
       <div class="stats-tabs">
         <button class="stats-tab active" data-stab="meetings" onclick="switchStatTab('meetings',this)">Собрания</button>
         <button class="stats-tab" data-stab="reprimands" onclick="switchStatTab('reprimands',this)">Выговоры</button>
-        <button class="stats-tab" data-stab="scores" onclick="switchStatTab('scores',this)">Баллы</button>
+        <button class="stats-tab" data-stab="scores" onclick="switchStatTab('scores',this)">Баллы (тек.)</button>
+        <button class="stats-tab" data-stab="weekhist" onclick="switchStatTab('weekhist',this)">История недель</button>
         <button class="stats-tab" data-stab="log" onclick="switchStatTab('log',this)">История</button>
       </div>
 
@@ -592,6 +600,14 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
           <div class="card-hd"><span class="card-title">Баллы по сотрудникам за месяц</span></div>
           <div class="card-body"><div class="bar-chart" id="statScoreBar"></div></div>
         </div>
+      </div>
+
+      <div id="statPanel-weekhist" style="display:none">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+          <span style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3)">Архив недель</span>
+          <select id="weekHistSelect" onchange="renderWeekHistory()" style="width:auto;max-width:280px;padding:5px 10px;font-size:12px"></select>
+        </div>
+        <div id="weekHistPanel"></div>
       </div>
 
       <div id="statPanel-log" style="display:none">
@@ -811,19 +827,20 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
   ],
   "ranks": ["Curator of Department","Head of Department","Deputy Head of Department","Instructor of Department","Staff of Department"],
   "activities": [
-    {"id":"a1","code":"LC","name":"Выдача лицензии","points":15,"highStaff":false,"note":""},
-    {"id":"a2","code":"EM","name":"Трудоустройство (кадр. аудит)","points":30,"highStaff":false,"note":""},
-    {"id":"a3","code":"EX","name":"Практический экзамен","points":20,"highStaff":false,"note":""},
-    {"id":"a4","code":"RP","name":"Проверка отчётность-pa","points":10,"highStaff":false,"note":""},
-    {"id":"a5","code":"GV","name":"Отчётность по гос. волнам","points":30,"highStaff":false,"note":""},
-    {"id":"a6","code":"CK","name":"Проверка трудоустройство","points":10,"highStaff":false,"note":""},
-    {"id":"a7","code":"UP","name":"Запрос-на-повышение","points":5,"highStaff":false,"note":""},
-    {"id":"a8","code":"AC","name":"Перевод из академии","points":10,"highStaff":false,"note":""},
-    {"id":"a9","code":"AG","name":"Агитация в канал","points":5,"highStaff":true,"note":""},
-    {"id":"a10","code":"CL","name":"Обзвон в отдел PAI","points":30,"highStaff":true,"note":""},
-    {"id":"a11","code":"DS","name":"Рапорт-на-увольнение","points":5,"highStaff":true,"note":""}
+    {"id":"a1","code":"LC","name":"Кол-во лицензий — доказательства","points":15,"highStaff":false,"note":"Скриншот выдачи лицензии"},
+    {"id":"a2","code":"EM","name":"Трудоустройство — доказательства","points":30,"highStaff":false,"note":"Скриншот трудоустройства"},
+    {"id":"a3","code":"EX","name":"Проведено экзаменов — доказательства","points":20,"highStaff":false,"note":"Скриншот экзамена"},
+    {"id":"a4","code":"RP","name":"Проверка отчётность PA","points":10,"highStaff":false,"note":""},
+    {"id":"a5","code":"GN","name":"Отправлено гос. волн (набор) — доказательства","points":45,"highStaff":false,"note":"Одобренный отчёт, 3 скриншота"},
+    {"id":"a6","code":"GL","name":"Отправлено гос. волн (лицензии) — доказательства","points":10,"highStaff":false,"note":"Одобренный отчёт, 1 скриншот лицензии"},
+    {"id":"a7","code":"UP","name":"Проверено запросов на повышение — доказательства","points":5,"highStaff":false,"note":""},
+    {"id":"a8","code":"AC","name":"Перевод человека из академии — доказательства","points":10,"highStaff":false,"note":""},
+    {"id":"a9","code":"AG","name":"Отправлено агитаций — доказательства","points":5,"highStaff":false,"note":""},
+    {"id":"a10","code":"CL","name":"Обзвон в отдел — доказательства","points":40,"highStaff":true,"note":""},
+    {"id":"a11","code":"DS","name":"Проверено рапортов на увал — доказательства","points":5,"highStaff":true,"note":""}
   ],
   "weeklyScores": {},
+  "weeklyHistory": [],
   "meeting": {"date":"","attendance":{}},
   "call": {"date":"","candidates":[],"scores":{}},
   "reprimands": {},
@@ -1118,6 +1135,7 @@ function migrateState(raw) {
     questions:   raw.questions?.length    ? raw.questions    : base.questions  || [],
     ranks:       raw.ranks?.length        ? raw.ranks        : base.ranks      || [],
     weeklyScores: raw.weeklyScores || base.weeklyScores || {},
+    weeklyHistory: raw.weeklyHistory || base.weeklyHistory || [],
     meeting:     raw.meeting     || base.meeting     || { date:'', attendance:{} },
     call:        raw.call        || base.call        || { date:'', candidates:[], scores:{} },
     reprimands:  raw.reprimands  || base.reprimands  || {},
@@ -1302,11 +1320,74 @@ function renderMembers() {
 }
 
 // ── SCORES ───────────────────────────────────────────────────────────────────
+const MIN_SCORE = 500;
+let weekViewOffset = 0; // 0 = current, -1 = previous archived, etc.
+
+function getViewedWeek() {
+  if (weekViewOffset === 0) return null; // live
+  const hist = S.weeklyHistory || [];
+  const idx = hist.length + weekViewOffset; // offset is negative
+  return hist[idx] || null;
+}
+
+function changeWeekView(delta) {
+  const hist = S.weeklyHistory || [];
+  weekViewOffset = Math.min(0, Math.max(-(hist.length), weekViewOffset + delta));
+  renderScores();
+}
+
+function weekLabel(entry) {
+  if (!entry) return 'Текущая неделя';
+  return `Неделя ${entry.weekNum || ''} · ${entry.dateFrom || ''} — ${entry.dateTo || entry.date || ''}`;
+}
+
+function getWeekNumber(d) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+}
+
+function getMemberTotalFromScores(mid, scores) {
+  const sc = scores[mid] || {};
+  return Object.entries(sc).reduce((sum, [aid, cnt]) => {
+    const a = S.activities.find(x => x.id === aid);
+    return sum + (a ? a.points * (parseInt(cnt)||0) : 0);
+  }, 0);
+}
+
 function renderScores() {
+  if (!S.weeklyHistory) S.weeklyHistory = [];
+  const hist = S.weeklyHistory;
+  const viewEntry = getViewedWeek();
+  const isHistory = weekViewOffset < 0;
+  const scores = isHistory ? (viewEntry?.scores || {}) : S.weeklyScores;
+
+  // Week navigation label
+  document.getElementById('weekViewLabel').textContent = isHistory
+    ? weekLabel(viewEntry)
+    : 'Текущая неделя';
+  document.getElementById('weekPrevBtn').disabled = weekViewOffset <= -hist.length;
+  document.getElementById('weekPrevBtn').style.opacity = weekViewOffset <= -hist.length ? '.3' : '';
+  document.getElementById('weekNextBtn').disabled = weekViewOffset >= 0;
+  document.getElementById('weekNextBtn').style.opacity = weekViewOffset >= 0 ? '.3' : '';
+
+  // Archive banner
+  const banner = document.getElementById('weekArchiveBanner');
+  if (isHistory && viewEntry) {
+    banner.style.display = '';
+    const archivedDate = viewEntry.archivedAt ? ` · закрыта ${viewEntry.archivedAt}` : '';
+    banner.innerHTML = `<div style="background:var(--amber-bg);border:1px solid var(--amber-line);border-radius:var(--rad);padding:10px 16px;font-family:var(--mono);font-size:11px;color:var(--amber)">📁 Архивная неделя${archivedDate} — только просмотр</div>`;
+  } else {
+    banner.style.display = 'none';
+  }
+
+  // Legend
   document.getElementById('legendBadges').innerHTML = S.activities.map(a => `
     <span class="badge bg-gray">
       <span class="act-code">${ea(a.code)}</span> ${ea(a.name)} · <strong style="color:var(--t1)">${a.points} б.</strong>
-      ${a.highStaff ? ' · <span style="color:var(--red)">HS</span>' : ''}
+      ${a.highStaff ? ' · <span style="color:var(--red)">★ HS</span>' : ''}
     </span>
   `).join('');
 
@@ -1314,22 +1395,30 @@ function renderScores() {
   document.getElementById('scoresGrid').innerHTML = grid.map(m => {
     const hs = rankIdx(m.rank) <= 2;
     const acts = S.activities.filter(a => !a.highStaff || hs);
-    const sc = S.weeklyScores[m.id] || {};
-    const total = getMemberTotal(m.id);
+    const sc = scores[m.id] || {};
+    const total = getMemberTotalFromScores(m.id, scores);
+    const meetsMin = total >= MIN_SCORE;
+    const borderColor = !isHistory ? (total > 0 ? (meetsMin ? 'var(--green-line)' : 'var(--amber-line)') : 'var(--line)') : 'var(--line)';
     return `
-      <div class="score-card">
+      <div class="score-card" style="border-color:${borderColor}">
         <div class="score-card-name ${rankNameClass(m.rank)}">${ea(memberName(m))}</div>
         <div class="score-card-rank">${ea(m.rank)} · #${ea(m.gameId)}</div>
         ${acts.map(a => `
           <div class="score-row">
             <div class="score-label"><span class="act-code">${ea(a.code)}</span><span>${ea(a.name)}</span></div>
-            <input type="number" class="score-input" min="0" value="${sc[a.id]||0}"
-              onchange="updateScore('${m.id}','${a.id}',this.value)">
+            ${isHistory
+              ? `<span class="mono" style="font-size:12px;color:var(--t2);min-width:52px;text-align:center">${sc[a.id]||0}</span>`
+              : `<input type="number" class="score-input" min="0" value="${sc[a.id]||0}" onchange="updateScore('${m.id}','${a.id}',this.value)">`
+            }
           </div>
         `).join('')}
         <div class="score-total">
           <span class="score-total-label">Итого</span>
-          <span class="score-total-val" id="tot_${m.id}" style="color:${total>0?'var(--green)':'var(--t2)'}">${total}</span>
+          <div style="display:flex;align-items:baseline;gap:8px">
+            ${!isHistory && total > 0 && !meetsMin ? `<span style="font-family:var(--mono);font-size:10px;color:var(--amber)">< ${MIN_SCORE}</span>` : ''}
+            ${!isHistory && meetsMin ? `<span style="font-family:var(--mono);font-size:10px;color:var(--green)">✓</span>` : ''}
+            <span class="score-total-val" id="tot_${m.id}" style="color:${total>0?(meetsMin?'var(--green)':'var(--amber)'):'var(--t2)'}">${total}</span>
+          </div>
         </div>
       </div>
     `;
@@ -1340,20 +1429,56 @@ function updateScore(mid, aid, val) {
   if (!S.weeklyScores[mid]) S.weeklyScores[mid] = {};
   S.weeklyScores[mid][aid] = parseInt(val)||0;
   const el = document.getElementById('tot_'+mid);
-  if (el) { const t = getMemberTotal(mid); el.textContent = t; el.style.color = t > 0 ? 'var(--green)' : 'var(--t2)'; }
+  if (el) {
+    const t = getMemberTotal(mid);
+    const meetsMin = t >= MIN_SCORE;
+    el.textContent = t;
+    el.style.color = t > 0 ? (meetsMin ? 'var(--green)' : 'var(--amber)') : 'var(--t2)';
+  }
   scheduleSave();
 }
 
-function resetWeeklyScores() {
-  if (!confirm('Сбросить все баллы за неделю?')) return;
-  // save to monthly log before reset
-  const ym = ymKey(thisYearMonth().year, thisYearMonth().month);
+function archiveWeek() {
+  const totalAll = S.members.reduce((s, m) => s + getMemberTotal(m.id), 0);
+  if (totalAll === 0) { toast('Нет баллов для архивирования'); return; }
+  if (!confirm('Закрыть текущую неделю и сохранить в архив? Баллы будут сброшены.')) return;
+  if (!S.weeklyHistory) S.weeklyHistory = [];
+  const now = new Date();
+  // Find monday of current week
+  const mon = new Date(now);
+  mon.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  const sun = new Date(mon);
+  sun.setDate(mon.getDate() + 6);
+  const fmt = d => d.toLocaleDateString('ru', { day:'2-digit', month:'2-digit', year:'numeric' });
+  S.weeklyHistory.push({
+    id: uid(),
+    date: now_iso(),
+    archivedAt: now.toLocaleDateString('ru', {day:'2-digit',month:'2-digit',year:'numeric'}),
+    dateFrom: fmt(mon),
+    dateTo: fmt(sun),
+    weekNum: getWeekNumber(now),
+    scores: JSON.parse(JSON.stringify(S.weeklyScores))
+  });
+  // Also log to monthlyLog
   if (!S.monthlyLog) S.monthlyLog = [];
   S.monthlyLog.push({
     id: uid(), type: 'scores-reset', date: now_iso(),
     data: { scores: JSON.parse(JSON.stringify(S.weeklyScores)) }
   });
   S.weeklyScores = {};
+  weekViewOffset = 0;
+  scheduleSave(); renderScores(); toast('Неделя закрыта и сохранена в архив');
+}
+
+function resetWeeklyScores() {
+  if (!confirm('Сбросить все баллы за неделю без сохранения в архив?')) return;
+  if (!S.monthlyLog) S.monthlyLog = [];
+  S.monthlyLog.push({
+    id: uid(), type: 'scores-reset', date: now_iso(),
+    data: { scores: JSON.parse(JSON.stringify(S.weeklyScores)) }
+  });
+  S.weeklyScores = {};
+  weekViewOffset = 0;
   scheduleSave(); renderScores(); toast('Баллы сброшены');
 }
 
@@ -1577,7 +1702,7 @@ function switchStatTab(tab, el) {
   currentStatTab = tab;
   document.querySelectorAll('.stats-tab').forEach(b => b.classList.remove('active'));
   el?.classList.add('active');
-  ['meetings','reprimands','scores','log'].forEach(t => {
+  ['meetings','reprimands','scores','weekhist','log'].forEach(t => {
     document.getElementById('statPanel-'+t).style.display = (t === tab) ? '' : 'none';
   });
   renderStatContent();
@@ -1595,10 +1720,92 @@ function getMonthLogs(type) {
 }
 
 function renderStatContent() {
-  if (currentStatTab === 'meetings')   renderStatMeetings();
+  if (currentStatTab === 'meetings')    renderStatMeetings();
   else if (currentStatTab === 'reprimands') renderStatReprimands();
-  else if (currentStatTab === 'scores')    renderStatScores();
-  else if (currentStatTab === 'log')       renderStatLog();
+  else if (currentStatTab === 'scores')     renderStatScores();
+  else if (currentStatTab === 'weekhist')   renderWeekHistoryList();
+  else if (currentStatTab === 'log')        renderStatLog();
+}
+
+function renderWeekHistoryList() {
+  const hist = (S.weeklyHistory || []).slice().reverse(); // newest first
+  const sel = document.getElementById('weekHistSelect');
+  if (!hist.length) {
+    sel.innerHTML = '<option>Нет архивных недель</option>';
+    document.getElementById('weekHistPanel').innerHTML = '<div class="empty">Архив пуст. Закрывайте недели кнопкой «💾 Закрыть неделю» в разделе Еженедельные баллы.</div>';
+    return;
+  }
+  const curVal = sel.value;
+  sel.innerHTML = hist.map((w, i) => `<option value="${i}">${weekLabel(w)}</option>`).join('');
+  if (curVal && hist.findIndex((_,i)=>String(i)===curVal) !== -1) sel.value = curVal;
+  renderWeekHistory();
+}
+
+function renderWeekHistory() {
+  const hist = (S.weeklyHistory || []).slice().reverse();
+  const idx = parseInt(document.getElementById('weekHistSelect')?.value || '0') || 0;
+  const entry = hist[idx];
+  if (!entry) { document.getElementById('weekHistPanel').innerHTML = '<div class="empty">Выберите неделю</div>'; return; }
+
+  const scores = entry.scores || {};
+  const members = sortedMembers(S.members);
+  const totals = members.map(m => ({ m, total: getMemberTotalFromScores(m.id, scores) }))
+    .sort((a, b) => b.total - a.total);
+  const maxVal = Math.max(1, ...totals.map(x => x.total));
+  const totalPts = totals.reduce((s, x) => s + x.total, 0);
+  const active = totals.filter(x => x.total > 0).length;
+  const meetsMin = totals.filter(x => x.total >= MIN_SCORE).length;
+  const avgPts = members.length > 0 ? Math.round(totalPts / members.length) : 0;
+
+  document.getElementById('weekHistPanel').innerHTML = `
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:18px">
+      <div class="sc"><div class="sc-label">Итого баллов</div><div class="sc-val" style="color:var(--green)">${totalPts}</div></div>
+      <div class="sc"><div class="sc-label">Среднее</div><div class="sc-val">${avgPts}</div><div class="sc-sub">на сотрудника</div></div>
+      <div class="sc"><div class="sc-label">Выполнили норму</div><div class="sc-val" style="color:var(--green)">${meetsMin}</div><div class="sc-sub">из ${members.length} · ≥${MIN_SCORE} б.</div></div>
+      <div class="sc"><div class="sc-label">Не выполнили</div><div class="sc-val" style="color:var(--red)">${active - meetsMin}</div><div class="sc-sub">набрали < ${MIN_SCORE} б.</div></div>
+    </div>
+    <div class="card">
+      <div class="card-hd"><span class="card-title">Баллы по сотрудникам · ${weekLabel(entry)}</span></div>
+      <div class="card-body">
+        <div class="bar-chart">
+          ${totals.map(({m, total}) => {
+            const meetsMinRow = total >= MIN_SCORE;
+            const color = total === 0 ? 'rgba(255,255,255,.08)' : meetsMinRow ? 'var(--green)' : 'var(--amber)';
+            return `
+              <div class="bc-row">
+                <div class="bc-label" title="${ea(memberName(m))}"><span class="${rankNameClass(m.rank)}">${ea(memberName(m))}</span></div>
+                <div class="bc-track"><div class="bc-fill" style="width:${(total/maxVal)*100}%;background:${color}"></div></div>
+                <div class="bc-val" style="color:${total>0?(meetsMinRow?'var(--green)':'var(--amber)'):'var(--t3)'}">${total}${total>0&&!meetsMinRow?'<span style="color:var(--t3);font-size:9px"> &lt;500</span>':''}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:14px">
+      <div class="card-hd"><span class="card-title">Детальные баллы по активностям</span></div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Сотрудник</th><th>Должность</th>${S.activities.map(a=>`<th style="text-align:center" title="${ea(a.name)}">${ea(a.code)}</th>`).join('')}<th>Итого</th></tr></thead>
+          <tbody>
+            ${totals.map(({m, total}) => {
+              const sc = scores[m.id] || {};
+              const hs = rankIdx(m.rank) <= 2;
+              return `<tr>
+                <td><span class="${rankNameClass(m.rank)}">${ea(memberName(m))}</span></td>
+                <td><span class="rank-badge ${rankBadgeClass(m.rank)}">${ea(m.rank)}</span></td>
+                ${S.activities.map(a => {
+                  const cnt = (!a.highStaff || hs) ? (sc[a.id]||0) : '—';
+                  return `<td class="mono" style="text-align:center;color:${cnt&&cnt!=='—'&&cnt>0?'var(--t1)':'var(--t3)'}">${cnt||0}</td>`;
+                }).join('')}
+                <td class="mono" style="color:${total>0?(total>=MIN_SCORE?'var(--green)':'var(--amber)'):'var(--t3)'};font-weight:500">${total}</td>
+              </tr>`;
+            }).join('')}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
 }
 
 function renderStatMeetings() {
