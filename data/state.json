@@ -45,17 +45,6 @@
       "bank": ""
     },
     {
-      "id": "m5",
-      "firstName": "Kamilla",
-      "lastName": "Initial",
-      "name": "Kamilla Initial",
-      "gameId": "159945",
-      "rank": "Deputy Head of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "m6",
       "firstName": "Edwin",
       "lastName": "Milton",
@@ -466,10 +455,6 @@
         "status": "none",
         "note": ""
       },
-      "m5": {
-        "status": "none",
-        "note": ""
-      },
       "m6": {
         "status": "none",
         "note": ""
@@ -582,10 +567,6 @@
       "strict": 0
     },
     "m4": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m5": {
       "verbal": 0,
       "strict": 0
     },
