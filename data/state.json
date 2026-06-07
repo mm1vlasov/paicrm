@@ -56,17 +56,6 @@
       "bank": ""
     },
     {
-      "id": "m6",
-      "firstName": "Edwin",
-      "lastName": "Milton",
-      "name": "Edwin Milton",
-      "gameId": "218240",
-      "rank": "Deputy Head of Department",
-      "ooc": "OOC Отпуск 16.06.26-30.06.26",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "m7",
       "firstName": "Zakura",
       "lastName": "Londo",
@@ -481,10 +470,6 @@
         "status": "none",
         "note": ""
       },
-      "m6": {
-        "status": "none",
-        "note": ""
-      },
       "m7": {
         "status": "none",
         "note": ""
@@ -601,10 +586,6 @@
       "strict": 0
     },
     "m5": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m6": {
       "verbal": 0,
       "strict": 0
     },
