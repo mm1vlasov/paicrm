@@ -56,17 +56,6 @@
       "bank": ""
     },
     {
-      "id": "m7",
-      "firstName": "Zakura",
-      "lastName": "Londo",
-      "name": "Zakura Londo",
-      "gameId": "273383",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "m9",
       "firstName": "Molly",
       "lastName": "Londo",
@@ -461,10 +450,6 @@
         "status": "none",
         "note": ""
       },
-      "m7": {
-        "status": "none",
-        "note": ""
-      },
       "m9": {
         "status": "none",
         "note": ""
@@ -569,10 +554,6 @@
       "strict": 0
     },
     "m5": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m7": {
       "verbal": 0,
       "strict": 0
     },
