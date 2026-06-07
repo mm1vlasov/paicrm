@@ -175,6 +175,17 @@
       "phone": "",
       "bank": "",
       "name": "Ryker Moonlight"
+    },
+    {
+      "id": "i1780833688077woux",
+      "firstName": "Wiski",
+      "lastName": "IceTwice",
+      "gameId": "21512",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Wiski IceTwice"
     }
   ],
   "ranks": [
@@ -482,6 +493,10 @@
       "i1780833670884jza4": {
         "status": "none",
         "note": ""
+      },
+      "i1780833688077woux": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -599,6 +614,10 @@
       "strict": 0
     },
     "i1780833670884jza4": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1780833688077woux": {
       "verbal": 0,
       "strict": 0
     }
