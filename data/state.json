@@ -342,6 +342,9 @@
   "weeklyScores": {
     "m1": {
       "a1": 0
+    },
+    "m16": {
+      "a1": 45
     }
   },
   "weeklyHistory": [
