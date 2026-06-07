@@ -208,6 +208,17 @@
       "phone": "",
       "bank": "",
       "name": "Kyka Londo"
+    },
+    {
+      "id": "i1780832354801ym38",
+      "firstName": "Doshy",
+      "lastName": "Unfairz",
+      "gameId": "205402",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Doshy Unfairz"
     }
   ],
   "ranks": [
@@ -505,6 +516,10 @@
       "i17808319413133ci4": {
         "status": "none",
         "note": ""
+      },
+      "i1780832354801ym38": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -634,6 +649,10 @@
       "strict": 0
     },
     "i17808319413133ci4": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1780832354801ym38": {
       "verbal": 0,
       "strict": 0
     }
