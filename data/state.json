@@ -45,17 +45,6 @@
       "bank": ""
     },
     {
-      "id": "m9",
-      "firstName": "Molly",
-      "lastName": "Londo",
-      "name": "Molly Londo",
-      "gameId": "58309",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "m10",
       "firstName": "Miran",
       "lastName": "Zekari",
@@ -422,10 +411,6 @@
         "status": "none",
         "note": ""
       },
-      "m9": {
-        "status": "none",
-        "note": ""
-      },
       "m10": {
         "status": "none",
         "note": ""
@@ -518,10 +503,6 @@
       "strict": 0
     },
     "m8": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m9": {
       "verbal": 0,
       "strict": 0
     },
