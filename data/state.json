@@ -122,17 +122,6 @@
       "bank": ""
     },
     {
-      "id": "m22",
-      "firstName": "Lana",
-      "lastName": "Westcoast",
-      "name": "Lana Westcoast",
-      "gameId": "267626",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "id_1780246654453_gkl6e4m2ewo",
       "firstName": "Shaggy",
       "lastName": "Furia",
@@ -483,10 +472,6 @@
         "status": "none",
         "note": ""
       },
-      "m22": {
-        "status": "none",
-        "note": ""
-      },
       "id_1780246654453_gkl6e4m2ewo": {
         "status": "none",
         "note": ""
@@ -611,10 +596,6 @@
       "strict": 0
     },
     "m21": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m22": {
       "verbal": 0,
       "strict": 0
     },
