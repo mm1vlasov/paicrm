@@ -339,7 +339,11 @@
       "note": "Только для High Staff (Head+)"
     }
   ],
-  "weeklyScores": {},
+  "weeklyScores": {
+    "m1": {
+      "a1": 1
+    }
+  },
   "weeklyHistory": [
     {
       "id": "i1780820050136dm69",
