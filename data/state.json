@@ -89,17 +89,6 @@
       "bank": ""
     },
     {
-      "id": "m12",
-      "firstName": "Satoru",
-      "lastName": "Initial",
-      "name": "Satoru Initial",
-      "gameId": "201700",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "m15",
       "firstName": "Daryana",
       "lastName": "Londo",
@@ -484,10 +473,6 @@
         "status": "none",
         "note": ""
       },
-      "m12": {
-        "status": "none",
-        "note": ""
-      },
       "m15": {
         "status": "none",
         "note": ""
@@ -604,10 +589,6 @@
       "strict": 0
     },
     "m11": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m12": {
       "verbal": 0,
       "strict": 0
     },
