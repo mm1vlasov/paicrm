@@ -164,6 +164,17 @@
       "phone": "",
       "bank": "",
       "name": "Doshy Unfairz"
+    },
+    {
+      "id": "i1780833670884jza4",
+      "firstName": "Ryker",
+      "lastName": "Moonlight",
+      "gameId": "305966",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Ryker Moonlight"
     }
   ],
   "ranks": [
@@ -467,6 +478,10 @@
       "i1780832354801ym38": {
         "status": "none",
         "note": ""
+      },
+      "i1780833670884jza4": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -580,6 +595,10 @@
       "strict": 0
     },
     "i1780832354801ym38": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1780833670884jza4": {
       "verbal": 0,
       "strict": 0
     }
