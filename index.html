@@ -575,6 +575,7 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
     <button class="sb-item"        data-tab="members"     onclick="showTab('members',this)">    <span class="sb-icon">◉</span> Состав</button>
     <span class="sb-section">Учёт</span>
     <button class="sb-item"        data-tab="scores"      onclick="showTab('scores',this)">     <span class="sb-icon">◎</span> Еженеделька</button>
+    <button class="sb-item"        data-tab="reports"     onclick="showTab('reports',this)">    <span class="sb-icon">◑</span> Заявки <span id="pendingBadge" style="display:none;margin-left:auto;background:rgba(240,224,176,0.15);color:var(--amber);border:1px solid rgba(240,224,176,0.2);border-radius:100px;font-family:var(--mono);font-size:9px;padding:1px 6px"></span></button>
     <button class="sb-item"        data-tab="meetings"    onclick="showTab('meetings',this)">   <span class="sb-icon">◷</span> Собрания</button>
     <button class="sb-item"        data-tab="calls"       onclick="showTab('calls',this)">      <span class="sb-icon">◌</span> Обзвон</button>
     <button class="sb-item"        data-tab="reprimands"  onclick="showTab('reprimands',this)"> <span class="sb-icon">⚠</span> Выговоры</button>
@@ -789,7 +790,45 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
       </div>
     </div>
 
-    <!-- Modal: явка собрания -->
+    <!-- ══ REPORTS MODERATION ══ -->
+    <div id="tab-reports" class="tab-content hidden">
+      <div class="section-hd">
+        <div>
+          <div class="page-title">Заявки на еженедельку</div>
+          <div class="page-sub">Сотрудники сами подают отчёты — здесь модератор проверяет и засчитывает баллы</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <select id="reportWeekFilter" onchange="renderReports()" style="width:220px;font-size:12px;font-family:var(--mono)">
+            <option value="all">Все недели</option>
+          </select>
+          <select id="reportStatusFilter" onchange="renderReports()" style="width:140px;font-size:12px">
+            <option value="pending">Ожидают</option>
+            <option value="approved">Одобрено</option>
+            <option value="rejected">Отклонено</option>
+            <option value="all">Все статусы</option>
+          </select>
+          <button class="btn btn-ghost btn-sm" onclick="loadReports()">↻ Обновить</button>
+        </div>
+      </div>
+
+      <!-- Summary bar -->
+      <div id="reportsSummary" class="stats-row" style="margin-bottom:16px"></div>
+
+      <!-- Reports list -->
+      <div id="reportsList"></div>
+    </div>
+
+    <!-- Modal: просмотр заявки -->
+    <div class="modal-overlay" id="modalReport">
+      <div class="modal" style="max-width:680px">
+        <div class="modal-hd">
+          <span class="modal-title" id="modalReportTitle">Заявка</span>
+          <button class="modal-close" onclick="closeModal('modalReport')">×</button>
+        </div>
+        <div class="modal-body" id="modalReportBody"></div>
+        <div class="modal-foot" id="modalReportFoot"></div>
+      </div>
+    </div>
     <div class="modal-overlay" id="modalMeetingAttendance">
       <div class="modal" style="max-width:640px">
         <div class="modal-hd" style="padding:16px 20px 14px">
@@ -1513,7 +1552,7 @@ function ensureAll() {
 const TAB_TITLES = {
   dashboard: 'Дашборд', members: 'Состав', scores: 'Еженедельные баллы',
   meetings: 'Собрания', calls: 'Обзвон', reprimands: 'Выговоры',
-  statistics: 'Статистика', admin: 'Настройки'
+  statistics: 'Статистика', admin: 'Настройки', reports: 'Заявки на еженедельку'
 };
 
 function showTab(tab, el) {
@@ -1535,6 +1574,7 @@ function renderTab(tab) {
   else if (tab === 'reprimands') renderReprimands();
   else if (tab === 'statistics') renderStatistics();
   else if (tab === 'admin')      renderAdmin();
+  else if (tab === 'reports')    renderReports();
 }
 
 function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
@@ -2808,6 +2848,305 @@ function clearAllData() {
   S = defaultState(); ensureAll(); scheduleSave(); renderTab(currentTab); toast('Данные сброшены');
 }
 
+// ── REPORTS MODERATION ──────────────────────────────────────────────────────
+const REPORTS_PATH = 'data/weekly_reports.json';
+let REPORTS = null;
+let remoteShaReports = '';
+let activeReportId = null;
+
+function ghReportsPath(cfg) { return REPORTS_PATH; }
+
+async function ghGetFile(cfg, path) {
+  const url = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}?ref=${encodeURIComponent(cfg.branch||'main')}&t=${Date.now()}`;
+  const r = await fetch(url, { cache:'no-store', headers: { Accept:'application/vnd.github+json', Authorization:`Bearer ${cfg.token}` } });
+  if (!r.ok) throw new Error('GitHub ' + r.status + ' ' + path);
+  const d = await r.json();
+  return { data: JSON.parse(b64toStr(d.content)), sha: d.sha };
+}
+
+async function ghPutFile(cfg, path, data, sha, message) {
+  // re-fetch SHA
+  try {
+    const cur = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}?ref=${encodeURIComponent(cfg.branch||'main')}&t=${Date.now()}`, { cache:'no-store', headers: { Accept:'application/vnd.github+json', Authorization:`Bearer ${cfg.token}` } });
+    if (cur.ok) sha = (await cur.json()).sha;
+  } catch {}
+  const body = { message: message||'PAI reports update', content: strToB64(JSON.stringify(data, null, 2)), branch: cfg.branch||'main' };
+  if (sha) body.sha = sha;
+  const r = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Accept:'application/vnd.github+json', Authorization:`Bearer ${cfg.token}`, 'Content-Type':'application/json' },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) { const e = await r.json().catch(()=>({})); throw new Error(e.message||'PUT '+r.status); }
+  return (await r.json()).content?.sha || sha;
+}
+
+async function loadReports() {
+  const cfg = getSyncConfig();
+  if (!cfg.owner || !cfg.repo || !cfg.token) return;
+  try {
+    const res = await ghGetFile(cfg, REPORTS_PATH);
+    REPORTS = Array.isArray(res.data) ? res.data : [];
+    remoteShaReports = res.sha;
+  } catch(e) {
+    if (e.message.includes('404')) { REPORTS = []; remoteShaReports = ''; }
+    else console.warn('loadReports:', e);
+  }
+  if (currentTab === 'reports') renderReports();
+  updatePendingBadge();
+}
+
+async function saveReports() {
+  const cfg = getSyncConfig();
+  if (!cfg.owner || !cfg.repo || !cfg.token || !REPORTS) return;
+  remoteShaReports = await ghPutFile(cfg, REPORTS_PATH, REPORTS, remoteShaReports, 'PAI: reports moderation');
+}
+
+function updatePendingBadge() {
+  const badge = document.getElementById('pendingBadge');
+  if (!badge) return;
+  const pending = (REPORTS||[]).filter(r => r.status === 'pending').length;
+  if (pending > 0) { badge.style.display = ''; badge.textContent = pending; }
+  else { badge.style.display = 'none'; }
+}
+
+function getWeekKey() {
+  const now = new Date();
+  const mon = new Date(now);
+  mon.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+  mon.setHours(0,0,0,0);
+  return mon.toISOString().slice(0,10);
+}
+
+function renderReports() {
+  if (!REPORTS) { loadReports(); return; }
+
+  // Build week filter options
+  const sel = document.getElementById('reportWeekFilter');
+  const curWeekFilter = sel.value;
+  const weeks = [...new Set(REPORTS.map(r => r.weekKey).filter(Boolean))].sort().reverse();
+  const thisWeek = getWeekKey();
+  sel.innerHTML = '<option value="all">Все недели</option>' +
+    weeks.map(w => `<option value="${ea(w)}"${w===thisWeek&&curWeekFilter==='all'?'':''} ${curWeekFilter===w?'selected':''}>${ea(w)}</option>`).join('');
+  // auto-select current week if first load
+  if (curWeekFilter === 'all' && weeks.includes(thisWeek)) {
+    // leave as 'all' but default view shows current week first
+  }
+
+  const statusFilter = document.getElementById('reportStatusFilter').value;
+  const weekFilter   = document.getElementById('reportWeekFilter').value;
+
+  let list = [...REPORTS];
+  if (weekFilter !== 'all') list = list.filter(r => r.weekKey === weekFilter);
+  if (statusFilter !== 'all') list = list.filter(r => r.status === statusFilter);
+  list.sort((a,b) => (b.submittedAt||'').localeCompare(a.submittedAt||''));
+
+  // Summary
+  const allWeek = weekFilter !== 'all' ? REPORTS.filter(r => r.weekKey === weekFilter) : REPORTS;
+  const pendingN  = allWeek.filter(r => r.status === 'pending').length;
+  const approvedN = allWeek.filter(r => r.status === 'approved').length;
+  const rejectedN = allWeek.filter(r => r.status === 'rejected').length;
+  document.getElementById('reportsSummary').innerHTML = `
+    <div class="sc"><div class="sc-label">Ожидают</div><div class="sc-val" style="color:var(--amber)">${pendingN}</div></div>
+    <div class="sc"><div class="sc-label">Одобрено</div><div class="sc-val" style="color:var(--green)">${approvedN}</div></div>
+    <div class="sc"><div class="sc-label">Отклонено</div><div class="sc-val" style="color:var(--red)">${rejectedN}</div></div>
+    <div class="sc"><div class="sc-label">Всего</div><div class="sc-val">${allWeek.length}</div></div>
+  `;
+
+  const container = document.getElementById('reportsList');
+  if (!list.length) {
+    container.innerHTML = '<div class="empty" style="padding:40px;text-align:center;color:var(--t3)">Заявок нет</div>';
+    return;
+  }
+
+  container.innerHTML = list.map(r => {
+    const statusColor = r.status==='approved' ? 'var(--green)' : r.status==='rejected' ? 'var(--red)' : 'var(--amber)';
+    const statusLabel = r.status==='approved' ? 'Одобрено' : r.status==='rejected' ? 'Отклонено' : 'На проверке';
+    const filled = (r.aspects||[]).filter(a => a.count > 0);
+    const submDate = r.submittedAt ? new Date(r.submittedAt).toLocaleString('ru',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+
+    // Find matching member
+    const member = S.members.find(m =>
+      m.gameId === r.gameId ||
+      (m.firstName?.toLowerCase() === r.firstName?.toLowerCase() && m.lastName?.toLowerCase() === r.lastName?.toLowerCase())
+    );
+
+    return `
+      <div class="card" style="margin-bottom:10px;border-left:3px solid ${statusColor}20;cursor:pointer" onclick="openReportModal('${r.id}')">
+        <div class="card-body" style="padding:14px 18px">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">
+                <span style="font-size:14px;font-weight:500;color:var(--t1)">${ea(r.name||'—')}</span>
+                <span class="badge bg-gray">#${ea(r.gameId||'—')}</span>
+                ${member ? `<span class="rank-badge ${rankBadgeClass(member.rank)}">${ea(member.rank)}</span>` : '<span style="font-family:var(--mono);font-size:10px;color:var(--t3)">не в составе</span>'}
+              </div>
+              <div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-bottom:8px">${ea(r.weekLabel||r.weekKey||'—')} · Подано: ${submDate}</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap">
+                ${filled.map(a => `
+                  <span class="badge bg-gray">
+                    <span class="act-code">${ea(a.code)}</span>
+                    ${ea(a.name)} · ${a.count}×
+                  </span>`).join('')}
+                ${!filled.length ? '<span style="color:var(--t3);font-size:12px">Нет ссылок</span>' : ''}
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+              <span class="badge" style="background:transparent;color:${statusColor};border-color:${statusColor}40">${statusLabel}</span>
+              <span style="font-family:var(--mono);font-size:18px;font-weight:300;color:var(--t1)">${r.totalPts||0} б.</span>
+              <span style="font-family:var(--mono);font-size:10px;color:var(--t3)">${(r.aspects||[]).reduce((s,a)=>s+(a.links?.length||0),0)} ссылок</span>
+            </div>
+          </div>
+          ${r.modNote ? `<div style="margin-top:10px;padding:8px 12px;background:var(--bg3);border-radius:var(--rad-s);font-size:12px;color:var(--t2);border:1px solid var(--line)">💬 ${ea(r.modNote)}</div>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+
+  updatePendingBadge();
+}
+
+function openReportModal(id) {
+  const r = (REPORTS||[]).find(x => x.id === id);
+  if (!r) return;
+  activeReportId = id;
+
+  document.getElementById('modalReportTitle').textContent = `${r.name||'—'} · #${r.gameId||'—'}`;
+
+  const member = S.members.find(m =>
+    m.gameId === r.gameId ||
+    (m.firstName?.toLowerCase() === r.firstName?.toLowerCase() && m.lastName?.toLowerCase() === r.lastName?.toLowerCase())
+  );
+
+  const submDate = r.submittedAt ? new Date(r.submittedAt).toLocaleString('ru',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+  const reviewDate = r.reviewedAt ? new Date(r.reviewedAt).toLocaleString('ru',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+  const statusColor = r.status==='approved' ? 'var(--green)' : r.status==='rejected' ? 'var(--red)' : 'var(--amber)';
+  const statusLabel = r.status==='approved' ? 'Одобрено' : r.status==='rejected' ? 'Отклонено' : 'На проверке';
+
+  document.getElementById('modalReportBody').innerHTML = `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+      ${member ? `<span class="${rankNameClass(member.rank)}">${ea(member.rank)}</span>` : ''}
+      <span class="badge bg-gray">#${ea(r.gameId||'—')}</span>
+      <span class="badge" style="background:transparent;color:${statusColor};border-color:${statusColor}40">${statusLabel}</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;font-family:var(--mono);font-size:10.5px;color:var(--t3)">
+      <div>Неделя: <span style="color:var(--t2)">${ea(r.weekLabel||r.weekKey||'—')}</span></div>
+      <div>Подано: <span style="color:var(--t2)">${submDate}</span></div>
+      ${r.reviewedAt ? `<div>Проверено: <span style="color:var(--t2)">${reviewDate}</span></div>` : ''}
+    </div>
+
+    ${(r.aspects||[]).map(a => {
+      const linksHtml = (a.links||[]).length
+        ? (a.links||[]).map((lnk, idx) => `
+            <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)">
+              <span style="font-family:var(--mono);font-size:10px;color:var(--t3);min-width:20px;text-align:right">${idx+1}</span>
+              <a href="${ea(lnk)}" target="_blank" style="flex:1;color:var(--blue);font-family:var(--mono);font-size:11px;word-break:break-all;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${ea(lnk)}">${ea(lnk)}</a>
+            </div>`).join('')
+        : '<div style="color:var(--t3);font-size:12px;padding:6px 0">Нет ссылок</div>';
+      return `
+        <div style="margin-bottom:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;padding-bottom:6px;border-bottom:1px solid var(--line)">
+            <div style="display:flex;align-items:center;gap:6px">
+              <span class="act-code">${ea(a.code)}</span>
+              <span style="font-size:13px;font-weight:500">${ea(a.name)}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:var(--mono);font-size:11px;color:var(--t3)">${a.count} × ${a.points} б.</span>
+              ${r.status === 'approved' || r.status === 'pending' ? `
+              <input type="number" min="0" style="width:52px;font-family:var(--mono);font-size:12px;text-align:center;padding:3px 6px" 
+                id="modCount_${a.actId}" value="${r.status==='approved' ? (getApprovedCount(r,a.actId)||a.count) : a.count}" 
+                title="Скорректировать кол-во">` : `<span style="font-family:var(--mono);font-size:11px;color:var(--t2)">${a.count}</span>`}
+            </div>
+          </div>
+          <div style="padding:0 4px">${linksHtml}</div>
+        </div>`;
+    }).join('')}
+
+    <div style="padding:12px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--t3);letter-spacing:.08em;text-transform:uppercase">Итого</span>
+      <span style="font-family:var(--mono);font-size:24px;font-weight:300;color:var(--t1)">${r.totalPts||0} б.</span>
+    </div>
+
+    <div style="margin-top:12px">
+      <label style="font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3)">Комментарий модератора</label>
+      <textarea id="modNoteInput" rows="2" style="resize:vertical;margin-top:6px" placeholder="Причина отказа, примечание...">${ea(r.modNote||'')}</textarea>
+    </div>
+  `;
+
+  const isPending  = r.status === 'pending';
+  const isApproved = r.status === 'approved';
+  const isRejected = r.status === 'rejected';
+
+  document.getElementById('modalReportFoot').innerHTML = `
+    <button class="btn btn-ghost btn-sm" onclick="closeModal('modalReport')">Закрыть</button>
+    ${isPending || isApproved ? `<button class="btn btn-danger btn-sm" onclick="reviewReport('rejected')">✕ Отклонить</button>` : ''}
+    ${isPending ? `<button class="btn btn-primary btn-sm" onclick="reviewReport('approved')">✓ Одобрить</button>` : ''}
+    ${isApproved ? `<button class="btn btn-primary btn-sm" onclick="reviewReport('approved')">↻ Пересчитать</button>` : ''}
+    ${isRejected ? `<button class="btn btn-primary btn-sm" onclick="reviewReport('approved')">✓ Одобрить</button>` : ''}
+  `;
+
+  openModal('modalReport');
+}
+
+function getApprovedCount(r, actId) {
+  // Returns approved count if set (for recalculation)
+  const a = (r.aspects||[]).find(x => x.actId === actId);
+  return a?.approvedCount ?? a?.count ?? 0;
+}
+
+async function reviewReport(newStatus) {
+  const r = (REPORTS||[]).find(x => x.id === activeReportId);
+  if (!r) return;
+
+  const modNote = document.getElementById('modNoteInput').value.trim();
+
+  if (newStatus === 'approved') {
+    // Collect moderator-adjusted counts
+    let newTotal = 0;
+    const newAspects = (r.aspects||[]).map(a => {
+      const inputEl = document.getElementById('modCount_' + a.actId);
+      const approvedCount = inputEl ? (parseInt(inputEl.value)||0) : a.count;
+      const pts = approvedCount * a.points;
+      newTotal += pts;
+      return { ...a, approvedCount, count: approvedCount, totalPts: pts };
+    });
+
+    r.aspects  = newAspects;
+    r.totalPts = newTotal;
+    r.status   = 'approved';
+    r.modNote  = modNote;
+    r.reviewedAt = new Date().toISOString();
+
+    // Apply to weeklyScores
+    const member = S.members.find(m =>
+      m.gameId === r.gameId ||
+      (m.firstName?.toLowerCase() === r.firstName?.toLowerCase() && m.lastName?.toLowerCase() === r.lastName?.toLowerCase())
+    );
+    if (member) {
+      if (!S.weeklyScores[member.id]) S.weeklyScores[member.id] = {};
+      newAspects.forEach(a => {
+        S.weeklyScores[member.id][a.actId] = (parseInt(S.weeklyScores[member.id][a.actId])||0) + a.approvedCount;
+      });
+      scheduleSave();
+      toast(`✓ Баллы засчитаны для ${memberName(member)}`);
+    } else {
+      toast('⚠ Сотрудник не найден в составе — баллы не засчитаны');
+    }
+  } else {
+    r.status   = 'rejected';
+    r.modNote  = modNote;
+    r.reviewedAt = new Date().toISOString();
+  }
+
+  try {
+    await saveReports();
+    closeModal('modalReport');
+    renderReports();
+    toast(newStatus === 'approved' ? 'Заявка одобрена' : 'Заявка отклонена');
+  } catch(e) {
+    toast('Ошибка сохранения: ' + e.message);
+  }
+}
+
 // ── INIT ─────────────────────────────────────────────────────────────────────
 async function init() {
   setSyncUI('loading', 'Загрузка...');
@@ -2823,6 +3162,7 @@ async function init() {
   }
 
   startPolling();
+  loadReports();
 
   const cfg = getSyncConfig();
   if (!cfg.token) setTimeout(() => openSyncSetup(cfg), 500);
