@@ -487,9 +487,67 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
 ::-webkit-scrollbar-thumb { background: var(--bg5); border-radius: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 
-@media (max-width: 1100px) {
-  .dash-grid, .admin-grid { grid-template-columns: 1fr; }
-  #activitySection { grid-template-columns: 1fr 1fr !important; }
+/* ── MEETING TILES ── */
+.mtg-tile {
+  background: var(--bg2); border: 1px solid var(--line); border-radius: var(--rad);
+  padding: 16px 18px; cursor: pointer; transition: border-color .2s, box-shadow .2s;
+  position: relative; overflow: hidden;
+}
+.mtg-tile:hover {
+  border-color: rgba(255,255,255,.12);
+  box-shadow: 0 0 20px rgba(255,255,255,.03);
+}
+.mtg-tile-status-bar {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--bg4);
+}
+.mtg-tile-status-fill {
+  height: 100%; border-radius: 0;
+  background: rgba(255,255,255,.4);
+  box-shadow: 0 0 8px rgba(255,255,255,0.2);
+  transition: width .4s ease;
+}
+.mtg-tile-title { font-size: 13.5px; font-weight: 500; margin-bottom: 3px; margin-top: 6px; }
+.mtg-tile-meta  { font-family: var(--mono); font-size: 10px; color: var(--t3); margin-bottom: 14px; }
+.mtg-tile-stats { display: flex; gap: 6px; flex-wrap: wrap; }
+.mtg-stat {
+  display: flex; align-items: center; gap: 5px;
+  font-family: var(--mono); font-size: 11px;
+  padding: 3px 8px; border-radius: 100px;
+  border: 1px solid var(--line2); color: var(--t3);
+}
+.mtg-stat.present { color: var(--t2); border-color: rgba(255,255,255,.12); }
+.mtg-stat.warned  { color: var(--amber); border-color: var(--amber-line); }
+.mtg-stat.absent  { color: var(--red);   border-color: var(--red-line); }
+.mtg-stat-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+
+/* Attendance list inside modal */
+.mAtt-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 18px; border-bottom: 1px solid var(--line);
+  transition: background .12s;
+}
+.mAtt-row:last-child { border-bottom: none; }
+.mAtt-row:hover { background: rgba(255,255,255,.015); }
+.mAtt-name { flex: 1; min-width: 0; }
+.mAtt-name-text { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mAtt-rank-text { font-family: var(--mono); font-size: 10px; color: var(--t3); margin-top: 1px; }
+.mAtt-controls { display: flex; gap: 5px; align-items: center; flex-shrink: 0; }
+.mAtt-btn {
+  padding: 4px 10px; border-radius: 100px; font-size: 11px; font-family: var(--mono);
+  border: 1px solid var(--line2); background: transparent; color: var(--t3);
+  cursor: pointer; transition: all .13s; white-space: nowrap;
+}
+.mAtt-btn:hover { color: var(--t2); border-color: rgba(255,255,255,.15); }
+.mAtt-btn.active-present { background: rgba(255,255,255,.07); border-color: rgba(255,255,255,.2); color: var(--t1); box-shadow: 0 0 8px rgba(255,255,255,.06); }
+.mAtt-btn.active-warned  { background: var(--amber-bg); border-color: var(--amber-line); color: var(--amber); }
+.mAtt-btn.active-absent  { background: var(--red-bg);   border-color: var(--red-line);   color: var(--red); }
+.mAtt-note { width: 130px; padding: 4px 8px; font-size: 11.5px; flex-shrink: 0; }
+
+@media (max-width: 600px) {
+  .mAtt-note { display: none; }
+  .mAtt-controls { gap: 3px; }
+  .mAtt-btn { padding: 4px 7px; font-size: 10px; }
 }
 @media (max-width: 820px) {
   :root { --sidebar: 0px; }
@@ -657,23 +715,150 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
     <!-- ══ MEETINGS ══ -->
     <div id="tab-meetings" class="tab-content hidden">
       <div class="section-hd">
-        <div><div class="page-title">Учёт собраний</div><div class="page-sub">Присутствовал · Предупредил · Отсутствовал</div></div>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <input type="date" id="meetingDate" onchange="setMeetingDate(this.value)" style="width:auto;max-width:155px">
-          <button class="btn btn-ghost btn-sm" onclick="saveMeetingSnapshot()">💾 Сохранить в историю</button>
-          <button class="btn btn-ghost btn-sm" onclick="clearMeetingMarks()">↺ Сбросить</button>
+        <div>
+          <div class="page-title">Собрания</div>
+          <div class="page-sub">Создавайте собрания, отмечайте явку, выдавайте выговоры</div>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="openCreateMeeting()">+ Создать собрание</button>
+      </div>
+
+      <!-- Week nav + summary bar -->
+      <div class="card" style="margin-bottom:18px">
+        <div class="card-body" style="padding:14px 18px">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-sm" onclick="changeMeetingWeek(-1)">‹</button>
+            <span style="font-family:var(--mono);font-size:12px;color:var(--t1);min-width:220px;text-align:center" id="mwLabel"></span>
+            <button class="btn btn-ghost btn-sm" onclick="changeMeetingWeek(1)">›</button>
+            <button class="btn btn-ghost btn-sm" onclick="meetingWeekOffset=0;renderMeetings()" style="font-size:11px">Текущая</button>
+            <span style="flex:1"></span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap" id="mwWeekSummary"></div>
+          </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-hd">
-          <span class="card-title">Явка</span>
-          <div id="meetingSummary" style="display:flex;gap:7px;flex-wrap:wrap"></div>
+
+      <!-- Meeting tiles grid -->
+      <div id="meetingTilesGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:24px"></div>
+
+      <div id="meetingEmptyState" style="display:none;padding:60px 24px;text-align:center;color:var(--t3)">
+        <div style="font-size:32px;margin-bottom:14px;opacity:.2">◷</div>
+        <div style="font-size:13px;color:var(--t2)">Нет собраний за эту неделю</div>
+        <div style="font-size:11.5px;margin-top:5px">Нажмите «+ Создать собрание»</div>
+      </div>
+    </div>
+
+    <!-- Modal: создать/редактировать собрание -->
+    <div class="modal-overlay" id="modalCreateMeeting">
+      <div class="modal" style="max-width:460px">
+        <div class="modal-hd">
+          <span class="modal-title" id="modalCreateMeetingTitle">Новое собрание</span>
+          <button class="modal-close" onclick="closeModal('modalCreateMeeting')">×</button>
         </div>
-        <div class="tbl-wrap">
-          <table id="meetingTable">
-            <thead><tr><th>#</th><th>Должность</th><th>Имя</th><th>Статик</th><th>Явка</th><th>Примечание</th></tr></thead>
-            <tbody></tbody>
-          </table>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Название</label>
+            <input type="text" id="mtgTitle" placeholder="Еженедельное собрание" maxlength="60">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Дата</label>
+              <input type="date" id="mtgDate">
+            </div>
+            <div class="form-group">
+              <label>Время начала</label>
+              <input type="time" id="mtgTime">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Тип собрания</label>
+            <select id="mtgType">
+              <option value="weekly">Еженедельное</option>
+              <option value="emergency">Экстренное</option>
+              <option value="briefing">Брифинг</option>
+              <option value="other">Другое</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Тема / повестка</label>
+            <textarea id="mtgNote" rows="3" placeholder="Описание, повестка, ссылки..." style="resize:vertical;min-height:60px"></textarea>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button class="btn btn-ghost btn-sm" onclick="closeModal('modalCreateMeeting')">Отмена</button>
+          <button class="btn btn-primary btn-sm" id="mtgSaveBtn" onclick="createMeeting()">Создать</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: явка собрания -->
+    <div class="modal-overlay" id="modalMeetingAttendance">
+      <div class="modal" style="max-width:640px">
+        <div class="modal-hd" style="padding:16px 20px 14px">
+          <div style="flex:1;min-width:0">
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+              <div class="modal-title" id="mAttTitle">Собрание</div>
+              <span id="mAttTypeBadge" class="badge bg-gray"></span>
+            </div>
+            <div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:4px" id="mAttMeta"></div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;margin-left:12px;flex-shrink:0">
+            <button class="btn btn-ghost btn-sm" onclick="openEditMeeting()" title="Редактировать">✎</button>
+            <button class="modal-close" onclick="closeModal('modalMeetingAttendance')">×</button>
+          </div>
+        </div>
+
+        <!-- Summary + quick actions -->
+        <div style="padding:10px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:var(--bg3)">
+          <div style="display:flex;gap:5px;flex:1;flex-wrap:wrap" id="mAttSummary"></div>
+          <div style="display:flex;gap:5px;flex-shrink:0">
+            <button class="btn btn-ghost btn-sm" onclick="mAttMarkAll('present')" title="Все присутствовали">✓ Все</button>
+            <button class="btn btn-ghost btn-sm" onclick="mAttReset()" title="Сбросить все отметки">↺</button>
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div style="padding:8px 18px;border-bottom:1px solid var(--line);display:flex;gap:14px;font-family:var(--mono);font-size:10px;color:var(--t3)">
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5);display:inline-block"></span>Присутствовал</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--amber);display:inline-block"></span>Предупредил</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block"></span>Отсутствовал</span>
+        </div>
+
+        <!-- Member list -->
+        <div style="max-height:54vh;overflow-y:auto" id="mAttList"></div>
+
+        <!-- Footer -->
+        <div class="modal-foot" style="justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line)">
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="btn btn-danger btn-sm" id="mAttReprimandBtn" onclick="openReprimandPanel()" style="display:none">⚠ Выговоры отсутствующим</button>
+          </div>
+          <div style="display:flex;gap:6px">
+            <button class="btn btn-ghost btn-sm" onclick="deleteMeetingConfirm()">Удалить</button>
+            <button class="btn btn-primary btn-sm" onclick="saveMeetingAttendance()">Сохранить</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal: выдача выговоров -->
+    <div class="modal-overlay" id="modalReprimandPanel">
+      <div class="modal" style="max-width:500px">
+        <div class="modal-hd">
+          <span class="modal-title">Выдать выговоры</span>
+          <button class="modal-close" onclick="closeModal('modalReprimandPanel')">×</button>
+        </div>
+        <div class="modal-body" style="padding:0">
+          <div style="padding:14px 18px;border-bottom:1px solid var(--line);font-size:12px;color:var(--t2)">
+            Выберите тип выговора и сотрудников. Предупредившие об отсутствии исключены по умолчанию.
+          </div>
+          <div style="padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px">
+            <span style="font-family:var(--mono);font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.1em">Тип:</span>
+            <button class="mAtt-btn active-present" id="repTypeVerbal" onclick="setRepType('verbal')" style="border-radius:var(--rad-s);padding:5px 14px;font-family:var(--font);font-size:12px">Устный</button>
+            <button class="mAtt-btn" id="repTypeStrict" onclick="setRepType('strict')" style="border-radius:var(--rad-s);padding:5px 14px;font-family:var(--font);font-size:12px">Строгий</button>
+          </div>
+          <div style="max-height:52vh;overflow-y:auto" id="repMemberList"></div>
+        </div>
+        <div class="modal-foot" style="justify-content:space-between">
+          <button class="btn btn-ghost btn-sm" onclick="closeModal('modalReprimandPanel')">Отмена</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmIssueReprimands()">Выдать выговоры</button>
         </div>
       </div>
     </div>
@@ -1141,28 +1326,6 @@ function changeMonth(delta) {
 }
 
 // ── MEETING SNAPSHOT → monthly log ──────────────────────────────────────────
-function saveMeetingSnapshot() {
-  if (!S.monthlyLog) S.monthlyLog = [];
-  const att = S.meeting.attendance || {};
-  const date = S.meeting.date || now_iso();
-  let present = 0, warned = 0, absent = 0;
-  S.members.forEach(m => {
-    const a = att[m.id] || {};
-    if (a.status === 'present') present++;
-    else if (a.status === 'warned') warned++;
-    else if (a.status === 'absent') absent++;
-  });
-  // Store snapshot
-  S.monthlyLog.push({
-    id: uid(), type: 'meeting', date,
-    data: { present, warned, absent, total: S.members.length,
-            detail: S.members.map(m => ({ id: m.id, name: memberName(m), status: (att[m.id]||{}).status||'none' }))
-          }
-  });
-  scheduleSave();
-  toast('Собрание сохранено в историю');
-}
-
 // ── TOAST ─────────────────────────────────────────────────────────────────────
 function toast(msg) {
   const el = document.createElement('div');
@@ -1668,59 +1831,387 @@ function resetWeeklyScores() {
   scheduleSave(); renderScores(); toast('Баллы сброшены');
 }
 
+// ── MEETINGS (new system) ────────────────────────────────────────────────────
 // ── MEETINGS ─────────────────────────────────────────────────────────────────
-function cycleMeetingStatus(mid) {
-  const a = S.meeting.attendance[mid] || { status:'none', note:'' };
-  const cycle = { none:'present', present:'warned', warned:'absent', absent:'none' };
-  a.status = cycle[a.status] || 'present';
-  S.meeting.attendance[mid] = a;
-  renderMeetings();
-  scheduleSave();
-}
-function setMeetingDate(v) { S.meeting.date = v; scheduleSave(); }
-function setMeetingNote(mid, note) { S.meeting.attendance[mid] = S.meeting.attendance[mid]||{}; S.meeting.attendance[mid].note = note; scheduleSave(); }
-function clearMeetingMarks() {
-  if (!confirm('Сбросить все отметки?')) return;
-  S.members.forEach(m => { S.meeting.attendance[m.id] = { status:'none', note:'' }; });
-  renderMeetings(); scheduleSave();
-}
+let meetingWeekOffset = 0;
+let activeMeetingId   = null;
+let mAttDraft         = {};
+let editingMeetingId  = null; // for edit mode in create modal
+let repType           = 'verbal';
+let repSelected       = {};   // mid → true/false
 
-function statusLabel(s) { return {present:'Присутствовал',warned:'Предупредил',absent:'Отсутствовал'}[s]||'Не отмечен'; }
-function statusBtnCls(s) { return {present:'att-present',warned:'att-warned',absent:'att-absent'}[s]||''; }
+/* ── helpers ── */
+function getMondayOf(d) {
+  const r = new Date(d); const day = r.getDay() || 7;
+  r.setDate(r.getDate() - day + 1); r.setHours(0,0,0,0); return r;
+}
+function addDays(d, n) { const r = new Date(d); r.setDate(r.getDate()+n); return r; }
+function fmtDate(d) { return new Date(d).toLocaleDateString('ru',{day:'2-digit',month:'2-digit',year:'numeric'}); }
+function meetingWeekRange(offset) {
+  const mon = getMondayOf(new Date());
+  mon.setDate(mon.getDate() + offset * 7);
+  const sun = addDays(mon, 6); return { mon, sun };
+}
+function isoDate(d) { return d.toISOString().slice(0,10); }
+function ensureMeetings() { if (!S.meetings) S.meetings = []; }
 
+const MTG_TYPE_LABEL = { weekly:'Еженедельное', emergency:'Экстренное', briefing:'Брифинг', other:'Другое' };
+
+function changeMeetingWeek(delta) { meetingWeekOffset += delta; renderMeetings(); }
+
+/* ── RENDER TILES ── */
 function renderMeetings() {
-  if (!S.meeting.date) S.meeting.date = now_iso();
-  document.getElementById('meetingDate').value = S.meeting.date;
-  const att = S.meeting.attendance;
-  let present = 0, warned = 0, absent = 0, none = 0;
-  S.members.forEach(m => {
-    const s = (att[m.id]||{}).status;
-    if (s==='present') present++;
-    else if (s==='warned') warned++;
-    else if (s==='absent') absent++;
-    else none++;
+  ensureMeetings();
+  const { mon, sun } = meetingWeekRange(meetingWeekOffset);
+  const monIso = isoDate(mon); const sunIso = isoDate(sun);
+
+  document.getElementById('mwLabel').textContent = `${fmtDate(mon)} — ${fmtDate(sun)}`;
+
+  const weekMtgs = S.meetings
+    .filter(m => m.date >= monIso && m.date <= sunIso)
+    .sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+
+  // Week summary badges
+  let wPresent=0, wWarned=0, wAbsent=0;
+  weekMtgs.forEach(mtg => {
+    const att = mtg.attendance || {};
+    S.members.forEach(m => {
+      const s = (att[m.id]||{}).status;
+      if (s==='present') wPresent++;
+      else if (s==='warned') wWarned++;
+      else if (s==='absent') wAbsent++;
+    });
   });
-  document.getElementById('meetingSummary').innerHTML = `
-    <span class="badge bg-green">Присут. ${present}</span>
-    <span class="badge bg-amber">Предупр. ${warned}</span>
-    <span class="badge bg-red">Отс. ${absent}</span>
-    <span class="badge bg-gray">Не отм. ${none}</span>
-  `;
-  const list = sortedMembers(S.members);
-  document.querySelector('#meetingTable tbody').innerHTML = list.map((m, i) => {
-    const a = att[m.id] || { status:'none', note:'' };
-    return `
-      <tr>
-        <td class="mono" style="color:var(--t3)">${i+1}</td>
-        <td><span class="rank-badge ${rankBadgeClass(m.rank)}">${ea(m.rank)}</span></td>
-        <td><span class="${rankNameClass(m.rank)}">${ea(memberName(m))}</span></td>
-        <td class="mono">#${ea(m.gameId)}</td>
-        <td><button type="button" class="att-btn ${statusBtnCls(a.status)}" onclick="cycleMeetingStatus('${m.id}')">${statusLabel(a.status)}</button></td>
-        <td><input type="text" value="${ea(a.note)}" placeholder="—" style="width:160px;padding:4px 8px;font-size:12px" onchange="setMeetingNote('${m.id}',this.value)"></td>
-      </tr>
+  const wSum = document.getElementById('mwWeekSummary');
+  if (weekMtgs.length) {
+    wSum.innerHTML = `
+      <span class="badge bg-gray" style="color:var(--t1)">◷ ${weekMtgs.length} собр.</span>
+      ${wPresent ? `<span class="badge bg-gray" style="color:var(--t2)">✓ ${wPresent}</span>` : ''}
+      ${wWarned  ? `<span class="badge bg-amber">⚠ ${wWarned}</span>` : ''}
+      ${wAbsent  ? `<span class="badge bg-red">✕ ${wAbsent}</span>` : ''}
     `;
+  } else { wSum.innerHTML = ''; }
+
+  const grid  = document.getElementById('meetingTilesGrid');
+  const empty = document.getElementById('meetingEmptyState');
+
+  if (!weekMtgs.length) { grid.innerHTML=''; empty.style.display=''; return; }
+  empty.style.display = 'none';
+
+  grid.innerHTML = weekMtgs.map(mtg => {
+    const att     = mtg.attendance || {};
+    const total   = S.members.length;
+    const present = S.members.filter(m => (att[m.id]||{}).status==='present').length;
+    const warned  = S.members.filter(m => (att[m.id]||{}).status==='warned').length;
+    const absent  = S.members.filter(m => (att[m.id]||{}).status==='absent').length;
+    const marked  = present + warned + absent;
+    const fillPct = total ? (marked/total*100) : 0;
+    const isToday = mtg.date === isoDate(new Date());
+    const isPast  = mtg.date < isoDate(new Date());
+    const typeLabel = MTG_TYPE_LABEL[mtg.type] || 'Другое';
+
+    // Absent names preview
+    const absentNames = S.members
+      .filter(m => (att[m.id]||{}).status==='absent')
+      .slice(0,3).map(m => memberName(m)).join(', ');
+    const absentMore = absent > 3 ? ` +${absent-3}` : '';
+
+    return `
+      <div class="mtg-tile" onclick="openMeetingAttendance('${mtg.id}')">
+        <div class="mtg-tile-status-bar">
+          <div class="mtg-tile-status-fill" style="width:${fillPct}%"></div>
+        </div>
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-top:8px">
+          <div class="mtg-tile-title">${ea(mtg.title||'Собрание')}</div>
+          <span class="badge bg-gray" style="font-size:9.5px;flex-shrink:0">${typeLabel}</span>
+        </div>
+        <div class="mtg-tile-meta">
+          ${isToday?'<span style="color:var(--t1);font-weight:500">Сегодня</span> · ':''}${fmtDate(mtg.date)}${mtg.time?' · '+mtg.time:''}
+        </div>
+        ${mtg.note ? `<div style="font-size:11.5px;color:var(--t3);margin-bottom:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${ea(mtg.note)}</div>` : ''}
+        <div class="mtg-tile-stats">
+          ${marked===0 ? `<div class="mtg-stat"><span class="mtg-stat-dot"></span>Не отмечено</div>` : ''}
+          ${present ? `<div class="mtg-stat present"><span class="mtg-stat-dot"></span>${present} присут.</div>` : ''}
+          ${warned  ? `<div class="mtg-stat warned"><span class="mtg-stat-dot"></span>${warned} предупр.</div>` : ''}
+          ${absent  ? `<div class="mtg-stat absent"><span class="mtg-stat-dot"></span>${absent} отсутств.</div>` : ''}
+          ${marked < total && marked > 0 ? `<div class="mtg-stat"><span class="mtg-stat-dot"></span>${total-marked} не отм.</div>` : ''}
+        </div>
+        ${absent ? `<div style="font-size:10.5px;color:var(--t3);margin-top:8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Отсутств.: ${ea(absentNames)}${absentMore}</div>` : ''}
+        ${absent && !mtg.reprimandsIssued ? `<div style="display:flex;align-items:center;gap:5px;margin-top:10px;font-family:var(--mono);font-size:9.5px;color:var(--red)"><span>●</span> Выговоры не выданы</div>` : ''}
+        ${mtg.reprimandsIssued ? `<div style="display:flex;align-items:center;gap:5px;margin-top:10px;font-family:var(--mono);font-size:9.5px;color:var(--t3)"><span>✓</span> Выговоры выданы</div>` : ''}
+      </div>`;
   }).join('');
 }
+
+/* ── CREATE / EDIT MEETING ── */
+function openCreateMeeting() {
+  editingMeetingId = null;
+  document.getElementById('modalCreateMeetingTitle').textContent = 'Новое собрание';
+  document.getElementById('mtgSaveBtn').textContent = 'Создать';
+  document.getElementById('mtgTitle').value = '';
+  document.getElementById('mtgDate').value  = isoDate(new Date());
+  document.getElementById('mtgTime').value  = '20:00';
+  document.getElementById('mtgType').value  = 'weekly';
+  document.getElementById('mtgNote').value  = '';
+  openModal('modalCreateMeeting');
+}
+
+function openEditMeeting() {
+  const mtg = S.meetings.find(m => m.id === activeMeetingId);
+  if (!mtg) return;
+  closeModal('modalMeetingAttendance');
+  editingMeetingId = mtg.id;
+  document.getElementById('modalCreateMeetingTitle').textContent = 'Редактировать собрание';
+  document.getElementById('mtgSaveBtn').textContent = 'Сохранить';
+  document.getElementById('mtgTitle').value = mtg.title || '';
+  document.getElementById('mtgDate').value  = mtg.date  || isoDate(new Date());
+  document.getElementById('mtgTime').value  = mtg.time  || '20:00';
+  document.getElementById('mtgType').value  = mtg.type  || 'weekly';
+  document.getElementById('mtgNote').value  = mtg.note  || '';
+  openModal('modalCreateMeeting');
+}
+
+function createMeeting() {
+  const title = document.getElementById('mtgTitle').value.trim() || 'Собрание';
+  const date  = document.getElementById('mtgDate').value;
+  const time  = document.getElementById('mtgTime').value;
+  const type  = document.getElementById('mtgType').value || 'weekly';
+  const note  = document.getElementById('mtgNote').value.trim();
+  if (!date) { toast('Укажите дату'); return; }
+  ensureMeetings();
+
+  if (editingMeetingId) {
+    // Edit mode
+    const mtg = S.meetings.find(m => m.id === editingMeetingId);
+    if (mtg) { mtg.title=title; mtg.date=date; mtg.time=time; mtg.type=type; mtg.note=note; }
+    closeModal('modalCreateMeeting');
+    scheduleSave(); renderMeetings(); toast('Собрание обновлено');
+    return;
+  }
+
+  // Create mode
+  const attendance = {};
+  S.members.forEach(m => { attendance[m.id] = { status:'none', note:'' }; });
+  S.meetings.push({ id:uid(), title, date, time, type, note, attendance, createdAt:now_iso() });
+  closeModal('modalCreateMeeting');
+
+  const mon    = getMondayOf(new Date());
+  const mtgMon = getMondayOf(new Date(date+'T00:00:00'));
+  meetingWeekOffset = Math.round((mtgMon - mon) / (7*86400000));
+
+  scheduleSave(); renderMeetings(); toast('Собрание создано');
+}
+
+/* ── ATTENDANCE MODAL ── */
+function openMeetingAttendance(id) {
+  ensureMeetings();
+  const mtg = S.meetings.find(m => m.id === id);
+  if (!mtg) return;
+  activeMeetingId = id;
+
+  mAttDraft = {};
+  S.members.forEach(m => {
+    const a = (mtg.attendance||{})[m.id] || { status:'none', note:'' };
+    mAttDraft[m.id] = { status: a.status||'none', note: a.note||'' };
+  });
+
+  document.getElementById('mAttTitle').textContent    = mtg.title || 'Собрание';
+  document.getElementById('mAttTypeBadge').textContent = MTG_TYPE_LABEL[mtg.type] || '';
+  document.getElementById('mAttMeta').textContent     =
+    fmtDate(mtg.date) + (mtg.time?' · '+mtg.time:'') + (mtg.note?' · '+mtg.note:'');
+
+  renderAttendanceModal();
+  openModal('modalMeetingAttendance');
+}
+
+function renderAttendanceModal() {
+  const list    = sortedMembers(S.members);
+  const present = list.filter(m => mAttDraft[m.id]?.status==='present').length;
+  const warned  = list.filter(m => mAttDraft[m.id]?.status==='warned').length;
+  const absent  = list.filter(m => mAttDraft[m.id]?.status==='absent').length;
+  const none    = list.length - present - warned - absent;
+
+  document.getElementById('mAttSummary').innerHTML = `
+    <span class="badge bg-gray" style="color:var(--t1)">✓ ${present} присут.</span>
+    ${warned ? `<span class="badge bg-amber">⚠ ${warned} предупр.</span>` : ''}
+    ${absent ? `<span class="badge bg-red">✕ ${absent} отсутств.</span>` : ''}
+    ${none   ? `<span class="badge bg-gray">${none} не отм.</span>` : ''}
+  `;
+
+  const repBtn = document.getElementById('mAttReprimandBtn');
+  repBtn.style.display = absent ? '' : 'none';
+
+  // Group: sort so absent/warned go to top
+  const sorted = [...list].sort((a,b) => {
+    const order = { absent:0, warned:1, none:2, present:3 };
+    return (order[mAttDraft[a.id]?.status||'none']||2) - (order[mAttDraft[b.id]?.status||'none']||2);
+  });
+
+  document.getElementById('mAttList').innerHTML = sorted.map(m => {
+    const d  = mAttDraft[m.id] || { status:'none', note:'' };
+    const sc = d.status;
+    const rowBg = sc==='absent' ? 'rgba(240,200,200,0.03)' : sc==='warned' ? 'rgba(240,224,176,0.03)' : '';
+    return `
+      <div class="mAtt-row" style="background:${rowBg}">
+        <div class="mAtt-name">
+          <div class="mAtt-name-text ${rankNameClass(m.rank)}">${ea(memberName(m))}</div>
+          <div class="mAtt-rank-text">${ea(m.rank)} · #${ea(m.gameId)}</div>
+        </div>
+        <div class="mAtt-controls">
+          <button class="mAtt-btn ${sc==='present'?'active-present':''}" onclick="setAttStatus('${m.id}','present')">Присут.</button>
+          <button class="mAtt-btn ${sc==='warned'?'active-warned':''}"   onclick="setAttStatus('${m.id}','warned')">Предупр.</button>
+          <button class="mAtt-btn ${sc==='absent'?'active-absent':''}"   onclick="setAttStatus('${m.id}','absent')">Отсутств.</button>
+        </div>
+        <input class="mAtt-note" type="text" placeholder="Примечание"
+          value="${ea(d.note)}" oninput="setAttNote('${m.id}',this.value)">
+      </div>`;
+  }).join('');
+}
+
+function setAttStatus(mid, status) {
+  if (!mAttDraft[mid]) mAttDraft[mid] = { status:'none', note:'' };
+  mAttDraft[mid].status = mAttDraft[mid].status === status ? 'none' : status;
+  renderAttendanceModal();
+}
+function setAttNote(mid, note) {
+  if (!mAttDraft[mid]) mAttDraft[mid] = { status:'none', note:'' };
+  mAttDraft[mid].note = note;
+}
+function mAttMarkAll(status) {
+  S.members.forEach(m => { mAttDraft[m.id] = { ...(mAttDraft[m.id]||{}), status }; });
+  renderAttendanceModal();
+}
+function mAttReset() {
+  S.members.forEach(m => { mAttDraft[m.id] = { status:'none', note:'' }; });
+  renderAttendanceModal();
+}
+
+function saveMeetingAttendance() {
+  ensureMeetings();
+  const mtg = S.meetings.find(m => m.id === activeMeetingId);
+  if (!mtg) return;
+  mtg.attendance = JSON.parse(JSON.stringify(mAttDraft));
+
+  // Log
+  if (!S.monthlyLog) S.monthlyLog = [];
+  const att = mtg.attendance;
+  const pC = S.members.filter(m=>(att[m.id]||{}).status==='present').length;
+  const wC = S.members.filter(m=>(att[m.id]||{}).status==='warned').length;
+  const aC = S.members.filter(m=>(att[m.id]||{}).status==='absent').length;
+  const existing = S.monthlyLog.find(l => l.type==='meeting' && l.meetingId===mtg.id);
+  const entry = {
+    id: existing?.id||uid(), meetingId:mtg.id, type:'meeting', date:mtg.date,
+    data: { title:mtg.title, present:pC, warned:wC, absent:aC, total:S.members.length,
+      detail: S.members.map(m=>({ id:m.id, name:memberName(m), status:(att[m.id]||{}).status||'none', note:(att[m.id]||{}).note||'' })) }
+  };
+  if (existing) Object.assign(existing, entry); else S.monthlyLog.push(entry);
+
+  closeModal('modalMeetingAttendance');
+  scheduleSave(); renderMeetings(); toast('Явка сохранена');
+}
+
+/* ── REPRIMAND PANEL ── */
+function openReprimandPanel() {
+  const absentIds = S.members.filter(m => mAttDraft[m.id]?.status==='absent').map(m=>m.id);
+  const warnedIds = S.members.filter(m => mAttDraft[m.id]?.status==='warned').map(m=>m.id);
+
+  // Default: absent selected, warned not selected
+  repSelected = {};
+  absentIds.forEach(id => { repSelected[id] = true; });
+  warnedIds.forEach(id => { repSelected[id] = false; });
+
+  repType = 'verbal';
+  renderReprimandPanel();
+  openModal('modalReprimandPanel');
+}
+
+function setRepType(t) {
+  repType = t;
+  document.getElementById('repTypeVerbal').className  = 'mAtt-btn' + (t==='verbal' ? ' active-present' : '');
+  document.getElementById('repTypeStrict').className  = 'mAtt-btn' + (t==='strict' ? ' active-absent' : '');
+}
+
+function renderReprimandPanel() {
+  const targets = S.members.filter(m =>
+    mAttDraft[m.id]?.status==='absent' || mAttDraft[m.id]?.status==='warned'
+  );
+  const sorted = [...targets].sort((a,b) => {
+    const order = { absent:0, warned:1 };
+    return (order[mAttDraft[a.id]?.status]||1) - (order[mAttDraft[b.id]?.status]||1);
+  });
+
+  document.getElementById('repMemberList').innerHTML = sorted.length ? sorted.map(m => {
+    const sc      = mAttDraft[m.id]?.status;
+    const checked = repSelected[m.id] !== false; // default true for absent
+    const repInfo = S.reprimands?.[m.id] || { verbal:0, strict:0 };
+    const note    = mAttDraft[m.id]?.note || '';
+    return `
+      <div style="display:flex;align-items:center;gap:12px;padding:11px 18px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .12s"
+           onclick="toggleRepSelected('${m.id}')" id="repRow_${m.id}">
+        <div style="width:18px;height:18px;border-radius:4px;border:1.5px solid;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .12s;
+          ${checked ? 'background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.35);color:var(--t1)' : 'border-color:var(--t3);color:transparent'}">
+          ${checked?'✓':''}
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:500;${rankNameClass(m.rank)?'':''}class="${rankNameClass(m.rank)}">${ea(memberName(m))}</div>
+          <div style="font-family:var(--mono);font-size:10px;color:var(--t3);margin-top:1px">${ea(m.rank)}</div>
+          ${note ? `<div style="font-size:11px;color:var(--t2);margin-top:2px;font-style:italic">"${ea(note)}"</div>` : ''}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0">
+          <span class="badge ${sc==='absent'?'bg-red':'bg-amber'}">${sc==='absent'?'Отсутств.':'Предупр.'}</span>
+          <span style="font-family:var(--mono);font-size:9.5px;color:var(--t3)">У:${repInfo.verbal}/2 · С:${repInfo.strict}/2</span>
+        </div>
+      </div>`;
+  }).join('') : `<div class="empty">Нет отсутствующих</div>`;
+}
+
+function toggleRepSelected(mid) {
+  repSelected[mid] = !repSelected[mid];
+  renderReprimandPanel();
+}
+
+function confirmIssueReprimands() {
+  const targets = S.members.filter(m => repSelected[m.id] === true);
+  if (!targets.length) { toast('Никто не выбран'); return; }
+
+  if (!S.reprimands) S.reprimands = {};
+  if (!S.monthlyLog) S.monthlyLog = [];
+  const given = []; const skipped = [];
+
+  targets.forEach(m => {
+    if (!S.reprimands[m.id]) S.reprimands[m.id] = { verbal:0, strict:0 };
+    const cur = S.reprimands[m.id][repType] || 0;
+    if (cur < 2) {
+      S.reprimands[m.id][repType] = cur + 1;
+      given.push(memberName(m));
+      S.monthlyLog.push({ id:uid(), type:'reprimand', date:now_iso(),
+        data:{ mid:m.id, memberName:memberName(m), repType, val:S.reprimands[m.id][repType], reason:'Отсутствие на собрании' }
+      });
+    } else { skipped.push(memberName(m)); }
+  });
+
+  // Mark meeting as reprimands issued
+  const mtg = S.meetings.find(m => m.id === activeMeetingId);
+  if (mtg) mtg.reprimandsIssued = true;
+
+  closeModal('modalReprimandPanel');
+  saveMeetingAttendance();
+
+  if (given.length) toast(`Выговор (${repType==='verbal'?'устный':'строгий'}) выдан: ${given.join(', ')}`);
+  if (skipped.length) toast(`Пропущены (макс.): ${skipped.join(', ')}`);
+  scheduleSave(); renderMeetings();
+}
+
+function deleteMeetingConfirm() {
+  if (!confirm('Удалить это собрание?')) return;
+  ensureMeetings();
+  S.meetings = S.meetings.filter(m => m.id !== activeMeetingId);
+  closeModal('modalMeetingAttendance');
+  scheduleSave(); renderMeetings(); toast('Собрание удалено');
+}
+
+// Legacy stub — no-op (old meeting.attendance is replaced by meetings array)
+function saveMeetingSnapshot() { toast('Используйте вкладку Собрания'); }
 
 // ── CALLS ────────────────────────────────────────────────────────────────────
 function addCandidate() {
