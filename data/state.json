@@ -639,15 +639,15 @@
       "strict": 0
     },
     "i1780833670884jza4": {
-      "verbal": 1,
+      "verbal": 0,
       "strict": 0
     },
     "i1780833688077woux": {
-      "verbal": 1,
+      "verbal": 0,
       "strict": 0
     },
     "i17808337037678l8f": {
-      "verbal": 1,
+      "verbal": 0,
       "strict": 0
     }
   },
@@ -1113,6 +1113,83 @@
         "repType": "verbal",
         "val": 1,
         "reason": "Отсутствие на собрании"
+      }
+    },
+    {
+      "id": "i17809027789193l7q",
+      "type": "reprimand",
+      "date": "2026-06-08",
+      "data": {
+        "mid": "i1780833670884jza4",
+        "memberName": "Ryker Moonlight",
+        "repType": "verbal",
+        "val": 0
+      }
+    },
+    {
+      "id": "i17809027797809s41",
+      "type": "reprimand",
+      "date": "2026-06-08",
+      "data": {
+        "mid": "i1780833688077woux",
+        "memberName": "Wiski IceTwice",
+        "repType": "verbal",
+        "val": 0
+      }
+    },
+    {
+      "id": "i1780902780571fzj1",
+      "type": "reprimand",
+      "date": "2026-06-08",
+      "data": {
+        "mid": "i17808337037678l8f",
+        "memberName": "Vanco Londo",
+        "repType": "verbal",
+        "val": 0
+      }
+    },
+    {
+      "id": "i1780902780850eusw",
+      "type": "reprimand",
+      "date": "2026-06-08",
+      "data": {
+        "mid": "i17808337037678l8f",
+        "memberName": "Vanco Londo",
+        "repType": "verbal",
+        "val": 1
+      }
+    },
+    {
+      "id": "i1780902781360wufp",
+      "type": "reprimand",
+      "date": "2026-06-08",
+      "data": {
+        "mid": "i17808337037678l8f",
+        "memberName": "Vanco Londo",
+        "repType": "verbal",
+        "val": 0
+      }
+    },
+    {
+      "id": "i1780902781752366v",
+      "type": "reprimand",
+      "date": "2026-06-08",
+      "data": {
+        "mid": "i17808337037678l8f",
+        "memberName": "Vanco Londo",
+        "repType": "strict",
+        "val": 1
+      }
+    },
+    {
+      "id": "i17809027822355tx3",
+      "type": "reprimand",
+      "date": "2026-06-08",
+      "data": {
+        "mid": "i17808337037678l8f",
+        "memberName": "Vanco Londo",
+        "repType": "strict",
+        "val": 0
       }
     }
   ],
