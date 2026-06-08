@@ -536,7 +536,7 @@
     "firstName": "Richi",
     "lastName": "Londo",
     "gameId": "155604",
-    "status": "pending",
+    "status": "rejected",
     "aspects": [
       {
         "actId": "a1",
@@ -647,7 +647,7 @@
       }
     ],
     "totalPts": 75,
-    "modNote": "",
-    "reviewedAt": null
+    "modNote": "мало баллов",
+    "reviewedAt": "2026-06-08T10:59:51.354Z"
   }
 ]
