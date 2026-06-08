@@ -252,7 +252,7 @@
     "firstName": "Okuname",
     "lastName": "Londo",
     "gameId": "155604",
-    "status": "pending",
+    "status": "rejected",
     "aspects": [
       {
         "actId": "a1",
@@ -383,7 +383,7 @@
     ],
     "totalPts": 245,
     "modNote": "",
-    "reviewedAt": null
+    "reviewedAt": "2026-06-08T07:40:57.863Z"
   },
   {
     "id": "r17809040589776gps",
