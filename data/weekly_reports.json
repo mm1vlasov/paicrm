@@ -394,7 +394,7 @@
     "firstName": "Anthony",
     "lastName": "Wilson",
     "gameId": "292488",
-    "status": "pending",
+    "status": "approved",
     "aspects": [
       {
         "actId": "a1",
@@ -407,7 +407,8 @@
           "https://discord.com/channels/1382609371510607923/1507850086716018780/1512451421293777087",
           "https://discord.com/channels/1382609371510607923/1507850086716018780/1512451421293777087",
           "https://discord.com/channels/1382609371510607923/1507850086716018780/1512451421293777087"
-        ]
+        ],
+        "approvedCount": 3
       },
       {
         "actId": "a2",
@@ -418,7 +419,8 @@
         "totalPts": 30,
         "links": [
           "https://discord.com/channels/1382609371510607923/1507850086716018780/1512451421293777087"
-        ]
+        ],
+        "approvedCount": 1
       },
       {
         "actId": "a3",
@@ -429,7 +431,8 @@
         "totalPts": 20,
         "links": [
           "https://discord.com/channels/1382609371510607923/1507850086716018780/1512451421293777087"
-        ]
+        ],
+        "approvedCount": 1
       },
       {
         "actId": "a4",
@@ -440,7 +443,8 @@
         "totalPts": 10,
         "links": [
           "https://discord.com/channels/1382609371510607923/1507850086716018780/1512451421293777087"
-        ]
+        ],
+        "approvedCount": 1
       },
       {
         "actId": "a5",
@@ -451,7 +455,8 @@
         "totalPts": 30,
         "links": [
           "https://discord.com/channels/1382609371510607923/1507850086716018780/1512451421293777087"
-        ]
+        ],
+        "approvedCount": 1
       },
       {
         "actId": "a6",
@@ -460,7 +465,8 @@
         "points": 10,
         "count": 0,
         "totalPts": 0,
-        "links": []
+        "links": [],
+        "approvedCount": 0
       },
       {
         "actId": "a7",
@@ -469,7 +475,8 @@
         "points": 5,
         "count": 0,
         "totalPts": 0,
-        "links": []
+        "links": [],
+        "approvedCount": 0
       },
       {
         "actId": "a8",
@@ -478,7 +485,8 @@
         "points": 10,
         "count": 0,
         "totalPts": 0,
-        "links": []
+        "links": [],
+        "approvedCount": 0
       },
       {
         "actId": "a9",
@@ -487,7 +495,8 @@
         "points": 5,
         "count": 0,
         "totalPts": 0,
-        "links": []
+        "links": [],
+        "approvedCount": 0
       },
       {
         "actId": "a10",
@@ -498,7 +507,8 @@
         "totalPts": 30,
         "links": [
           "https://discord.com/channels/1382609371510607923/1507850086716018780/1512451421293777087"
-        ]
+        ],
+        "approvedCount": 1
       },
       {
         "actId": "a11",
@@ -509,11 +519,12 @@
         "totalPts": 5,
         "links": [
           "https://discord.com/channels/1382609371510607923/1507850086716018780/1512451421293777087"
-        ]
+        ],
+        "approvedCount": 1
       }
     ],
     "totalPts": 170,
     "modNote": "",
-    "reviewedAt": null
+    "reviewedAt": "2026-06-08T07:34:32.146Z"
   }
 ]
