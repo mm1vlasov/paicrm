@@ -1154,7 +1154,7 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
 <div class="modal-overlay" id="modalActivity">
   <div class="modal" style="max-width:420px">
     <div class="modal-hd">
-      <span class="modal-title">Добавить активность</span>
+      <span class="modal-title" id="modalActivityTitle">Добавить активность</span>
       <button class="modal-close" onclick="closeModal('modalActivity')">×</button>
     </div>
     <div class="modal-body">
@@ -1170,7 +1170,7 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
     </div>
     <div class="modal-foot">
       <button class="btn btn-ghost" onclick="closeModal('modalActivity')">Отмена</button>
-      <button class="btn btn-primary" onclick="saveActivity()">Добавить</button>
+      <button class="btn btn-primary" id="modalActivitySaveBtn" onclick="saveActivity()">Добавить</button>
     </div>
   </div>
 </div>
@@ -1179,7 +1179,7 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
 <div class="modal-overlay" id="modalQuestion">
   <div class="modal" style="max-width:480px">
     <div class="modal-hd">
-      <span class="modal-title">Добавить вопрос</span>
+      <span class="modal-title" id="modalQuestionTitle">Добавить вопрос</span>
       <button class="modal-close" onclick="closeModal('modalQuestion')">×</button>
     </div>
     <div class="modal-body">
@@ -1188,7 +1188,7 @@ canvas.monthly-chart { width: 100%; height: 100%; display: block; }
     </div>
     <div class="modal-foot">
       <button class="btn btn-ghost" onclick="closeModal('modalQuestion')">Отмена</button>
-      <button class="btn btn-primary" onclick="saveQuestion()">Добавить</button>
+      <button class="btn btn-primary" id="modalQuestionSaveBtn" onclick="saveQuestion()">Добавить</button>
     </div>
   </div>
 </div>
@@ -1301,6 +1301,8 @@ let currentTab = 'dashboard';
 let memberFilter = '';
 let memberSort  = 'rank-asc';
 let editMemberId = null;
+let editActivityId = null;
+let editQuestionId = null;
 let remoteSha = '';
 let isSaving = false, pendingSave = false;
 let saveTimer = null, pollTimer = null;
@@ -2719,14 +2721,20 @@ function renderAdmin() {
   document.getElementById('activitiesList').innerHTML = S.activities.map(a => `
     <div style="display:flex;justify-content:space-between;align-items:center;background:var(--bg3);padding:7px 11px;border-radius:var(--rad-s);border:1px solid var(--line)">
       <span style="font-size:12px"><span class="act-code">${ea(a.code)}</span> ${ea(a.name)} · <span class="mono" style="color:var(--t3)">${a.points} б.</span></span>
-      <button class="btn btn-danger btn-xs" onclick="deleteActivity('${a.id}')">×</button>
+      <div style="display:flex;gap:5px">
+        <button class="btn btn-ghost btn-xs" onclick="openEditActivity('${a.id}')">Ред.</button>
+        <button class="btn btn-danger btn-xs" onclick="deleteActivity('${a.id}')">×</button>
+      </div>
     </div>
   `).join('');
 
   document.getElementById('questionsList').innerHTML = S.questions.map((q, i) => `
     <div style="display:flex;gap:7px;justify-content:space-between;background:var(--bg3);padding:7px 11px;border-radius:var(--rad-s);border:1px solid var(--line)">
       <span style="font-size:12px;color:var(--t2);flex:1"><span class="mono" style="color:var(--t3)">${i+1}.</span> ${ea(q.q)}</span>
-      <button class="btn btn-danger btn-xs" onclick="deleteQuestion('${q.id}')">×</button>
+      <div style="display:flex;gap:5px">
+        <button class="btn btn-ghost btn-xs" onclick="openEditQuestion('${q.id}')">Ред.</button>
+        <button class="btn btn-danger btn-xs" onclick="deleteQuestion('${q.id}')">×</button>
+      </div>
     </div>
   `).join('');
 }
@@ -2796,8 +2804,24 @@ function addRank() {
 function deleteRank(i) { S.ranks.splice(i, 1); scheduleSave(); renderAdmin(); }
 
 function openAddActivity() {
+  editActivityId = null;
   ['actCode','actName','actPoints','actNote'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('actHighStaff').value = 'false';
+  document.getElementById('modalActivityTitle').textContent = 'Добавить активность';
+  document.getElementById('modalActivitySaveBtn').textContent = 'Добавить';
+  openModal('modalActivity');
+}
+function openEditActivity(id) {
+  const a = S.activities.find(x => x.id === id);
+  if (!a) return;
+  editActivityId = id;
+  document.getElementById('actCode').value = a.code || '';
+  document.getElementById('actName').value = a.name || '';
+  document.getElementById('actPoints').value = a.points || '';
+  document.getElementById('actHighStaff').value = a.highStaff ? 'true' : 'false';
+  document.getElementById('actNote').value = a.note || '';
+  document.getElementById('modalActivityTitle').textContent = 'Редактировать активность';
+  document.getElementById('modalActivitySaveBtn').textContent = 'Сохранить';
   openModal('modalActivity');
 }
 function saveActivity() {
@@ -2805,17 +2829,48 @@ function saveActivity() {
   const name   = document.getElementById('actName').value.trim();
   const points = parseInt(document.getElementById('actPoints').value) || 0;
   if (!name || !points) { toast('Название и баллы обязательны'); return; }
-  S.activities.push({ id: uid(), code, name, points, highStaff: document.getElementById('actHighStaff').value === 'true', note: document.getElementById('actNote').value.trim() });
+  const data = { code, name, points, highStaff: document.getElementById('actHighStaff').value === 'true', note: document.getElementById('actNote').value.trim() };
+  if (editActivityId) {
+    const a = S.activities.find(x => x.id === editActivityId);
+    if (a) Object.assign(a, data);
+  } else {
+    S.activities.push({ id: uid(), ...data });
+  }
+  editActivityId = null;
   closeModal('modalActivity'); scheduleSave(); renderAdmin();
+  if (currentTab === 'scores') renderScores();
 }
 function deleteActivity(id) { if (!confirm('Удалить?')) return; S.activities = S.activities.filter(a => a.id !== id); scheduleSave(); renderAdmin(); }
 
-function openAddQuestion() { document.getElementById('qQuestion').value=''; document.getElementById('qAnswer').value=''; openModal('modalQuestion'); }
+function openAddQuestion() {
+  editQuestionId = null;
+  document.getElementById('qQuestion').value = '';
+  document.getElementById('qAnswer').value = '';
+  document.getElementById('modalQuestionTitle').textContent = 'Добавить вопрос';
+  document.getElementById('modalQuestionSaveBtn').textContent = 'Добавить';
+  openModal('modalQuestion');
+}
+function openEditQuestion(id) {
+  const item = S.questions.find(x => x.id === id);
+  if (!item) return;
+  editQuestionId = id;
+  document.getElementById('qQuestion').value = item.q || '';
+  document.getElementById('qAnswer').value = item.a || '';
+  document.getElementById('modalQuestionTitle').textContent = 'Редактировать вопрос';
+  document.getElementById('modalQuestionSaveBtn').textContent = 'Сохранить';
+  openModal('modalQuestion');
+}
 function saveQuestion() {
   const q = document.getElementById('qQuestion').value.trim();
   const a = document.getElementById('qAnswer').value.trim();
   if (!q) return;
-  S.questions.push({ id: uid(), q, a });
+  if (editQuestionId) {
+    const item = S.questions.find(x => x.id === editQuestionId);
+    if (item) { item.q = q; item.a = a; }
+  } else {
+    S.questions.push({ id: uid(), q, a });
+  }
+  editQuestionId = null;
   closeModal('modalQuestion'); scheduleSave(); renderAdmin();
   if (currentTab === 'calls') renderCalls();
 }
