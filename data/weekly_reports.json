@@ -242,5 +242,147 @@
     "totalPts": 2055,
     "modNote": "",
     "reviewedAt": "2026-06-08T07:31:37.802Z"
+  },
+  {
+    "id": "r1780903993264mr6n",
+    "weekKey": "2026-06-07",
+    "weekLabel": "08.06.2026 — 14.06.2026",
+    "submittedAt": "2026-06-08T07:33:13.264Z",
+    "name": "Okuname Londo",
+    "firstName": "Okuname",
+    "lastName": "Londo",
+    "gameId": "155604",
+    "status": "pending",
+    "aspects": [
+      {
+        "actId": "a1",
+        "code": "LC",
+        "name": "Выдача лицензии",
+        "points": 15,
+        "count": 6,
+        "totalPts": 90,
+        "links": [
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138",
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138",
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138",
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138",
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138",
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138"
+        ]
+      },
+      {
+        "actId": "a2",
+        "code": "EM",
+        "name": "Трудоустройство (кадр. аудит)",
+        "points": 30,
+        "count": 1,
+        "totalPts": 30,
+        "links": [
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138"
+        ]
+      },
+      {
+        "actId": "a3",
+        "code": "EX",
+        "name": "Практический экзамен",
+        "points": 20,
+        "count": 1,
+        "totalPts": 20,
+        "links": [
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138"
+        ]
+      },
+      {
+        "actId": "a4",
+        "code": "RP",
+        "name": "Проверка отчётность-pa",
+        "points": 10,
+        "count": 1,
+        "totalPts": 10,
+        "links": [
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138"
+        ]
+      },
+      {
+        "actId": "a5",
+        "code": "GV",
+        "name": "Отчётность по гос. волнам",
+        "points": 30,
+        "count": 1,
+        "totalPts": 30,
+        "links": [
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138"
+        ]
+      },
+      {
+        "actId": "a6",
+        "code": "CK",
+        "name": "Проверка трудоустройство",
+        "points": 10,
+        "count": 1,
+        "totalPts": 10,
+        "links": [
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138"
+        ]
+      },
+      {
+        "actId": "a7",
+        "code": "UP",
+        "name": "Запрос-на-повышение",
+        "points": 5,
+        "count": 1,
+        "totalPts": 5,
+        "links": [
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138"
+        ]
+      },
+      {
+        "actId": "a8",
+        "code": "AC",
+        "name": "Перевод из академии",
+        "points": 10,
+        "count": 1,
+        "totalPts": 10,
+        "links": [
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138"
+        ]
+      },
+      {
+        "actId": "a9",
+        "code": "AG",
+        "name": "Агитация в канал",
+        "points": 5,
+        "count": 1,
+        "totalPts": 5,
+        "links": [
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138"
+        ]
+      },
+      {
+        "actId": "a10",
+        "code": "CL",
+        "name": "Обзвон в отдел PAI",
+        "points": 30,
+        "count": 1,
+        "totalPts": 30,
+        "links": [
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138"
+        ]
+      },
+      {
+        "actId": "a11",
+        "code": "DS",
+        "name": "Рапорт-на-увольнение",
+        "points": 5,
+        "count": 1,
+        "totalPts": 5,
+        "links": [
+          "https://discord.com/channels/1382609371510607923/1507850086716018780/1510764245774635138"
+        ]
+      }
+    ],
+    "totalPts": 245,
+    "modNote": "",
+    "reviewedAt": null
   }
 ]
