@@ -955,6 +955,129 @@
           }
         }
       }
+    },
+    {
+      "id": "i1780902765717b7bl",
+      "meetingId": "i1780902754162rk4m",
+      "type": "meeting",
+      "date": "2026-06-08",
+      "data": {
+        "title": "Собрание отдела",
+        "present": 12,
+        "warned": 3,
+        "absent": 3,
+        "total": 18,
+        "detail": [
+          {
+            "id": "m1",
+            "name": "Richi Londo",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m2",
+            "name": "Mir Li",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m3",
+            "name": "Francesco IceTwice",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m4",
+            "name": "Logan Brooks",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m10",
+            "name": "Miran Zekari",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m15",
+            "name": "Daryana Londo",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m16",
+            "name": "Neko Toujou",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m19",
+            "name": "Anthony Wilson",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m20",
+            "name": "Aomine Londo",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "id_1780246654453_gkl6e4m2ewo",
+            "name": "Shaggy Furia",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "id_1780246701085_rt4ppx33i1",
+            "name": "Kalyaka Mart",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "id_1780246783483_wj5t4ndl8j",
+            "name": "Vex Londo",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "id_1780246795993_72yjh7t9f7d",
+            "name": "Egor Blazer",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i17808319413133ci4",
+            "name": "Kyka Londo",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "i1780832354801ym38",
+            "name": "Doshy Unfairz",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i1780833670884jza4",
+            "name": "Ryker Moonlight",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1780833688077woux",
+            "name": "Wiski IceTwice",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i17808337037678l8f",
+            "name": "Vanco Londo",
+            "status": "absent",
+            "note": ""
+          }
+        ]
+      }
     }
   ],
   "sync": {
@@ -976,75 +1099,75 @@
       "note": "",
       "attendance": {
         "m1": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m2": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m3": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m4": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m10": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m15": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m16": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m19": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m20": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "id_1780246654453_gkl6e4m2ewo": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "id_1780246701085_rt4ppx33i1": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "id_1780246783483_wj5t4ndl8j": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "id_1780246795993_72yjh7t9f7d": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i17808319413133ci4": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "i1780832354801ym38": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i1780833670884jza4": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1780833688077woux": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i17808337037678l8f": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         }
       },
