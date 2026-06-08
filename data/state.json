@@ -639,15 +639,15 @@
       "strict": 0
     },
     "i1780833670884jza4": {
-      "verbal": 0,
+      "verbal": 1,
       "strict": 0
     },
     "i1780833688077woux": {
-      "verbal": 0,
+      "verbal": 1,
       "strict": 0
     },
     "i17808337037678l8f": {
-      "verbal": 0,
+      "verbal": 1,
       "strict": 0
     }
   },
@@ -1078,6 +1078,42 @@
           }
         ]
       }
+    },
+    {
+      "id": "i1780902771205rpso",
+      "type": "reprimand",
+      "date": "2026-06-08",
+      "data": {
+        "mid": "i1780833670884jza4",
+        "memberName": "Ryker Moonlight",
+        "repType": "verbal",
+        "val": 1,
+        "reason": "Отсутствие на собрании"
+      }
+    },
+    {
+      "id": "i178090277120512jt",
+      "type": "reprimand",
+      "date": "2026-06-08",
+      "data": {
+        "mid": "i1780833688077woux",
+        "memberName": "Wiski IceTwice",
+        "repType": "verbal",
+        "val": 1,
+        "reason": "Отсутствие на собрании"
+      }
+    },
+    {
+      "id": "i1780902771205j70k",
+      "type": "reprimand",
+      "date": "2026-06-08",
+      "data": {
+        "mid": "i17808337037678l8f",
+        "memberName": "Vanco Londo",
+        "repType": "verbal",
+        "val": 1,
+        "reason": "Отсутствие на собрании"
+      }
     }
   ],
   "sync": {
@@ -1171,7 +1207,8 @@
           "note": ""
         }
       },
-      "createdAt": "2026-06-08"
+      "createdAt": "2026-06-08",
+      "reprimandsIssued": true
     }
   ]
 }
