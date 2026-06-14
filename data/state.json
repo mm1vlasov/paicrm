@@ -23,17 +23,6 @@
       "bank": ""
     },
     {
-      "id": "m3",
-      "firstName": "Francesco",
-      "lastName": "IceTwice",
-      "name": "Francesco IceTwice",
-      "gameId": "99108",
-      "rank": "Head of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "m4",
       "firstName": "Logan",
       "lastName": "Brooks",
@@ -476,10 +465,6 @@
         "status": "none",
         "note": ""
       },
-      "m3": {
-        "status": "none",
-        "note": ""
-      },
       "m4": {
         "status": "none",
         "note": ""
@@ -576,10 +561,6 @@
       "strict": 0
     },
     "m2": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m3": {
       "verbal": 0,
       "strict": 0
     },
