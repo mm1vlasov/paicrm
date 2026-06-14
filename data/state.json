@@ -186,6 +186,17 @@
       "phone": "",
       "bank": "",
       "name": "Abdullah Londo"
+    },
+    {
+      "id": "i1781452485118xbs7",
+      "firstName": "John",
+      "lastName": "Whou",
+      "gameId": "227136",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "John Whou"
     }
   ],
   "ranks": [
@@ -524,6 +535,10 @@
       "i1781452469848uojk": {
         "status": "none",
         "note": ""
+      },
+      "i1781452485118xbs7": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -645,6 +660,10 @@
       "strict": 0
     },
     "i1781452469848uojk": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1781452485118xbs7": {
       "verbal": 0,
       "strict": 0
     }
