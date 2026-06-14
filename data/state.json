@@ -1348,6 +1348,97 @@
         }
       },
       "createdAt": "2026-06-14"
+    },
+    {
+      "id": "i1781452595612bkk7",
+      "title": "Еженедельное собрание состава",
+      "date": "2026-06-14",
+      "time": "19:00",
+      "type": "weekly",
+      "note": "",
+      "attendance": {
+        "m1": {
+          "status": "none",
+          "note": ""
+        },
+        "m2": {
+          "status": "none",
+          "note": ""
+        },
+        "m4": {
+          "status": "none",
+          "note": ""
+        },
+        "m10": {
+          "status": "none",
+          "note": ""
+        },
+        "m15": {
+          "status": "none",
+          "note": ""
+        },
+        "m19": {
+          "status": "none",
+          "note": ""
+        },
+        "m20": {
+          "status": "none",
+          "note": ""
+        },
+        "id_1780246701085_rt4ppx33i1": {
+          "status": "none",
+          "note": ""
+        },
+        "id_1780246783483_wj5t4ndl8j": {
+          "status": "none",
+          "note": ""
+        },
+        "i17808319413133ci4": {
+          "status": "none",
+          "note": ""
+        },
+        "i1780833670884jza4": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452270089wt0y": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452361976vitd": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452383425yq1w": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452418839dj58": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452448187t94n": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452469848uojk": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452485118xbs7": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452502651sag1": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452513490qgz4": {
+          "status": "none",
+          "note": ""
+        }
+      },
+      "createdAt": "2026-06-14"
     }
   ]
 }
