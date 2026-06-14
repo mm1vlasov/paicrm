@@ -56,17 +56,6 @@
       "bank": ""
     },
     {
-      "id": "m16",
-      "firstName": "Neko",
-      "lastName": "Toujou",
-      "name": "Neko Toujou",
-      "gameId": "24300",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "m19",
       "firstName": "Anthony",
       "lastName": "Wilson",
@@ -466,10 +455,6 @@
         "status": "none",
         "note": ""
       },
-      "m16": {
-        "status": "none",
-        "note": ""
-      },
       "m19": {
         "status": "none",
         "note": ""
@@ -574,10 +559,6 @@
       "strict": 0
     },
     "m15": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m16": {
       "verbal": 0,
       "strict": 0
     },
