@@ -142,6 +142,17 @@
       "phone": "",
       "bank": "",
       "name": "Cornelio Londo"
+    },
+    {
+      "id": "i1781452383425yq1w",
+      "firstName": "Chaobi",
+      "lastName": "Yuwi",
+      "gameId": "156750",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Chaobi Yuwi"
     }
   ],
   "ranks": [
@@ -464,6 +475,10 @@
       "i1781452361976vitd": {
         "status": "none",
         "note": ""
+      },
+      "i1781452383425yq1w": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -569,6 +584,10 @@
       "strict": 0
     },
     "i1781452361976vitd": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1781452383425yq1w": {
       "verbal": 0,
       "strict": 0
     }
