@@ -122,17 +122,6 @@
       "name": "Ryker Moonlight"
     },
     {
-      "id": "i1780833688077woux",
-      "firstName": "Wiski",
-      "lastName": "IceTwice",
-      "gameId": "21512",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": "",
-      "name": "Wiski IceTwice"
-    },
-    {
       "id": "i17808337037678l8f",
       "firstName": "Vanco",
       "lastName": "Londo",
@@ -468,10 +457,6 @@
         "status": "none",
         "note": ""
       },
-      "i1780833688077woux": {
-        "status": "none",
-        "note": ""
-      },
       "i17808337037678l8f": {
         "status": "none",
         "note": ""
@@ -576,10 +561,6 @@
       "strict": 0
     },
     "i1780833670884jza4": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "i1780833688077woux": {
       "verbal": 0,
       "strict": 0
     },
