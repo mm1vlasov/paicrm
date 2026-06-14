@@ -208,6 +208,17 @@
       "phone": "",
       "bank": "",
       "name": "Jannik Londo"
+    },
+    {
+      "id": "i1781452513490qgz4",
+      "firstName": "Alexandr",
+      "lastName": "Mirror",
+      "gameId": "290135",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Alexandr Mirror"
     }
   ],
   "ranks": [
@@ -554,6 +565,10 @@
       "i1781452502651sag1": {
         "status": "none",
         "note": ""
+      },
+      "i1781452513490qgz4": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -683,6 +698,10 @@
       "strict": 0
     },
     "i1781452502651sag1": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1781452513490qgz4": {
       "verbal": 0,
       "strict": 0
     }
