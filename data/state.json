@@ -175,6 +175,17 @@
       "phone": "",
       "bank": "",
       "name": "Sato Horikawa"
+    },
+    {
+      "id": "i1781452469848uojk",
+      "firstName": "Abdullah",
+      "lastName": "Londo",
+      "gameId": "207759",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Abdullah Londo"
     }
   ],
   "ranks": [
@@ -509,6 +520,10 @@
       "i1781452448187t94n": {
         "status": "none",
         "note": ""
+      },
+      "i1781452469848uojk": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -626,6 +641,10 @@
       "strict": 0
     },
     "i1781452448187t94n": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1781452469848uojk": {
       "verbal": 0,
       "strict": 0
     }
