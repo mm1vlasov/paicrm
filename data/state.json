@@ -89,17 +89,6 @@
       "bank": ""
     },
     {
-      "id": "id_1780246654453_gkl6e4m2ewo",
-      "firstName": "Shaggy",
-      "lastName": "Furia",
-      "gameId": "219437",
-      "rank": "Deputy Head of Department",
-      "ooc": "05.06.26-10.06.26",
-      "name": "Shaggy Furia",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "id_1780246701085_rt4ppx33i1",
       "firstName": "Kalyaka",
       "lastName": "Mart",
@@ -489,10 +478,6 @@
         "status": "none",
         "note": ""
       },
-      "id_1780246654453_gkl6e4m2ewo": {
-        "status": "none",
-        "note": ""
-      },
       "id_1780246701085_rt4ppx33i1": {
         "status": "none",
         "note": ""
@@ -609,10 +594,6 @@
       "strict": 0
     },
     "m21": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "id_1780246654453_gkl6e4m2ewo": {
       "verbal": 0,
       "strict": 0
     },
