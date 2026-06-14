@@ -164,6 +164,17 @@
       "phone": "",
       "bank": "",
       "name": "Vanco Londo"
+    },
+    {
+      "id": "i1781452270089wt0y",
+      "firstName": "Ruan",
+      "lastName": "Yuwi",
+      "gameId": "229202",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Ruan Yuwi"
     }
   ],
   "ranks": [
@@ -494,6 +505,10 @@
       "i17808337037678l8f": {
         "status": "none",
         "note": ""
+      },
+      "i1781452270089wt0y": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -607,6 +622,10 @@
       "strict": 0
     },
     "i17808337037678l8f": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1781452270089wt0y": {
       "verbal": 0,
       "strict": 0
     }
