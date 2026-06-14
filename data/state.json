@@ -131,6 +131,17 @@
       "phone": "",
       "bank": "",
       "name": "Ruan Yuwi"
+    },
+    {
+      "id": "i1781452361976vitd",
+      "firstName": "Cornelio",
+      "lastName": "Londo",
+      "gameId": "101475",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Cornelio Londo"
     }
   ],
   "ranks": [
@@ -449,6 +460,10 @@
       "i1781452270089wt0y": {
         "status": "none",
         "note": ""
+      },
+      "i1781452361976vitd": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -550,6 +565,10 @@
       "strict": 0
     },
     "i1781452270089wt0y": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1781452361976vitd": {
       "verbal": 0,
       "strict": 0
     }
