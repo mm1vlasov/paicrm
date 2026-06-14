@@ -197,6 +197,17 @@
       "phone": "",
       "bank": "",
       "name": "John Whou"
+    },
+    {
+      "id": "i1781452502651sag1",
+      "firstName": "Jannik",
+      "lastName": "Londo",
+      "gameId": "183761",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Jannik Londo"
     }
   ],
   "ranks": [
@@ -539,6 +550,10 @@
       "i1781452485118xbs7": {
         "status": "none",
         "note": ""
+      },
+      "i1781452502651sag1": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -664,6 +679,10 @@
       "strict": 0
     },
     "i1781452485118xbs7": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1781452502651sag1": {
       "verbal": 0,
       "strict": 0
     }
