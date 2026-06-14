@@ -122,17 +122,6 @@
       "name": "Ryker Moonlight"
     },
     {
-      "id": "i17808337037678l8f",
-      "firstName": "Vanco",
-      "lastName": "Londo",
-      "gameId": "288208",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": "",
-      "name": "Vanco Londo"
-    },
-    {
       "id": "i1781452270089wt0y",
       "firstName": "Ruan",
       "lastName": "Yuwi",
@@ -457,10 +446,6 @@
         "status": "none",
         "note": ""
       },
-      "i17808337037678l8f": {
-        "status": "none",
-        "note": ""
-      },
       "i1781452270089wt0y": {
         "status": "none",
         "note": ""
@@ -561,10 +546,6 @@
       "strict": 0
     },
     "i1780833670884jza4": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "i17808337037678l8f": {
       "verbal": 0,
       "strict": 0
     },
