@@ -153,6 +153,17 @@
       "phone": "",
       "bank": "",
       "name": "Chaobi Yuwi"
+    },
+    {
+      "id": "i1781452418839dj58",
+      "firstName": "Qwelst",
+      "lastName": "Phoenix",
+      "gameId": "188345",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Qwelst Phoenix"
     }
   ],
   "ranks": [
@@ -479,6 +490,10 @@
       "i1781452383425yq1w": {
         "status": "none",
         "note": ""
+      },
+      "i1781452418839dj58": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -588,6 +603,10 @@
       "strict": 0
     },
     "i1781452383425yq1w": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1781452418839dj58": {
       "verbal": 0,
       "strict": 0
     }
