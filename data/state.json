@@ -100,17 +100,6 @@
       "bank": ""
     },
     {
-      "id": "id_1780246795993_72yjh7t9f7d",
-      "firstName": "Egor",
-      "lastName": "Blazer",
-      "gameId": "283663",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "name": "Egor Blazer",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "i17808319413133ci4",
       "firstName": "Kyka",
       "lastName": "Londo",
@@ -482,10 +471,6 @@
         "status": "none",
         "note": ""
       },
-      "id_1780246795993_72yjh7t9f7d": {
-        "status": "none",
-        "note": ""
-      },
       "i17808319413133ci4": {
         "status": "none",
         "note": ""
@@ -598,10 +583,6 @@
       "strict": 0
     },
     "id_1780246783483_wj5t4ndl8j": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "id_1780246795993_72yjh7t9f7d": {
       "verbal": 0,
       "strict": 0
     },
