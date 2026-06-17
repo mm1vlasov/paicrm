@@ -1277,15 +1277,15 @@
       "data": {
         "title": "123",
         "present": 0,
-        "warned": 1,
+        "warned": 0,
         "absent": 0,
         "total": 20,
         "detail": [
           {
             "id": "m1",
             "name": "Richi Londo",
-            "status": "warned",
-            "note": "я пидр"
+            "status": "none",
+            "note": ""
           },
           {
             "id": "m2",
@@ -1424,8 +1424,8 @@
       "note": "",
       "attendance": {
         "m1": {
-          "status": "warned",
-          "note": "я пидр"
+          "status": "none",
+          "note": ""
         },
         "m2": {
           "status": "none",
