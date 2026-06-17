@@ -602,7 +602,7 @@
   },
   "reprimands": {
     "m1": {
-      "verbal": 0,
+      "verbal": 1,
       "strict": 0
     },
     "m2": {
@@ -1245,6 +1245,17 @@
         "memberName": "Vanco Londo",
         "repType": "strict",
         "val": 0
+      }
+    },
+    {
+      "id": "i1781689565443vc8a",
+      "type": "reprimand",
+      "date": "2026-06-17",
+      "data": {
+        "mid": "m1",
+        "memberName": "Richi Londo",
+        "repType": "verbal",
+        "val": 1
       }
     }
   ],
