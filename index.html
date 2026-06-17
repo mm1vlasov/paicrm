@@ -2037,9 +2037,9 @@ function createMeeting() {
   S.meetings.push({ id:uid(), title, date, time, type, note, attendance, createdAt:now_iso() });
   closeModal('modalCreateMeeting');
 
-  const mon    = getMondayOf(new Date());
-  const mtgMon = getMondayOf(new Date(date+'T00:00:00'));
-  meetingWeekOffset = Math.round((mtgMon - mon) / (7*86400000));
+const currentWeek = getWeekNumber(new Date());
+const mtgWeek = getWeekNumber(new Date(date + 'T00:00:00'));
+meetingWeekOffset = mtgWeek - currentWeek;
 
   scheduleSave(); renderMeetings(); toast('Собрание создано');
 }
