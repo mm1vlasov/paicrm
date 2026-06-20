@@ -219,6 +219,17 @@
       "phone": "",
       "bank": "",
       "name": "Jojo Krager"
+    },
+    {
+      "id": "i1781996307063wsmr",
+      "firstName": "Raze",
+      "lastName": "Zubovich",
+      "gameId": "309087",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Raze Zubovich"
     }
   ],
   "ranks": [
@@ -594,6 +605,10 @@
       "i1781995977319mgic": {
         "status": "none",
         "note": ""
+      },
+      "i1781996307063wsmr": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -727,6 +742,10 @@
       "strict": 0
     },
     "i1781995977319mgic": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1781996307063wsmr": {
       "verbal": 0,
       "strict": 0
     }
