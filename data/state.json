@@ -67,17 +67,6 @@
       "bank": ""
     },
     {
-      "id": "m20",
-      "firstName": "Aomine",
-      "lastName": "Londo",
-      "name": "Aomine Londo",
-      "gameId": "116222",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "id_1780246701085_rt4ppx33i1",
       "firstName": "Kalyaka",
       "lastName": "Mart",
@@ -518,10 +507,6 @@
         "status": "none",
         "note": ""
       },
-      "m20": {
-        "status": "none",
-        "note": ""
-      },
       "id_1780246701085_rt4ppx33i1": {
         "status": "none",
         "note": ""
@@ -646,10 +631,6 @@
       "strict": 0
     },
     "m19": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m20": {
       "verbal": 0,
       "strict": 0
     },
