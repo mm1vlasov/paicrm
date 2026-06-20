@@ -208,6 +208,17 @@
       "phone": "",
       "bank": "",
       "name": "Alexandr Mirror"
+    },
+    {
+      "id": "i1781995977319mgic",
+      "firstName": "Jojo",
+      "lastName": "Krager",
+      "gameId": "247776",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Jojo Krager"
     }
   ],
   "ranks": [
@@ -568,6 +579,10 @@
       "i1781452513490qgz4": {
         "status": "none",
         "note": ""
+      },
+      "i1781995977319mgic": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -697,6 +712,10 @@
       "strict": 0
     },
     "i1781452513490qgz4": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1781995977319mgic": {
       "verbal": 0,
       "strict": 0
     }
