@@ -208,6 +208,17 @@
       "phone": "",
       "bank": "",
       "name": "Alexandr Mirror"
+    },
+    {
+      "id": "i1781995633268wj6u",
+      "firstName": "Sato",
+      "lastName": "Horikawa",
+      "gameId": "158390",
+      "rank": "Deputy Head of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Sato Horikawa"
     }
   ],
   "ranks": [
@@ -558,6 +569,10 @@
       "i1781452513490qgz4": {
         "status": "none",
         "note": ""
+      },
+      "i1781995633268wj6u": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -687,6 +702,10 @@
       "strict": 0
     },
     "i1781452513490qgz4": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1781995633268wj6u": {
       "verbal": 0,
       "strict": 0
     }
