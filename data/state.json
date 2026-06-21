@@ -111,17 +111,6 @@
       "name": "Ryker Moonlight"
     },
     {
-      "id": "i1781452270089wt0y",
-      "firstName": "Ruan",
-      "lastName": "Yuwi",
-      "gameId": "229202",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": "",
-      "name": "Ruan Yuwi"
-    },
-    {
       "id": "i1781452361976vitd",
       "firstName": "Cornelio",
       "lastName": "Londo",
@@ -634,10 +623,6 @@
         "status": "none",
         "note": ""
       },
-      "i1781452270089wt0y": {
-        "status": "none",
-        "note": ""
-      },
       "i1781452361976vitd": {
         "status": "none",
         "note": ""
@@ -790,10 +775,6 @@
       "strict": 0
     },
     "i1780833670884jza4": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "i1781452270089wt0y": {
       "verbal": 0,
       "strict": 0
     },
