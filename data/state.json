@@ -230,6 +230,17 @@
       "phone": "",
       "bank": "",
       "name": "Raze Zubovich"
+    },
+    {
+      "id": "i1782058023687ba1x",
+      "firstName": "Abduhalim",
+      "lastName": "Faze",
+      "gameId": "20023",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Abduhalim Faze"
     }
   ],
   "ranks": [
@@ -622,6 +633,10 @@
       "i1781996307063wsmr": {
         "status": "none",
         "note": ""
+      },
+      "i1782058023687ba1x": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -759,6 +774,10 @@
       "strict": 0
     },
     "i1781996307063wsmr": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1782058023687ba1x": {
       "verbal": 0,
       "strict": 0
     }
