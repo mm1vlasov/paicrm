@@ -104,8 +104,8 @@
       "firstName": "Ryker",
       "lastName": "Moonlight",
       "gameId": "305966",
-      "rank": "Curator of Department",
-      "ooc": "-",
+      "rank": "Instructor of Department",
+      "ooc": "ООС Отпуск (15.06.26-20.06.26)",
       "phone": "",
       "bank": "",
       "name": "Ryker Moonlight"
@@ -252,6 +252,17 @@
       "phone": "",
       "bank": "",
       "name": "Twix London"
+    },
+    {
+      "id": "i1782058070040z80u",
+      "firstName": "Vladislav",
+      "lastName": "Bumaga",
+      "gameId": "35786",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Vladislav Bumaga"
     }
   ],
   "ranks": [
@@ -652,6 +663,10 @@
       "i1782058046189shs4": {
         "status": "none",
         "note": ""
+      },
+      "i1782058070040z80u": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -797,6 +812,10 @@
       "strict": 0
     },
     "i1782058046189shs4": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1782058070040z80u": {
       "verbal": 0,
       "strict": 0
     }
