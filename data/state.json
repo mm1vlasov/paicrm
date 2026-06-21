@@ -1517,6 +1517,165 @@
           }
         ]
       }
+    },
+    {
+      "id": "i17820583436085yv9",
+      "meetingId": "i1782058178259p0hr",
+      "type": "meeting",
+      "date": "2026-06-21",
+      "data": {
+        "title": "Еженеделька состава",
+        "present": 6,
+        "warned": 7,
+        "absent": 11,
+        "total": 24,
+        "detail": [
+          {
+            "id": "m1",
+            "name": "Richi Londo",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m2",
+            "name": "Mir Li",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "m4",
+            "name": "Logan Brooks",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m10",
+            "name": "Miran Londo",
+            "status": "warned",
+            "note": "Отпуск"
+          },
+          {
+            "id": "m15",
+            "name": "Daryana Londo",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "m19",
+            "name": "Anthony Wilson",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "id_1780246783483_wj5t4ndl8j",
+            "name": "Vex Londo",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i17808319413133ci4",
+            "name": "Kyka Londo",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1780833670884jza4",
+            "name": "Ryker Moonlight",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1781452361976vitd",
+            "name": "Cornelio Londo",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i1781452383425yq1w",
+            "name": "Chaobi Yuwi",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "i1781452448187t94n",
+            "name": "Sato Horikawa",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "i1781452469848uojk",
+            "name": "Abdullah Londo",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i1781452485118xbs7",
+            "name": "John Whou",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1781452502651sag1",
+            "name": "Jannik Londo",
+            "status": "absent",
+            "note": "Уволился"
+          },
+          {
+            "id": "i1781452513490qgz4",
+            "name": "Alexandr Mirror",
+            "status": "warned",
+            "note": "Отпуск"
+          },
+          {
+            "id": "i1781995977319mgic",
+            "name": "Jojo Krager",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i1781996307063wsmr",
+            "name": "Raze Zubovich",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i1782058023687ba1x",
+            "name": "Abduhalim Faze",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "i1782058046189shs4",
+            "name": "Twix London",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1782058104607nue4",
+            "name": "Vladislav Bumaga",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1782058153934ll20",
+            "name": "Kate Staffary",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1782058171999elgo",
+            "name": "Denis Armstrong",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1782058246001zypf",
+            "name": "Cheef ForSainttez",
+            "status": "present",
+            "note": ""
+          }
+        ]
+      }
     }
   ],
   "sync": {
@@ -1629,99 +1788,99 @@
       "note": "",
       "attendance": {
         "m1": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m2": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "m4": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m10": {
-          "status": "none",
-          "note": ""
+          "status": "warned",
+          "note": "Отпуск"
         },
         "m15": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "m19": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "id_1780246783483_wj5t4ndl8j": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i17808319413133ci4": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1780833670884jza4": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1781452361976vitd": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i1781452383425yq1w": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "i1781452448187t94n": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "i1781452469848uojk": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i1781452485118xbs7": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1781452502651sag1": {
-          "status": "none",
-          "note": ""
+          "status": "absent",
+          "note": "Уволился"
         },
         "i1781452513490qgz4": {
-          "status": "none",
-          "note": ""
+          "status": "warned",
+          "note": "Отпуск"
         },
         "i1781995977319mgic": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i1781996307063wsmr": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i1782058023687ba1x": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "i1782058046189shs4": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1782058104607nue4": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1782058153934ll20": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1782058171999elgo": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1782058246001zypf": {
-          "status": "none",
+          "status": "present",
           "note": ""
         }
       },
