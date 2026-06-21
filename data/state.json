@@ -252,6 +252,17 @@
       "phone": "",
       "bank": "",
       "name": "Twix London"
+    },
+    {
+      "id": "i1782058104607nue4",
+      "firstName": "Vladislav",
+      "lastName": "Bumaga",
+      "gameId": "35786",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Vladislav Bumaga"
     }
   ],
   "ranks": [
@@ -652,6 +663,10 @@
       "i1782058046189shs4": {
         "status": "none",
         "note": ""
+      },
+      "i1782058104607nue4": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -797,6 +812,10 @@
       "strict": 0
     },
     "i1782058046189shs4": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1782058104607nue4": {
       "verbal": 0,
       "strict": 0
     }
