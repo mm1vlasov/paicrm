@@ -263,6 +263,17 @@
       "phone": "",
       "bank": "",
       "name": "Vladislav Bumaga"
+    },
+    {
+      "id": "i1782058153934ll20",
+      "firstName": "Kate",
+      "lastName": "Staffary",
+      "gameId": "228050",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Kate Staffary"
     }
   ],
   "ranks": [
@@ -667,6 +678,10 @@
       "i1782058104607nue4": {
         "status": "none",
         "note": ""
+      },
+      "i1782058153934ll20": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -816,6 +831,10 @@
       "strict": 0
     },
     "i1782058104607nue4": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1782058153934ll20": {
       "verbal": 0,
       "strict": 0
     }
