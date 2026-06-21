@@ -67,17 +67,6 @@
       "bank": ""
     },
     {
-      "id": "id_1780246701085_rt4ppx33i1",
-      "firstName": "Kalyaka",
-      "lastName": "Mart",
-      "gameId": "218097",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "name": "Kalyaka Mart",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "id_1780246783483_wj5t4ndl8j",
       "firstName": "Vex",
       "lastName": "Londo",
@@ -607,10 +596,6 @@
         "status": "none",
         "note": ""
       },
-      "id_1780246701085_rt4ppx33i1": {
-        "status": "none",
-        "note": ""
-      },
       "id_1780246783483_wj5t4ndl8j": {
         "status": "none",
         "note": ""
@@ -759,10 +744,6 @@
       "strict": 0
     },
     "m21": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "id_1780246701085_rt4ppx33i1": {
       "verbal": 0,
       "strict": 0
     },
