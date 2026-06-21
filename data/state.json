@@ -122,17 +122,6 @@
       "name": "Chaobi Yuwi"
     },
     {
-      "id": "i1781452418839dj58",
-      "firstName": "Qwelst",
-      "lastName": "Phoenix",
-      "gameId": "188345",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": "",
-      "name": "Qwelst Phoenix"
-    },
-    {
       "id": "i1781452448187t94n",
       "firstName": "Sato",
       "lastName": "Horikawa",
@@ -616,10 +605,6 @@
         "status": "none",
         "note": ""
       },
-      "i1781452418839dj58": {
-        "status": "none",
-        "note": ""
-      },
       "i1781452448187t94n": {
         "status": "none",
         "note": ""
@@ -764,10 +749,6 @@
       "strict": 0
     },
     "i1781452383425yq1w": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "i1781452418839dj58": {
       "verbal": 0,
       "strict": 0
     },
