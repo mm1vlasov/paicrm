@@ -1540,7 +1540,7 @@
             "id": "m2",
             "name": "Mir Li",
             "status": "absent",
-            "note": ""
+            "note": "Рыбка поговорит"
           },
           {
             "id": "m4",
@@ -1558,13 +1558,13 @@
             "id": "m15",
             "name": "Daryana Londo",
             "status": "absent",
-            "note": ""
+            "note": "Илюша напишет"
           },
           {
             "id": "m19",
             "name": "Anthony Wilson",
             "status": "absent",
-            "note": ""
+            "note": "Помилован"
           },
           {
             "id": "id_1780246783483_wj5t4ndl8j",
@@ -1576,13 +1576,13 @@
             "id": "i17808319413133ci4",
             "name": "Kyka Londo",
             "status": "absent",
-            "note": ""
+            "note": "Илюша напишет"
           },
           {
             "id": "i1780833670884jza4",
             "name": "Ryker Moonlight",
             "status": "absent",
-            "note": ""
+            "note": "Вопросики"
           },
           {
             "id": "i1781452361976vitd",
@@ -1612,7 +1612,7 @@
             "id": "i1781452485118xbs7",
             "name": "John Whou",
             "status": "absent",
-            "note": ""
+            "note": "Вопросики"
           },
           {
             "id": "i1781452502651sag1",
@@ -1648,25 +1648,25 @@
             "id": "i1782058046189shs4",
             "name": "Twix London",
             "status": "absent",
-            "note": ""
+            "note": "Не дома"
           },
           {
             "id": "i1782058104607nue4",
             "name": "Vladislav Bumaga",
             "status": "absent",
-            "note": ""
+            "note": "Новый"
           },
           {
             "id": "i1782058153934ll20",
             "name": "Kate Staffary",
             "status": "absent",
-            "note": ""
+            "note": "Какого хуя"
           },
           {
             "id": "i1782058171999elgo",
             "name": "Denis Armstrong",
             "status": "absent",
-            "note": ""
+            "note": "Какого хуя"
           },
           {
             "id": "i1782058246001zypf",
@@ -1793,7 +1793,7 @@
         },
         "m2": {
           "status": "absent",
-          "note": ""
+          "note": "Рыбка поговорит"
         },
         "m4": {
           "status": "present",
@@ -1805,11 +1805,11 @@
         },
         "m15": {
           "status": "absent",
-          "note": ""
+          "note": "Илюша напишет"
         },
         "m19": {
           "status": "absent",
-          "note": ""
+          "note": "Помилован"
         },
         "id_1780246783483_wj5t4ndl8j": {
           "status": "warned",
@@ -1817,11 +1817,11 @@
         },
         "i17808319413133ci4": {
           "status": "absent",
-          "note": ""
+          "note": "Илюша напишет"
         },
         "i1780833670884jza4": {
           "status": "absent",
-          "note": ""
+          "note": "Вопросики"
         },
         "i1781452361976vitd": {
           "status": "warned",
@@ -1841,7 +1841,7 @@
         },
         "i1781452485118xbs7": {
           "status": "absent",
-          "note": ""
+          "note": "Вопросики"
         },
         "i1781452502651sag1": {
           "status": "absent",
@@ -1865,19 +1865,19 @@
         },
         "i1782058046189shs4": {
           "status": "absent",
-          "note": ""
+          "note": "Не дома"
         },
         "i1782058104607nue4": {
           "status": "absent",
-          "note": ""
+          "note": "Новый"
         },
         "i1782058153934ll20": {
           "status": "absent",
-          "note": ""
+          "note": "Какого хуя"
         },
         "i1782058171999elgo": {
           "status": "absent",
-          "note": ""
+          "note": "Какого хуя"
         },
         "i1782058246001zypf": {
           "status": "present",
