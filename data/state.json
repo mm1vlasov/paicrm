@@ -144,17 +144,6 @@
       "name": "Abdullah Londo"
     },
     {
-      "id": "i1781996307063wsmr",
-      "firstName": "Raze",
-      "lastName": "Zubovich",
-      "gameId": "309087",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": "",
-      "name": "Raze Zubovich"
-    },
-    {
       "id": "i1782058023687ba1x",
       "firstName": "Abduhalim",
       "lastName": "Faze",
@@ -354,11 +343,6 @@
       "a4": 28,
       "a3": 5,
       "a5": 2
-    },
-    "i1781996307063wsmr": {
-      "a3": 11,
-      "a2": 4,
-      "a4": 12
     },
     "i1781452383425yq1w": {
       "a4": 78,
@@ -576,10 +560,6 @@
         "status": "none",
         "note": ""
       },
-      "i1781996307063wsmr": {
-        "status": "none",
-        "note": ""
-      },
       "i1782058023687ba1x": {
         "status": "none",
         "note": ""
@@ -708,10 +688,6 @@
       "strict": 0
     },
     "i1781452469848uojk": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "i1781996307063wsmr": {
       "verbal": 0,
       "strict": 0
     },
