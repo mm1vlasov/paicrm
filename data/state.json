@@ -144,17 +144,6 @@
       "name": "Abdullah Londo"
     },
     {
-      "id": "i1782058171999elgo",
-      "firstName": "Denis",
-      "lastName": "Armstrong",
-      "gameId": "295676",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": "",
-      "name": "Denis Armstrong"
-    },
-    {
       "id": "i1782058246001zypf",
       "firstName": "Cheef",
       "lastName": "ForSainttez",
@@ -516,10 +505,6 @@
         "status": "none",
         "note": ""
       },
-      "i1782058171999elgo": {
-        "status": "none",
-        "note": ""
-      },
       "i1782058246001zypf": {
         "status": "none",
         "note": ""
@@ -628,10 +613,6 @@
       "strict": 0
     },
     "i1781452469848uojk": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "i1782058171999elgo": {
       "verbal": 0,
       "strict": 0
     },
