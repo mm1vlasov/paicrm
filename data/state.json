@@ -142,6 +142,17 @@
       "phone": "",
       "bank": "",
       "name": "John Whou"
+    },
+    {
+      "id": "i1782662618505udak",
+      "firstName": "Violetta",
+      "lastName": "Hive",
+      "gameId": "280427",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Violetta Hive"
     }
   ],
   "ranks": [
@@ -493,6 +504,10 @@
       "i1782662593743xinc": {
         "status": "none",
         "note": ""
+      },
+      "i1782662618505udak": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -598,6 +613,10 @@
       "strict": 0
     },
     "i1782662593743xinc": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1782662618505udak": {
       "verbal": 0,
       "strict": 0
     }
