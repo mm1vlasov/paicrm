@@ -153,6 +153,17 @@
       "phone": "",
       "bank": "",
       "name": "Violetta Hive"
+    },
+    {
+      "id": "i1782662634913t0fm",
+      "firstName": "Likki",
+      "lastName": "Cartel",
+      "gameId": "71985",
+      "rank": "Curator of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Likki Cartel"
     }
   ],
   "ranks": [
@@ -508,6 +519,10 @@
       "i1782662618505udak": {
         "status": "none",
         "note": ""
+      },
+      "i1782662634913t0fm": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -617,6 +632,10 @@
       "strict": 0
     },
     "i1782662618505udak": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1782662634913t0fm": {
       "verbal": 0,
       "strict": 0
     }
