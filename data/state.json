@@ -175,6 +175,17 @@
       "phone": "",
       "bank": "",
       "name": "Jordan Londo"
+    },
+    {
+      "id": "i1782662924519f0zw",
+      "firstName": "Kento",
+      "lastName": "Londo",
+      "gameId": "118230",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Kento Londo"
     }
   ],
   "ranks": [
@@ -538,6 +549,10 @@
       "i1782662691351xpca": {
         "status": "none",
         "note": ""
+      },
+      "i1782662924519f0zw": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -655,6 +670,10 @@
       "strict": 0
     },
     "i1782662691351xpca": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1782662924519f0zw": {
       "verbal": 0,
       "strict": 0
     }
