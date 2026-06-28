@@ -45,17 +45,6 @@
       "bank": ""
     },
     {
-      "id": "id_1780246783483_wj5t4ndl8j",
-      "firstName": "Vex",
-      "lastName": "Londo",
-      "gameId": "203956",
-      "rank": "Deputy Head of Department",
-      "ooc": "*ООС Отпуск (19.06.26-22.06.26)*",
-      "name": "Vex Londo",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "i17808319413133ci4",
       "firstName": "Kyka",
       "lastName": "Londo",
@@ -502,10 +491,6 @@
         "status": "none",
         "note": ""
       },
-      "id_1780246783483_wj5t4ndl8j": {
-        "status": "none",
-        "note": ""
-      },
       "i17808319413133ci4": {
         "status": "none",
         "note": ""
@@ -622,10 +607,6 @@
       "strict": 0
     },
     "m21": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "id_1780246783483_wj5t4ndl8j": {
       "verbal": 0,
       "strict": 0
     },
