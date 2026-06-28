@@ -12,17 +12,6 @@
       "bank": ""
     },
     {
-      "id": "m2",
-      "firstName": "Mir",
-      "lastName": "Li",
-      "name": "Mir Li",
-      "gameId": "45430",
-      "rank": "Instructor of Department",
-      "ooc": "Стаф",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "m4",
       "firstName": "Logan",
       "lastName": "Brooks",
@@ -457,10 +446,6 @@
         "status": "none",
         "note": ""
       },
-      "m2": {
-        "status": "none",
-        "note": ""
-      },
       "m4": {
         "status": "none",
         "note": ""
@@ -541,10 +526,6 @@
   },
   "reprimands": {
     "m1": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m2": {
       "verbal": 0,
       "strict": 0
     },
