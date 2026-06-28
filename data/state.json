@@ -1515,6 +1515,117 @@
           }
         ]
       }
+    },
+    {
+      "id": "i1782662903891j12u",
+      "meetingId": "i17826627186838vf3",
+      "type": "meeting",
+      "date": "2026-06-28",
+      "data": {
+        "title": "Собрание отдела",
+        "present": 6,
+        "warned": 6,
+        "absent": 4,
+        "total": 16,
+        "detail": [
+          {
+            "id": "m1",
+            "name": "Richi Londo",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "m4",
+            "name": "Logan Brooks",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m15",
+            "name": "Daryana Londo",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "m19",
+            "name": "Anthony Wilson",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "i17808319413133ci4",
+            "name": "Kyka Londo",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i1780833670884jza4",
+            "name": "Ryker Moonlight",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i1781452361976vitd",
+            "name": "Cornelio Londo",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1781452383425yq1w",
+            "name": "Chaobi Yuwi",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i1781452448187t94n",
+            "name": "Sato Horikawa",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i1781452469848uojk",
+            "name": "Abdullah Londo",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1782058246001zypf",
+            "name": "Cheef ForSainttez",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1782662593743xinc",
+            "name": "John Whou",
+            "status": "warned",
+            "note": ""
+          },
+          {
+            "id": "i1782662618505udak",
+            "name": "Violetta Hive",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "i1782662634913t0fm",
+            "name": "Likki Cartel",
+            "status": "absent",
+            "note": ""
+          },
+          {
+            "id": "i1782662666929rv1h",
+            "name": "Hayden Londo",
+            "status": "present",
+            "note": ""
+          },
+          {
+            "id": "i1782662691351xpca",
+            "name": "Jordan Londo",
+            "status": "present",
+            "note": ""
+          }
+        ]
+      }
     }
   ],
   "sync": {
@@ -1734,71 +1845,67 @@
       "note": "",
       "attendance": {
         "m1": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "m4": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m15": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "m19": {
-          "status": "none",
-          "note": ""
-        },
-        "id_1780246783483_wj5t4ndl8j": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "i17808319413133ci4": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i1780833670884jza4": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i1781452361976vitd": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1781452383425yq1w": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i1781452448187t94n": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i1781452469848uojk": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1782058246001zypf": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1782662593743xinc": {
-          "status": "none",
+          "status": "warned",
           "note": ""
         },
         "i1782662618505udak": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "i1782662634913t0fm": {
-          "status": "none",
+          "status": "absent",
           "note": ""
         },
         "i1782662666929rv1h": {
-          "status": "none",
+          "status": "present",
           "note": ""
         },
         "i1782662691351xpca": {
-          "status": "none",
+          "status": "present",
           "note": ""
         }
       },
