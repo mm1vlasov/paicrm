@@ -144,17 +144,6 @@
       "name": "Abdullah Londo"
     },
     {
-      "id": "i1781452513490qgz4",
-      "firstName": "Alexandr",
-      "lastName": "Mirror",
-      "gameId": "290135",
-      "rank": "Instructor of Department",
-      "ooc": "ООС Отпуск (14.06.26-21.06.26)",
-      "phone": "",
-      "bank": "",
-      "name": "Alexandr Mirror"
-    },
-    {
       "id": "i1781995977319mgic",
       "firstName": "Jojo",
       "lastName": "Krager",
@@ -602,10 +591,6 @@
         "status": "none",
         "note": ""
       },
-      "i1781452513490qgz4": {
-        "status": "none",
-        "note": ""
-      },
       "i1781995977319mgic": {
         "status": "none",
         "note": ""
@@ -742,10 +727,6 @@
       "strict": 0
     },
     "i1781452469848uojk": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "i1781452513490qgz4": {
       "verbal": 0,
       "strict": 0
     },
