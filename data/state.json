@@ -23,17 +23,6 @@
       "bank": ""
     },
     {
-      "id": "m10",
-      "firstName": "Miran",
-      "lastName": "Londo",
-      "name": "Miran Londo",
-      "gameId": "34987",
-      "rank": "Instructor of Department",
-      "ooc": "Стаф",
-      "phone": "",
-      "bank": ""
-    },
-    {
       "id": "m15",
       "firstName": "Daryana",
       "lastName": "Londo",
@@ -450,10 +439,6 @@
         "status": "none",
         "note": ""
       },
-      "m10": {
-        "status": "none",
-        "note": ""
-      },
       "m15": {
         "status": "none",
         "note": ""
@@ -534,10 +519,6 @@
       "strict": 0
     },
     "m8": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "m10": {
       "verbal": 0,
       "strict": 0
     },
