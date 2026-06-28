@@ -131,6 +131,17 @@
       "phone": "",
       "bank": "",
       "name": "Cheef ForSainttez"
+    },
+    {
+      "id": "i1782662593743xinc",
+      "firstName": "John",
+      "lastName": "Whou",
+      "gameId": "227136",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "John Whou"
     }
   ],
   "ranks": [
@@ -478,6 +489,10 @@
       "i1782058246001zypf": {
         "status": "none",
         "note": ""
+      },
+      "i1782662593743xinc": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -579,6 +594,10 @@
       "strict": 0
     },
     "i1782058246001zypf": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1782662593743xinc": {
       "verbal": 0,
       "strict": 0
     }
