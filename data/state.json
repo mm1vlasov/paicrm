@@ -164,6 +164,17 @@
       "phone": "",
       "bank": "",
       "name": "Likki Cartel"
+    },
+    {
+      "id": "i1782662666929rv1h",
+      "firstName": "Hayden",
+      "lastName": "Londo",
+      "gameId": "304891",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Hayden Londo"
     }
   ],
   "ranks": [
@@ -523,6 +534,10 @@
       "i1782662634913t0fm": {
         "status": "none",
         "note": ""
+      },
+      "i1782662666929rv1h": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -636,6 +651,10 @@
       "strict": 0
     },
     "i1782662634913t0fm": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1782662666929rv1h": {
       "verbal": 0,
       "strict": 0
     }
