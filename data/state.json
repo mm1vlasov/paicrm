@@ -144,17 +144,6 @@
       "name": "Abdullah Londo"
     },
     {
-      "id": "i1781995977319mgic",
-      "firstName": "Jojo",
-      "lastName": "Krager",
-      "gameId": "247776",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": "",
-      "name": "Jojo Krager"
-    },
-    {
       "id": "i1781996307063wsmr",
       "firstName": "Raze",
       "lastName": "Zubovich",
@@ -358,10 +347,6 @@
       "a4": 31,
       "a2": 9,
       "a8": 6
-    },
-    "i1781995977319mgic": {
-      "a4": 22,
-      "a3": 32
     },
     "i1781452361976vitd": {
       "a8": 12,
@@ -591,10 +576,6 @@
         "status": "none",
         "note": ""
       },
-      "i1781995977319mgic": {
-        "status": "none",
-        "note": ""
-      },
       "i1781996307063wsmr": {
         "status": "none",
         "note": ""
@@ -727,10 +708,6 @@
       "strict": 0
     },
     "i1781452469848uojk": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "i1781995977319mgic": {
       "verbal": 0,
       "strict": 0
     },
