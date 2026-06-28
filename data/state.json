@@ -175,6 +175,17 @@
       "phone": "",
       "bank": "",
       "name": "Hayden Londo"
+    },
+    {
+      "id": "i1782662691351xpca",
+      "firstName": "Jordan",
+      "lastName": "Londo",
+      "gameId": "317616",
+      "rank": "Instructor of Department",
+      "ooc": "-",
+      "phone": "",
+      "bank": "",
+      "name": "Jordan Londo"
     }
   ],
   "ranks": [
@@ -538,6 +549,10 @@
       "i1782662666929rv1h": {
         "status": "none",
         "note": ""
+      },
+      "i1782662691351xpca": {
+        "status": "none",
+        "note": ""
       }
     }
   },
@@ -655,6 +670,10 @@
       "strict": 0
     },
     "i1782662666929rv1h": {
+      "verbal": 0,
+      "strict": 0
+    },
+    "i1782662691351xpca": {
       "verbal": 0,
       "strict": 0
     }
