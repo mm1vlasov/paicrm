@@ -1743,6 +1743,85 @@
         }
       },
       "createdAt": "2026-06-21"
+    },
+    {
+      "id": "i17826627186838vf3",
+      "title": "Собрание отдела",
+      "date": "2026-06-28",
+      "time": "20:00",
+      "type": "weekly",
+      "note": "",
+      "attendance": {
+        "m1": {
+          "status": "none",
+          "note": ""
+        },
+        "m4": {
+          "status": "none",
+          "note": ""
+        },
+        "m15": {
+          "status": "none",
+          "note": ""
+        },
+        "m19": {
+          "status": "none",
+          "note": ""
+        },
+        "id_1780246783483_wj5t4ndl8j": {
+          "status": "none",
+          "note": ""
+        },
+        "i17808319413133ci4": {
+          "status": "none",
+          "note": ""
+        },
+        "i1780833670884jza4": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452361976vitd": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452383425yq1w": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452448187t94n": {
+          "status": "none",
+          "note": ""
+        },
+        "i1781452469848uojk": {
+          "status": "none",
+          "note": ""
+        },
+        "i1782058246001zypf": {
+          "status": "none",
+          "note": ""
+        },
+        "i1782662593743xinc": {
+          "status": "none",
+          "note": ""
+        },
+        "i1782662618505udak": {
+          "status": "none",
+          "note": ""
+        },
+        "i1782662634913t0fm": {
+          "status": "none",
+          "note": ""
+        },
+        "i1782662666929rv1h": {
+          "status": "none",
+          "note": ""
+        },
+        "i1782662691351xpca": {
+          "status": "none",
+          "note": ""
+        }
+      },
+      "createdAt": "2026-06-28"
     }
   ]
 }
