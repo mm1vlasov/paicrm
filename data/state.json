@@ -144,17 +144,6 @@
       "name": "Abdullah Londo"
     },
     {
-      "id": "i1782058153934ll20",
-      "firstName": "Kate",
-      "lastName": "Staffary",
-      "gameId": "228050",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": "",
-      "name": "Kate Staffary"
-    },
-    {
       "id": "i1782058171999elgo",
       "firstName": "Denis",
       "lastName": "Armstrong",
@@ -527,10 +516,6 @@
         "status": "none",
         "note": ""
       },
-      "i1782058153934ll20": {
-        "status": "none",
-        "note": ""
-      },
       "i1782058171999elgo": {
         "status": "none",
         "note": ""
@@ -643,10 +628,6 @@
       "strict": 0
     },
     "i1781452469848uojk": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "i1782058153934ll20": {
       "verbal": 0,
       "strict": 0
     },
