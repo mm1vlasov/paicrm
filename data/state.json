@@ -144,17 +144,6 @@
       "name": "Abdullah Londo"
     },
     {
-      "id": "i1781452502651sag1",
-      "firstName": "Jannik",
-      "lastName": "Londo",
-      "gameId": "183761",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": "",
-      "name": "Jannik Londo"
-    },
-    {
       "id": "i1781452513490qgz4",
       "firstName": "Alexandr",
       "lastName": "Mirror",
@@ -613,10 +602,6 @@
         "status": "none",
         "note": ""
       },
-      "i1781452502651sag1": {
-        "status": "none",
-        "note": ""
-      },
       "i1781452513490qgz4": {
         "status": "none",
         "note": ""
@@ -757,10 +742,6 @@
       "strict": 0
     },
     "i1781452469848uojk": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "i1781452502651sag1": {
       "verbal": 0,
       "strict": 0
     },
