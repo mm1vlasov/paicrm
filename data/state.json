@@ -144,17 +144,6 @@
       "name": "Abdullah Londo"
     },
     {
-      "id": "i1782058046189shs4",
-      "firstName": "Twix",
-      "lastName": "London",
-      "gameId": "9953",
-      "rank": "Instructor of Department",
-      "ooc": "-",
-      "phone": "",
-      "bank": "",
-      "name": "Twix London"
-    },
-    {
       "id": "i1782058104607nue4",
       "firstName": "Vladislav",
       "lastName": "Bumaga",
@@ -549,10 +538,6 @@
         "status": "none",
         "note": ""
       },
-      "i1782058046189shs4": {
-        "status": "none",
-        "note": ""
-      },
       "i1782058104607nue4": {
         "status": "none",
         "note": ""
@@ -673,10 +658,6 @@
       "strict": 0
     },
     "i1781452469848uojk": {
-      "verbal": 0,
-      "strict": 0
-    },
-    "i1782058046189shs4": {
       "verbal": 0,
       "strict": 0
     },
